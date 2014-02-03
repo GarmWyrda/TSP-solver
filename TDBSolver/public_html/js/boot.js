@@ -8,12 +8,12 @@ require.config({
     },
     shim: {
         'jQuery': {
-            exports: 'jQuery'
-        }                       
+            exports: '$'
+        }    
     }
 });
 
-require(["jQuery", "bootstrap","googleApi","printMap"], init);
+require(["printMap"], init);
 
 function init() {
 	
