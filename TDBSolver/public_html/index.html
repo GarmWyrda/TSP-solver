@@ -13,15 +13,28 @@ and open the template in the editor.
     </head>
     <body>
         <script data-main="js/boot.js" src="lib/require.js"></script>
-        <div id ="map" class="col-md8">
+        <div id ="map" class="col-md-8">
         </div>
-        <div id ="matrix" class="col-md4">
+        <div id ="matrix" class="col-md-4">
         </div>
-        <div id="connexion_bar">
-            <form action="" method="post">
-                User : <input type="text" name="id" required="required"><br/>
-                Password : <input type="password" name = "password" required = "required"><br/>
-            </form>
+        <div id="connexion_bar"class="col-md-6">
+           <form class="form-inline" role="form">
+                <div class="form-group">
+                  <label class="sr-only" for="id">Id</label>
+                  <input type="email" class="form-control" id="id" placeholder="Enter id">
+                </div>
+                <div class="form-group">
+                  <label class="sr-only" for="password">Password</label>
+                  <input type="password" class="form-control" id="password" placeholder="Password">
+                </div>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"> Remember me
+                  </label>
+                </div>
+                <button type="submit" class="btn btn-default">Sign in</button>
+          </form>
+
         </div>
         
     </body>
