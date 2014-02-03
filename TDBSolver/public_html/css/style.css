@@ -1,0 +1,14 @@
+/* 
+    Document   : style
+    Created on : Feb 3, 2014, 2:46:51 PM
+    Author     : louis
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+map{
+    background-color : red;
+}
