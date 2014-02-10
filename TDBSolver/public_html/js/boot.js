@@ -11,7 +11,7 @@ require.config({
     }
 });
 
-require(["GoogleMaps","printMap","loadUI"], init);
+require(["jQuery","GoogleMaps","printMap","loadUI", "loadplace"], init);
 
 function init() {	
 	console.log("Loading sucessful");
