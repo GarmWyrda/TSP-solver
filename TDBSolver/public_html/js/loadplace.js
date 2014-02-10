@@ -35,6 +35,7 @@ define('loadplace', ['jQuery'],function(){
                 icon:'https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld='+id+'|FF776B|000000'
             }); 
         } 
+>>>>>>> .r20
     };
     
     $("#list").on("change",function(){
