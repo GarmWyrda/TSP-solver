@@ -11,5 +11,5 @@ define('printMap',
         position: new google.maps.LatLng(50.634327, 3.048550),
         map: map,
         title: 'ISEN'
-    });
+    }); 
 });
