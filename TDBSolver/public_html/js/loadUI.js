@@ -6,7 +6,7 @@ define('loadUI',['jQuery'],function(){
     $.getJSON("ressources/emplacements.txt",function(data){
        var length = data.length;
        var string = "";
-       for(var i = 1;i<length+1;i++){
+       for(var i = 0;i<length+1;i++){
            string += "<option value=" + i + ">" + i + "</option> ";
        }
        $("#list").html(string);
