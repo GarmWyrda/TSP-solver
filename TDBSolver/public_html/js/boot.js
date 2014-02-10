@@ -6,12 +6,12 @@ require.config({
     },
     shim: {
         'jQuery': {
-            exports: 'jQuery'
+            exports: '$'
         }    
     }
 });
 
-require(["jQuery","GoogleMaps","printMap"], init);
+require(["GoogleMaps","printMap","loadUI"], init);
 
 function init() {	
 	console.log("Loading sucessful");
