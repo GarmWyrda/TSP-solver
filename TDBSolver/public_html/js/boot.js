@@ -2,23 +2,19 @@
 require.config({
     paths: {
         jQuery: 'http://code.jquery.com/jquery-1.10.1.min',
-        bootstrap : 'http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min',
-        googleApi : 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false',
-        printMap : 'printMap'
+        async: "../lib/async"
     },
     shim: {
         'jQuery': {
-            exports: '$'
+            exports: 'jQuery'
         }    
     }
 });
 
-require(["printMap"], init);
+require(["jQuery","GoogleMaps","printMap"], init);
 
-function init() {
-	
+function init() {	
 	console.log("Loading sucessful");
-
 }
  
 

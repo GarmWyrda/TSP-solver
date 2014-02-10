@@ -9,6 +9,7 @@
 root { 
     display: block;
 }
-map{
-    background-color : red;
+
+#map{
+    height : 200px;
 }
