@@ -13,3 +13,8 @@ root {
 #map{
     height : 470px;
 }
+
+#logger{
+    height : 150px;
+    overflow-y: scroll;
+}
