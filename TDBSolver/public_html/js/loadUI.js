@@ -11,7 +11,7 @@ define('loadUI',['jQuery'],function(){
        }
        $("#list").html(string);
     });
-    $("#logger").append('<p class="alert-success">UI Loaded</p>')
+    $("#logger").append('<p class="alert-success">UI Loaded</p>');
 });
 
 
