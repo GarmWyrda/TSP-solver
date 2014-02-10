@@ -6,7 +6,7 @@ require.config({
     },
     shim: {
         'jQuery': {
-            exports: '$'
+            exports: 'jQuery'
         }    
     }
 });
