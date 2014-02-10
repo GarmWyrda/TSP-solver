@@ -1,4 +1,4 @@
-define('loadplace', ['jQuery'],function(){
+define('loadplace', ['jQuery','GoogleMaps'],function(){
     var places = {
         list:[],
         marker:[]
@@ -11,19 +11,19 @@ define('loadplace', ['jQuery'],function(){
     };
 
     loadfile();
-
+    var mapOptions = {
+            zoom: 14,
+            center: new google.maps.LatLng(50.631437, 3.061193)
+        };
+    var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+    
     var loadEmplacement = function(nb) {
         var id=0;
         var Lat=0;
         var Lng=0;
-
-        var mapOptions = {
-            zoom: 14,
-            center: new google.maps.LatLng(50.634327, 3.048550)
-        };
-
-        var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-
+        for(var i=0;i<places.marker.length;i++){
+            places.marker[i].setMap(null);
+        }
         for(var i=0;i<nb;i++){
             id = places.list[i].id;
             Lat = places.list[i].lat;
@@ -35,7 +35,6 @@ define('loadplace', ['jQuery'],function(){
                 icon:'https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld='+id+'|FF776B|000000'
             }); 
         } 
->>>>>>> .r20
     };
     
     $("#list").on("change",function(){
