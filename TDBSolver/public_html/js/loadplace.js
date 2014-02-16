@@ -39,31 +39,50 @@ define('loadplace', ['jQuery','GoogleMaps'],function(){
         } 
     };
     
-    var printWay = function(A, B) {
+    var printWay = function(A, B, byWalk) {
 
         var LatA = places.list[A - 1].lat;
         var LngA = places.list[A - 1].lng;
-
+        var ptA = new google.maps.LatLng(LatA, LngA);
+        
         var LatB = places.list[B - 1].lat;
         var LngB = places.list[B - 1].lng;
+        var ptB = new google.maps.LatLng(LatB, LngB);
+        
+        if(byWalk == false){
+            var extremites = [ptA,ptB];
 
-        var extremites = [
-            new google.maps.LatLng(LatA, LngA),
-            new google.maps.LatLng(LatB, LngB)
-        ];
+            var flightWay = new google.maps.Polyline({
+                path: extremites,
+                geodesic: true,
+                strokeColor: '#FF0000',
+                strokeOpacity: 1.0,
+                strokeWeight: 2,
+                map: map
+            });
 
-        var flightWay = new google.maps.Polyline({
-            path: extremites,
-            geodesic: true,
-            strokeColor: '#FF0000',
-            strokeOpacity: 1.0,
-            strokeWeight: 2,
-            map: map
-        });
-
-        flightWay.setMap(map);
+            flightWay.setMap(map);
+            $("#logger").append('<p class="alert-success">Way between ' + A + ' and ' + B + ' traced</p>');
+        }
+        else {
+            console.log("byWalk");
+            var directionsService = new google.maps.DirectionsService();
+            var directionsDisplay = new google.maps.DirectionsRenderer();
+            var request = {
+                origin: ptA,
+                destination: ptB,
+                travelMode: google.maps.DirectionsTravelMode.WALKING
+            };
+            directionsService.route(request, function(response, status) {
+                if (status == google.maps.DirectionsStatus.OK) {
+                    directionsDisplay.setDirections(response);
+                }
+            });
+            directionsDisplay.setMap(map);
+            $("#logger").append('<p class="alert-success">Way between ' + A + ' and ' + B + ' by walk traced</p>');
+        }
     };
-    
+     
     $("#list").on("change",function(){
         console.log($("#list").val());
         loadEmplacement($("#list").val());
@@ -84,9 +103,8 @@ define('loadplace', ['jQuery','GoogleMaps'],function(){
         var B = $('#ptB').val();
         console.log("chemin entre " + A + " et " + B);
         
-        printWay(A,B);
-        
-        $("#logger").append('<p class="alert-success">Way between ' + A + 'and ' + B + 'traced</p>');
+        var byWalk = $('#bywalk').is(':checked');
+        printWay(A,B,byWalk);
     });
 });
 
