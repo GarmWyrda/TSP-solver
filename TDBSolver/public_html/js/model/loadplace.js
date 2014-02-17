@@ -1,4 +1,4 @@
-define('loadplace', ['jQuery','GoogleMaps','Logger'],function($, gmaps, Logger){
+define('loadplace', ['jQuery','GoogleMaps','logger'],function($, gmaps, Logger){
     var places = {
         list:[],
         marker:[]
