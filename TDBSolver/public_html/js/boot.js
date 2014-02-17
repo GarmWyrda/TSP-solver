@@ -2,16 +2,19 @@
 require.config({
     paths: {
         jQuery: 'http://code.jquery.com/jquery-1.10.1.min',
-        async: "../lib/async"
+        async: "../lib/async",
+        logger : "interface/Logger",
+        map : "model/Map",
+        loadplace : "model/loadplace"
     },
     shim: {
         'jQuery': {
-            exports: 'jQuery'
+            exports: '$'
         }    
     }
 });
 
-require(["jQuery","GoogleMaps","printMap","loadUI","loadplace","log"], init);
+require(["logger","loadplace"], init);
 
 function init() {
         $.getJSON("ressources/emplacements.txt",function(data){
