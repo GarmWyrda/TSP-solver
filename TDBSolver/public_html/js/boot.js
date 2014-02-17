@@ -5,7 +5,8 @@ require.config({
         async: "../lib/async",
         logger : "interface/Logger",
         map : "model/Map",
-        loadplace : "model/loadplace"
+        loadplace : "model/loadplace",
+        GoogleMaps : "../lib/GoogleMaps"
     },
     shim: {
         'jQuery': {
@@ -16,7 +17,7 @@ require.config({
 
 require(["logger","loadplace"], init);
 
-function init() {
+function init(Logger) {
         $.getJSON("ressources/emplacements.txt",function(data){
            var length = data.length;
            var string = "";
