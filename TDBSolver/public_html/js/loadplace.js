@@ -1,4 +1,4 @@
-define('loadplace', ['jQuery','GoogleMaps'],function(){
+define('loadplace', ['jQuery','GoogleMaps','Logger'],function($, gmaps, Logger){
     var places = {
         list:[],
         marker:[]
@@ -62,7 +62,8 @@ define('loadplace', ['jQuery','GoogleMaps'],function(){
             });
 
             flightWay.setMap(map);
-            $("#logger").append('<p class="alert-success">Way between ' + A + ' and ' + B + ' traced</p>');
+            Logger.log("alert-success","Way between " + A + "and" + B);
+            
         }
         else {
             console.log("byWalk");
