@@ -2,16 +2,19 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-define('loadUI',['jQuery'],function(){
-    $.getJSON("ressources/emplacements.txt",function(data){
-       var length = data.length;
-       var string = "";
-       for(var i = 0;i<length+1;i++){
-           string += "<option value=" + i + ">" + i + "</option> ";
-       }
-       $("#list").html(string);
-    });
-    $("#logger").append('<p class="alert-success">UI Loaded</p>');
+define('Logger',['jQuery'],function(){    
+    var Logger = {
+        $zone : $("#logger"),
+        error : "alert-error",
+        success : "alert-success",
+        
+        log : function(type,string){
+            this.$zone.append("<p class = " + type + ">" + string + "</p>");
+        }             
+    };
+    
+    return Logger;
+
 });
 
 
