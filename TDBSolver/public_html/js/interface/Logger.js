@@ -9,13 +9,11 @@ define('logger',['jQuery'],function($){
         success : "alert-success",
         
         log : function(type,string){
-            console.log("toto");
             this.$zone.append("<p class = " + type + ">" + string + "</p>");
         }             
     };
     
     return Logger;
-
 });
 
 
