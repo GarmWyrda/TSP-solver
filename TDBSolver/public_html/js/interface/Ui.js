@@ -1,6 +1,6 @@
 //CLASS UI
 //Contient les méthodes relatives aux listeners, et a l'interface en général
-define('ui',['listener','jQuery','logger','environment'],function(Listener,$,Logger,Environment){   
+define('ui',['listener','jQuery','logger','environment','map'],function(Listener,$,Logger,Environment,Map){   
     var UI = {
         listeners : [],
         initialize : function(){
@@ -21,8 +21,9 @@ define('ui',['listener','jQuery','logger','environment'],function(Listener,$,Log
             var id=0;
             var Lat=0;
             var Lng=0;
-            for(var i=0;i<Environment.places.markers.length;i++){
-                Environment.places.markers[i].setMap(null);
+            for(var i=0;i<Environment.places.length;i++){
+                if(places.marker)
+                Environment.places[i].marker.setMap(null);
             }
             for(var i=0;i<nb;i++){
                 id = Environment.places.points[i].id;
@@ -30,7 +31,7 @@ define('ui',['listener','jQuery','logger','environment'],function(Listener,$,Log
                 Lng = Environment.places.points[i].lng;
                 Environment.places.markers[i] = new google.maps.Marker({
                     position: new google.maps.LatLng(Lat, Lng),
-                    map: Map.map,
+                    map: Map,
                     title: id,
                     icon:'https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld='+id+'|FF776B|000000'
                 }); 
