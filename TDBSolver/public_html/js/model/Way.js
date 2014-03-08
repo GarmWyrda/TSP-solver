@@ -16,8 +16,8 @@ define('way', ['jQuery','GoogleMaps','logger','environment','map'],function($, g
                     map: Map
                 });
 
-                flightWay.setMap(map);
-                Logger.log(Logger.success,"Way between " + A + "and" + B);
+                //flightWay.setMap(map);
+                Logger.log(Logger.success,"Way between " + A + " and " + B);
 
             }
             else {

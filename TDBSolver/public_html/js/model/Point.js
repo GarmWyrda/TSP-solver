@@ -2,7 +2,7 @@ define('point', ['jQuery','map','logger','GoogleMaps'],function($,Map,Logger,gma
     var Point = function(lat,lng,id){
         this.lat = lat;
         this.lng = lng;
-        this.googlePoint = google.maps.LatLng(lat,lng);
+        this.googlePoint = new google.maps.LatLng(lat,lng);
         this.marker = new google.maps.Marker({
                     position: new google.maps.LatLng(lat, lng),
                     map: Map,
