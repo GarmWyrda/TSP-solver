@@ -1,6 +1,6 @@
 //CLASS UI
 //Contient les méthodes relatives aux listeners, et a l'interface en général
-define('ui',['listener','jQuery','logger','environment','map'],function(Listener,$,Logger,Environment,Map){   
+define('ui',['listener','jQuery','logger','environment','map','way'],function(Listener,$,Logger,Environment,Map,Way){   
     var UI = {
         listeners : [],
         initialize : function(){
@@ -11,7 +11,8 @@ define('ui',['listener','jQuery','logger','environment','map'],function(Listener
                 console.log("chemin entre " + A + " et " + B);
         
                 var byWalk = $('#bywalk').is(':checked');
-                printWay(A,B,byWalk);
+                var newWay = new Way(A,B);
+                newWay.print(byWalk);
             }));
             this.listeners[0].toggle();
             this.listeners[1].toggle();
