@@ -4,7 +4,7 @@ define('way', ['jQuery','GoogleMaps','logger','environment','map'],function($, g
        this.stop = Environment.places[B - 1];
        this.polyline = null;
        this.print = function(byWalk) {
-
+            
             if(byWalk === false){
                 var extremites = [this.start.googlePoint,this.stop.googlePoint];
                 var flightWay = new google.maps.Polyline({
@@ -24,17 +24,27 @@ define('way', ['jQuery','GoogleMaps','logger','environment','map'],function($, g
                 var directionsService = new google.maps.DirectionsService();
                 var directionsDisplay = new google.maps.DirectionsRenderer();
                 var request = {
-                    origin: ptA,
-                    destination: ptB,
+                    origin: this.start.googlePoint,
+                    destination: this.stop.googlePoint,
                     travelMode: google.maps.DirectionsTravelMode.WALKING
                 };
                 directionsService.route(request, function(response, status) {
                     if (status === google.maps.DirectionsStatus.OK) {
                         directionsDisplay.setDirections(response);
+                        console.log(response.routes[0]); 
+                        
+                        var walkedWay = new google.maps.Polyline({
+                            path: response.routes[0].overview_path,
+                            geodesic: true,
+                            strokeColor: '#0000FF',
+                            strokeOpacity: 1.0,
+                            strokeWeight: 2,
+                            map: Map
+                        });
+                        
                     }
                 });
-                directionsDisplay.setMap(map);
-                Logger.log(Logger.success,"Way between ' + A + ' and ' + B + ' by walk traced");
+                Logger.log(Logger.success, "Way between " + A + " and " + B + " by walk traced");
         }
     };
     this.calculDist = function(byWalk) {
