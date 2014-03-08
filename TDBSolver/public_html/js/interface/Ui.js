@@ -30,7 +30,7 @@ define('ui',['listener','jQuery','logger','environment'],function(Listener,$,Log
                 Lng = Environment.places.points[i].lng;
                 Environment.places.markers[i] = new google.maps.Marker({
                     position: new google.maps.LatLng(Lat, Lng),
-                    map: Environment.map,
+                    map: Map.map,
                     title: id,
                     icon:'https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld='+id+'|FF776B|000000'
                 }); 
