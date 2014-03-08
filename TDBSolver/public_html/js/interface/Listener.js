@@ -8,7 +8,7 @@ define('listener',['jQuery'],function($){
         this.event = event;
         this.callback = callback;
         this.isOn = false;
-        this.trigger = function(){
+        this.toggle = function(){
             if(this.isOn){
                 $(this.elementHTML).off();
             }

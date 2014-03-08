@@ -1,10 +1,6 @@
-/* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 define('logger',['jQuery'],function($){    
     /** Allow to send messages to the log area  */
-        var Logger = {
+    var Logger = {
         $zone : $("#logger"),/** define the area of the DOM which will be modified*/
         error : "alert-error",
         success : "alert-success",
@@ -14,7 +10,7 @@ define('logger',['jQuery'],function($){
         }             
     };
     
-    return Logger; //**Singleton*/
+    return Logger; //**Singleton**//
 });
 
 
