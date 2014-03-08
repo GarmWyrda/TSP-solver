@@ -6,7 +6,9 @@ require.config({
         logger : "interface/Logger",
         map : "model/Map",
         loadplace : "model/loadplace",
-        GoogleMaps : "../lib/GoogleMaps"
+        GoogleMaps : "../lib/GoogleMaps",
+        ui : "interface/Ui",
+        listener: "interface/Listener"
     },
     shim: {
         'jQuery': {
@@ -15,7 +17,7 @@ require.config({
     }
 });
 
-require(["logger","loadplace"], init);
+require(["logger","loadplace","ui"], init);
 
 function init(Logger) {
         $.getJSON("ressources/emplacements.txt",function(data){
