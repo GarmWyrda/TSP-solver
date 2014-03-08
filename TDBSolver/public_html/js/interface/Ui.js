@@ -6,7 +6,12 @@
 
 define('ui',['listener'],function(){
     var UI = {
+        initialize : function(){
+            this.listeners.push(Listener());
+        },
         listeners : []
+        
     };
+    
     return UI;
 });
