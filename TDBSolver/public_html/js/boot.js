@@ -10,7 +10,8 @@ require.config({
         ui : "interface/Ui",
         listener: "interface/Listener",
         environment: "model/Environment",
-        point : "model/Point"
+        point : "model/Point",
+        way : "model/Way"
     },
     shim: {
         'jQuery': {
