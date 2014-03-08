@@ -7,7 +7,7 @@ define('way', ['jQuery','GoogleMaps','logger','environment','map'],function($, g
             
             if(byWalk === false){
                 var extremites = [this.start.googlePoint,this.stop.googlePoint];
-                var flightWay = new google.maps.Polyline({
+                this.polyline = new google.maps.Polyline({
                     path: extremites,
                     geodesic: true,
                     strokeColor: '#FF0000',
@@ -33,7 +33,7 @@ define('way', ['jQuery','GoogleMaps','logger','environment','map'],function($, g
                         directionsDisplay.setDirections(response);
                         console.log(response.routes[0]); 
                         
-                        var walkedWay = new google.maps.Polyline({
+                        this.polyline = new google.maps.Polyline({
                             path: response.routes[0].overview_path,
                             geodesic: true,
                             strokeColor: '#0000FF',
