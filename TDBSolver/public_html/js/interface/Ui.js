@@ -5,7 +5,16 @@ define('ui',['listener','jQuery','logger','environment'],function(Listener,$,Log
         listeners : [],
         initialize : function(){
             this.listeners.push(new Listener($("#list"),"change",this.changePoints));
+            this.listeners.push(new Listener($("#validWay"),"click",function(){
+                var A = $('#ptA').val();
+                var B = $('#ptB').val();
+                console.log("chemin entre " + A + " et " + B);
+        
+                var byWalk = $('#bywalk').is(':checked');
+                printWay(A,B,byWalk);
+            }));
             this.listeners[0].toggle();
+            this.listeners[1].toggle();
         },
         
         loadEmplacement : function(nb) {
@@ -21,7 +30,7 @@ define('ui',['listener','jQuery','logger','environment'],function(Listener,$,Log
                 Lng = Environment.places.points[i].lng;
                 Environment.places.markers[i] = new google.maps.Marker({
                     position: new google.maps.LatLng(Lat, Lng),
-                    map: map,
+                    map: Environment.map,
                     title: id,
                     icon:'https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld='+id+'|FF776B|000000'
                 }); 
