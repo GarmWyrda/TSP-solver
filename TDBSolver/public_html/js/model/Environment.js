@@ -1,13 +1,12 @@
-define('environment', ['map'],function(Map){
+define('environment', ['point'],function(Point){
     var Environment = {
-        places : {
-            points:[],
-            markers:[]
-        }
+        places : []
     };
     
     $.getJSON('ressources/emplacements.txt', function(data) {
-        Environment.places.points = data;
+        for(var i=0;i<data.length;i++){
+            Environment.places.push(new Point(data[i].lat,data[i].lng,data[i].id));
+        }
     });
     
     return Environment;
