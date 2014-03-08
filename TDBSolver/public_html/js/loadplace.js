@@ -1,11 +1,10 @@
-define('loadplace', ['jQuery','GoogleMaps','logger'],function($, gmaps, Logger){
-    /*
+define('loadplace', ['jQuery','GoogleMaps','Logger'],function($, gmaps, Logger){
     var places = {
         list:[],
         marker:[],
         matrix:[]
     };
-    
+
     var loadfile = function () {
         $.getJSON('ressources/emplacements.txt', function(data) {
             places.list = data;
@@ -13,15 +12,15 @@ define('loadplace', ['jQuery','GoogleMaps','logger'],function($, gmaps, Logger){
     };
 
     loadfile();
-    */
-
-    /*var mapOptions = {
+    
+    var mapOptions = {
             zoom: 14,
             center: new google.maps.LatLng(50.631437, 3.061193)
-        };   */
-    //var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-
-    /*var loadEmplacement = function(nb) {
+        };
+        
+    var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+    
+    var loadEmplacement = function(nb) {
         var id=0;
         var Lat=0;
         var Lng=0;
@@ -39,7 +38,7 @@ define('loadplace', ['jQuery','GoogleMaps','logger'],function($, gmaps, Logger){
                 icon:'https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld='+id+'|FF776B|000000'
             }); 
         } 
-    };*/
+    };
     
     var printWay = function(A, B, byWalk) {
 
@@ -81,7 +80,7 @@ define('loadplace', ['jQuery','GoogleMaps','logger'],function($, gmaps, Logger){
         }
     };
      
-   /* $("#list").on("change",function(){
+    $("#list").on("change",function(){
         console.log($("#list").val());
         loadEmplacement($("#list").val());
         
@@ -95,8 +94,7 @@ define('loadplace', ['jQuery','GoogleMaps','logger'],function($, gmaps, Logger){
         
         $("#logger").append('<p class="alert-success">Marker(s) placed on the map</p>');
     });
-    */
-   /*
+        
     $("#validWay").on("click", function() {
         var A = $('#ptA').val();
         var B = $('#ptB').val();
@@ -128,5 +126,11 @@ define('loadplace', ['jQuery','GoogleMaps','logger'],function($, gmaps, Logger){
                     avoidHighways: false,
                     avoidTolls: false
                 }, callback);
-*/
+
+        
+        
+        function callback(response, status) {
+            console.log(response);
+        }
+    };
 });
