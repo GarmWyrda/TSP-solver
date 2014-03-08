@@ -8,7 +8,9 @@ require.config({
         loadplace : "model/loadplace",
         GoogleMaps : "../lib/GoogleMaps",
         ui : "interface/Ui",
-        listener: "interface/Listener"
+        listener: "interface/Listener",
+        environment: "model/Environment",
+        point : "model/Point"
     },
     shim: {
         'jQuery': {
@@ -17,7 +19,8 @@ require.config({
     }
 });
 
-require(["logger","loadplace","ui"], init);
+//Le loadplace sera a supprimer du require à terme
+require(["logger","environment","loadplace","ui"], init);
 
 function init(Logger) {
         $.getJSON("ressources/emplacements.txt",function(data){
@@ -28,7 +31,7 @@ function init(Logger) {
            }
            $("#list").html(string);
         });
-        Logger.log(Logger.success,"Loading successful");
+        Logger.log("alert-success","Loading successful");
 }
  
 
