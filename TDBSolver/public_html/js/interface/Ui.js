@@ -22,19 +22,10 @@ define('ui',['listener','jQuery','logger','environment','map'],function(Listener
             var Lat=0;
             var Lng=0;
             for(var i=0;i<Environment.places.length;i++){
-                if(places.marker)
-                Environment.places[i].marker.setMap(null);
+                Environment.places[i].marker.setVisible(false);
             }
             for(var i=0;i<nb;i++){
-                id = Environment.places.points[i].id;
-                Lat = Environment.places.points[i].lat;
-                Lng = Environment.places.points[i].lng;
-                Environment.places.markers[i] = new google.maps.Marker({
-                    position: new google.maps.LatLng(Lat, Lng),
-                    map: Map,
-                    title: id,
-                    icon:'https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld='+id+'|FF776B|000000'
-                }); 
+                Environment.places[i].marker.setVisible(true);
             } 
         },
         
