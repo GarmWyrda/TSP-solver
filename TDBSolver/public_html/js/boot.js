@@ -21,7 +21,7 @@ require.config({
 });
 
 //Le loadplace sera a supprimer du require à terme
-require(["logger","environment","ui","loadplace"], init);
+require(["logger","environment","ui",], init);
 
 function init(Logger) {
         $.getJSON("ressources/emplacements.txt",function(data){

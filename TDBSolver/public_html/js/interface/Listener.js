@@ -1,14 +1,10 @@
-/* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-define('listener',['jQuery'],function($){
-    var Listener = function(elementHTML,event,callback) {
-        this.elementHTML = elementHTML;
-        this.event = event;
-        this.callback = callback;
-        this.isOn = false;
-        this.toggle = function(){
+define('listener',['jQuery'],function($){ //Class Listener
+    var Listener = function(elementHTML,event,callback) { //Constructeur 
+        this.elementHTML = elementHTML; //Zone a ecoute
+        this.event = event; //Evenement a ecouter
+        this.callback = callback; //Fonction a appeler lorsque l'evenement est lance
+        this.isOn = false; //Etat du listener
+        this.toggle = function(){ //Allume/eteint le listener
             if(this.isOn){
                 $(this.elementHTML).off();
             }

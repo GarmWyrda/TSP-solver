@@ -1,5 +1,6 @@
 define('point', ['jQuery','map','logger','GoogleMaps'],function($,Map,Logger,gmaps){
-    var Point = function(lat,lng,id){
+    var Point = function(lat,lng,id){ //Construit un point de latitude lat et de longitude lng, aved l'identifiant id a
+        //utiliser pour le marqueur
         this.lat = lat;
         this.lng = lng;
         this.googlePoint = new google.maps.LatLng(lat,lng);

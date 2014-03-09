@@ -1,16 +1,16 @@
 define('environment', ['jQuery','point','logger'],function($,Point,Logger){
     var Environment = {
-        places: [],
-        distanceMatrix: [],
-        ways: [],
+        places: [], //Emplacements
+        distanceMatrix: [], //Matrice de distances a vol d'oiseau
+        ways: [], //Chemin tracés sur la carte
    
-        clearWays: function() {
+        clearWays: function() { //Efface les chemins tracés sur la carte
             for (var i = 0; i < Environment.ways.length; i++) {
                 Environment.ways[i].hide();
             }
         },
         
-        calculMatrixFly: function() {
+        calculMatrixFly: function() { //Calcule et affiche la matrice de distances a vol d'oiseau
             if (Environment.distanceMatrix.length === 0) {
                 for (var i = 0; i < 30; i++) {
                     var line = [];
@@ -45,10 +45,10 @@ define('environment', ['jQuery','point','logger'],function($,Point,Logger){
                     Environment.distanceMatrix.push(line);
                 }
             }
-            Environment.printMatrix();
+            Environment.printMatrix(); //Affichage de la matrice dans le DOM
         },
         
-        printMatrix: function() {
+        printMatrix: function() { //Affiche la matrice de distance à vol d'oiseau de la classe Environment
             var $zone = $('#matrix');
             $zone.html("");
             var matrix = '<TABLE border=1>';
@@ -64,7 +64,8 @@ define('environment', ['jQuery','point','logger'],function($,Point,Logger){
             matrix += '</TABLE>';
             $zone.html(matrix);
         },
-        printMatrixWalk: function() {
+        
+        printMatrixWalk: function() { //Affiche la matrice de distances a pied du localStorage
             var $zone = $('#matrix');
             $zone.html("");
             var distances = JSON.parse(localStorage.getItem("distanceMatrix"));
@@ -82,7 +83,7 @@ define('environment', ['jQuery','point','logger'],function($,Point,Logger){
             $zone.html(matrix);
         },
         
-        clearCache: function() {
+        clearCache: function() { //Efface le localStorage
             if (localStorage.getItem("distanceMatrix") !== null) {
                 localStorage.removeItem("distanceMatrix");
                 Logger.log(Logger.success, "Cache cleared");
@@ -92,7 +93,8 @@ define('environment', ['jQuery','point','logger'],function($,Point,Logger){
             }
         },
         
-        fullMatrixWalking: function() {
+        fullMatrixWalking: function() { //Calcule la matrice complete des distances a pied
+    //la stocke dans le localStorage et l'affiche au fur et a mesure
             if (localStorage.getItem("distanceMatrix") === null){
                 var part1 = [];
                 var part2 = [];
@@ -162,12 +164,13 @@ define('environment', ['jQuery','point','logger'],function($,Point,Logger){
                 Environment.printMatrixWalk();
             }
         },
-        clearMatrix : function(){
+        clearMatrix : function(){ //Efface la matrice de la page
             $('#matrix').html('');
         }
     };
 
-    $.getJSON('ressources/emplacements.txt', function(data) {
+    $.getJSON('ressources/emplacements.txt', function(data) { //On récupére la liste d'emplacement pour la sauvegarder dans
+        //Environment.places
         for (var i = 0; i < data.length; i++) {
             Environment.places.push(new Point(data[i].lat, data[i].lng, data[i].id));
         }
