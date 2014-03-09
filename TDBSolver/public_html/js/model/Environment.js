@@ -46,18 +46,18 @@ define('environment', ['point'],function(Point){
         },
         
         printMatrix : function() {
-            var zone = $('#matrix');
-            var matrix = '<TABLE>';
+            var $zone = $('#matrix');
+            var matrix = '<TABLE border=1>';
             for(var i=0;i<30;i++) {
                 var line = '<TR>'; 
                 for(var j=0;j<30;j++){
-                    line += '<TH>' + Math.round(Environment.distanceMatrix[i][j]) +'</TH>';
+                    line += '<TD>' + Math.round(Environment.distanceMatrix[i][j]) +'</TD>';
                 };
                 line += '</TR>';
                 matrix += line;   
             }
             matrix += '</TABLE>';
-            zone.innerHTML += matrix;
+            $zone.html(matrix);
             console.log(matrix);
         }
     };

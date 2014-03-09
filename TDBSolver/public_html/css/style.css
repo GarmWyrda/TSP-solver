@@ -6,15 +6,29 @@
         Purpose of the stylesheet follows.
 */
 
-root { 
-    display: block;
+body { 
+    width:100%;
 }
 
+#input{
+    width : 10%;
+    float : left;
+}
 #map{
     height : 470px;
+    float : left;
+    width : 30%
 }
 
 #logger{
     height : 150px;
     overflow-y: scroll;
+}
+
+#matrix table{
+    text-align: center;
+    border-spacing:5px;
+    float : left;
+    font-size : 12px;
+    border-collapse: collapse;
 }
