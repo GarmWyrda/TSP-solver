@@ -14,7 +14,8 @@ define('ui',['listener','jQuery','logger','environment','map','way'],function(Li
                     Environment.ways.push(newWay);
                 }
             }));
-            this.listeners.push(new Listener($("#getMatrix"), "click", Environment.calculMatrix));
+            this.listeners.push(new Listener($("#getMatrixFly"), "click", Environment.calculMatrixFly));
+            this.listeners.push(new Listener($("#getMatrixWalk"), "click", Environment.calculMatrixWalk));
             this.listeners.push(new Listener($("#clearWays"), "click", Environment.clearWays));
             for(var i = 0;i<UI.listeners.length;i++){
                 UI.listeners[i].toggle();
