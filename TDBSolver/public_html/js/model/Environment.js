@@ -151,7 +151,7 @@ define('environment', ['point','logger'],function(Point,Logger){
             var matrix = [];
             
             for(var j=0;j<3;j++){
-                for(var k=0;j<3;j++){
+                for(var k=0;k<3;k++){
                     var service = new google.maps.DistanceMatrixService();
                     service.getDistanceMatrix(
                             {
@@ -172,7 +172,7 @@ define('environment', ['point','logger'],function(Point,Logger){
                                 for (var n = 0; n < results.length; n++) {
                                     var element = results[j];
                                     var distance = element.distance.value;
-                                    matrix[m+10*i].push(distance);
+                                    matrix[m+10*j].push(distance);
 
                                 }
                                 //Environment.distanceMatrixWalk.push(line);
