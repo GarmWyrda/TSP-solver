@@ -8,7 +8,7 @@ define('environment', ['point'],function(Point){
               Environment.ways[i].hide();
           }
         },
-        calculMatrix : function(){
+        calculMatrixFly : function(){
             for (var i = 0; i < 30; i++) {
                 var line = [];
                 var Rayon = 6371000; // METRES
@@ -42,10 +42,10 @@ define('environment', ['point'],function(Point){
                 Environment.distanceMatrix.push(line);
             }
             console.log(Environment.distanceMatrix);
-            Environment.printMatrix();
+            Environment.printMatrixFly();
         },
         
-        printMatrix : function() {
+        printMatrixFly : function() {
             var $zone = $('#matrix');
             var matrix = '<TABLE border=1>';
             for(var i=0;i<30;i++) {
