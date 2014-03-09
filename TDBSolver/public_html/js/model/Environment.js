@@ -126,6 +126,64 @@ define('environment', ['point','logger'],function(Point,Logger){
             else{
                 Logger.log(Logger.error,"Cache already empty");
             }
+        },
+        
+        fullMatrixWalking : function(){
+            var part1 = [];
+            var part2 = [];
+            var part3 = [];
+            var i=0;
+            
+            for(i=0;i<10;i++){
+                part1.push(Environment.places[i].googlePoint);
+            }
+            
+            for (i = 10; i < 20; i++) {
+                part2.push(Environment.places[i].googlePoint);
+            }
+            
+            for (i = 20; i < 30; i++) {
+                part3.push(Environment.places[i].googlePoint);
+            }
+            
+            var part = [part1, part2, part3];
+            
+            var matrix = [];
+            
+            for(var j=0;j<3;j++){
+                for(var k=0;j<3;j++){
+                    var service = new google.maps.DistanceMatrixService();
+                    service.getDistanceMatrix(
+                            {
+                                origins: part[j],
+                                destinations: part[k],
+                                travelMode: google.maps.TravelMode.WALKING,
+                                unitSystem: google.maps.UnitSystem.METRIC,
+                                durationInTraffic: false,
+                                avoidHighways: false,
+                                avoidTolls: false
+                            }, function(response, status) {
+                        if (status === google.maps.DistanceMatrixStatus.OK) {
+                            var origins = response.originAddresses;
+                            var destinations = response.destinationAddresses;
+                            for (var m = 0; m < origins.length; m++) {
+                                //var line = [];
+                                var results = response.rows[i].elements;
+                                for (var n = 0; n < results.length; n++) {
+                                    var element = results[j];
+                                    var distance = element.distance.value;
+                                    matrix[m+10*i].push(distance);
+
+                                }
+                                //Environment.distanceMatrixWalk.push(line);
+                            }
+                            localStorage.setItem("distanceMatrix", JSON.stringify(matrix));
+                            Environment.printMatrixWalk();
+                        }
+                    });
+                }
+            }
+            
         }
     };
     
