@@ -157,7 +157,6 @@ define('environment', ['point', 'logger'], function(Point, Logger) {
             for(var c=0;c<6;c++){
                 Environment.matrix[c] = [];
             }
-            console.log(Environment.matrix);
 
             for(var row=0;row<3;row++){
                 (function(currentRow) {
@@ -197,7 +196,7 @@ define('environment', ['point', 'logger'], function(Point, Logger) {
                 })(row);
             }
             
-            console.log(Environment.distanceMatrix)
+            console.log(Environment.matrix);
 
         }
     };
