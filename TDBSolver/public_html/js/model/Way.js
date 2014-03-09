@@ -28,7 +28,7 @@ define('way', ['jQuery','GoogleMaps','logger','environment','map'],function($, g
                         //directionsDisplay.setDirections(response);
                         //console.log(response.routes[0]); 
                         
-                        var newpolyline = new google.maps.Polyline({
+                        var polyline = new google.maps.Polyline({
                             path: response.routes[0].overview_path,
                             geodesic: true,
                             strokeColor: '#0000FF',
@@ -36,7 +36,7 @@ define('way', ['jQuery','GoogleMaps','logger','environment','map'],function($, g
                             strokeWeight: 2,
                             map: Map
                         });
-                        return newpolyline;
+                        return polyline;
                     }
                 });
           }
