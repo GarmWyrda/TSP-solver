@@ -2,7 +2,12 @@ define('environment', ['point'],function(Point){
     var Environment = {
         places : [],
         distanceMatrix : [],
-        
+        ways : [],
+        clearWays : function(){
+          for(var i=0;i<Environment.ways.length;i++){
+              Environment.ways[i].hide();
+          }
+        },
         calculMatrix : function(){
             for (var i = 0; i < 30; i++) {
                 var line = [];
