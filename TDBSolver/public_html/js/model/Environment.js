@@ -138,15 +138,15 @@ define('environment', ['point', 'logger'], function(Point, Logger) {
             var part3 = [];
             var i = 0;
 
-            for (i = 0; i < 2; i++) {
+            for (i = 0; i < 10; i++) {
                 part1.push(Environment.places[i].googlePoint);
             }
 
-            for (i = 2; i < 4; i++) {
+            for (i = 10; i < 20; i++) {
                 part2.push(Environment.places[i].googlePoint);
             }
 
-            for (i = 4; i < 6; i++) {
+            for (i = 20; i < 30; i++) {
                 part3.push(Environment.places[i].googlePoint);
             }
 
@@ -154,7 +154,7 @@ define('environment', ['point', 'logger'], function(Point, Logger) {
             console.log(part);
             
             Environment.matrix = [];
-            for(var c=0;c<6;c++){
+            for(var c=0;c<30;c++){
                 Environment.matrix[c] = [];
             }
 
@@ -162,35 +162,37 @@ define('environment', ['point', 'logger'], function(Point, Logger) {
                 (function(currentRow) {
                     for(var column = 0; column<3;column++){
                         (function(currentColumn) {
+                            setTimeout(function(){
+                                var service = new google.maps.DistanceMatrixService();
+                                service.getDistanceMatrix(
+                                        {
+                                            origins: part[currentRow],
+                                            destinations: part[currentColumn],
+                                            travelMode: google.maps.TravelMode.WALKING,
+                                            unitSystem: google.maps.UnitSystem.METRIC,
+                                            durationInTraffic: false,
+                                            avoidHighways: false,
+                                            avoidTolls: false
+                                        }, function(response, status) {
+                                    if (status === google.maps.DistanceMatrixStatus.OK) {
+                                        var origins = response.originAddresses;
+                                        var destinations = response.destinationAddresses;
+                                        for (var i = 0; i < origins.length; i++) {
 
-                            var service = new google.maps.DistanceMatrixService();
-                            service.getDistanceMatrix(
-                                    {
-                                        origins: part[currentRow],
-                                        destinations: part[currentColumn],
-                                        travelMode: google.maps.TravelMode.WALKING,
-                                        unitSystem: google.maps.UnitSystem.METRIC,
-                                        durationInTraffic: false,
-                                        avoidHighways: false,
-                                        avoidTolls: false
-                                    }, function(response, status) {
-                                if (status === google.maps.DistanceMatrixStatus.OK) {
-                                    var origins = response.originAddresses;
-                                    var destinations = response.destinationAddresses;
-                                    for (var i = 0; i < origins.length; i++) {
+                                            var results = response.rows[i].elements;
+                                            for (var j = 0; j < results.length; j++) {
+                                                var element = results[j];
+                                                var distance = element.distance.value;
+                                                Environment.matrix[10*currentRow+i].push(distance);
 
-                                        var results = response.rows[i].elements;
-                                        for (var j = 0; j < results.length; j++) {
-                                            var element = results[j];
-                                            var distance = element.distance.value;
-                                            Environment.matrix[2*currentRow+i].push(distance);
-
+                                            }
                                         }
+                                        //localStorage.setItem("distanceMatrix", JSON.stringify(matrix));
+                                        //Environment.printMatrixWalk();
                                     }
-                                    //localStorage.setItem("distanceMatrix", JSON.stringify(matrix));
-                                    //Environment.printMatrixWalk();
-                                }
-                            });
+                                });
+                            console.log(Environment.matrix);
+                            },12000*(1+3*currentRow+currentColumn));
                          })(column);
                     }
                 })(row);
