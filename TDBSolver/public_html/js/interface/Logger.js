@@ -2,7 +2,7 @@ define('logger',['jQuery'],function($){
     /** Allow to send messages to the log area  */
     var Logger = {
         $zone : $("#logger"),/** define the area of the DOM which will be modified*/
-        error : "alert-error",
+        error : "error",
         success : "alert-success",
         /** @constructor*/
         log : function(type,string){
