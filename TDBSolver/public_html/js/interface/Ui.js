@@ -14,8 +14,10 @@ define('ui',['listener','jQuery','logger','environment','map','way'],function(Li
                 var newWay = new Way(A,B);
                 newWay.print(byWalk);
             }));
+            this.listeners.push(new Listener($("#getMatrix"), "click", Environment.calculMatrix));
             this.listeners[0].toggle();
             this.listeners[1].toggle();
+            this.listeners[2].toggle();
         },
         
         loadEmplacement : function(nb) {

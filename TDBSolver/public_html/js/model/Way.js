@@ -31,7 +31,6 @@ define('way', ['jQuery','GoogleMaps','logger','environment','map'],function($, g
                 directionsService.route(request, function(response, status) {
                     if (status === google.maps.DirectionsStatus.OK) {
                         directionsDisplay.setDirections(response);
-                        console.log(response.routes[0]); 
                         
                         this.polyline = new google.maps.Polyline({
                             path: response.routes[0].overview_path,
@@ -46,41 +45,6 @@ define('way', ['jQuery','GoogleMaps','logger','environment','map'],function($, g
                 });
                 Logger.log(Logger.success, "Way between " + A + " and " + B + " by walk traced");
         }
-    };
-    this.calculDist = function(byWalk) {
-            if (byWalk === false){
-                //calcul local
-                var Rayon = 6371000; // METRES
-                var lat1 = this.start.lat;
-                var lon1 = this.start.lng;
-                var lat2 = this.stop.lat;
-                var lon2 = this.stop.lng;
-
-                //conversion en radian                  
-                var a = Math.PI / 180;
-                lat1 = (90 - lat1) * a;
-                lat2 = (90 - lat2) * a;
-                lon1 = lon1 * a;
-                lon2 = lon2 * a;
-
-                //conversion en coordonnées cartesiennes
-                var x1 = Rayon * Math.sin(lat1) * Math.cos(lon1);
-                var y1 = Rayon * Math.sin(lat1) * Math.sin(lon1);
-                var z1 = Rayon * Math.cos(lon1);
-
-                var x2 = Rayon * Math.sin(lat2) * Math.cos(lon2);
-                var y2 = Rayon * Math.sin(lat2) * Math.sin(lon2);
-                var z2 = Rayon * Math.cos(lon2);
-
-                //calcul de la distance
-                var distance = Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1) + (z2 - z1) * (z2 - z1));
-            }
-            
-            else {
-                //requete google
-            }
-            
-            return distance;
     };
    };
    
