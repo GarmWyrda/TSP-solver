@@ -48,7 +48,7 @@ define('way', ['jQuery','GoogleMaps','logger','environment','map'],function($, g
        this.hide = function(){ //Cache la polyline
            this.polyline.setVisible(false);
        };
-        Logger.log(Logger.success, "Way between " + A + " and " + B + " by walk traced");
+        Logger.log(Logger.success, "Way between " + A + " and " + B + "traced");
     };
     return Way;
 });
