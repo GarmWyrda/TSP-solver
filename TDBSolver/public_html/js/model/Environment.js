@@ -42,7 +42,6 @@ define('environment', ['point','logger'],function(Point,Logger){
                     }
                     Environment.distanceMatrix.push(line);
                 }
-                console.log(Environment.distanceMatrix);
             }
             Environment.printMatrix();
         },
