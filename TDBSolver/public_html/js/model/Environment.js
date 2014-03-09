@@ -94,7 +94,7 @@ define('environment', ['jQuery','point','logger'],function($,Point,Logger){
         },
         
         fullMatrixWalking: function() { //Calcule la matrice complete des distances a pied
-    //la stocke dans le localStorage et l'affiche au fur et a mesure
+    //la stocke dans le localStorage une fois fini et l'affiche au fur et a mesure
             if (localStorage.getItem("distanceMatrix") === null){
                 var part1 = [];
                 var part2 = [];
@@ -153,10 +153,9 @@ define('environment', ['jQuery','point','logger'],function($,Point,Logger){
                                             Environment.printMatrixWalk();
                                         }
                                     });
-                                console.log(Environment.matrix);
-                                },12000*(3*currentRow+currentColumn));
+                                },10500*(3*currentRow+currentColumn));
                              })(column);
-                        }
+                         }
                     })(row);
                 }
             }
