@@ -1,13 +1,11 @@
 define('way', ['jQuery','GoogleMaps','logger','environment','map'],function($, gmaps, Logger,Environment,Map){
-   var Way = function(A,B){
+   var Way = function(A,B,byWalk){
        this.start = Environment.places[A - 1];
        this.stop = Environment.places[B - 1];
-       this.polyline = null;
-       this.print = function(byWalk) {
-            
-            if(byWalk === false){
+       this.createPolyline = function(){
+           if(byWalk === false){
                 var extremites = [this.start.googlePoint,this.stop.googlePoint];
-                this.polyline = new google.maps.Polyline({
+                var polyline = new google.maps.Polyline({
                     path: extremites,
                     geodesic: true,
                     strokeColor: '#FF0000',
@@ -15,14 +13,11 @@ define('way', ['jQuery','GoogleMaps','logger','environment','map'],function($, g
                     strokeWeight: 2,
                     map: Map
                 });
-
-                //flightWay.setMap(map);
-                Logger.log(Logger.success,"Way between " + A + " and " + B);
-
+                return polyline;
             }
             else {
                 var directionsService = new google.maps.DirectionsService();
-                var directionsDisplay = new google.maps.DirectionsRenderer();
+                //var directionsDisplay = new google.maps.DirectionsRenderer();
                 var request = {
                     origin: this.start.googlePoint,
                     destination: this.stop.googlePoint,
@@ -30,9 +25,10 @@ define('way', ['jQuery','GoogleMaps','logger','environment','map'],function($, g
                 };
                 directionsService.route(request, function(response, status) {
                     if (status === google.maps.DirectionsStatus.OK) {
-                        directionsDisplay.setDirections(response);
+                        //directionsDisplay.setDirections(response);
+                        //console.log(response.routes[0]); 
                         
-                        this.polyline = new google.maps.Polyline({
+                        var newpolyline = new google.maps.Polyline({
                             path: response.routes[0].overview_path,
                             geodesic: true,
                             strokeColor: '#0000FF',
@@ -40,13 +36,19 @@ define('way', ['jQuery','GoogleMaps','logger','environment','map'],function($, g
                             strokeWeight: 2,
                             map: Map
                         });
-                        
+                        return newpolyline;
                     }
                 });
-                Logger.log(Logger.success, "Way between " + A + " and " + B + " by walk traced");
-        }
+          }
+       };
+       this.polyline = this.createPolyline();
+       this.print = function(){
+           this.polyline.setVisible(true);
+       };
+       this.hide = function(){
+           this.polyline.setVisible(false);
+       };
+        Logger.log(Logger.success, "Way between " + A + " and " + B + " by walk traced");
     };
-   };
-   
-   return Way;
+    return Way;
 });

@@ -8,16 +8,17 @@ define('ui',['listener','jQuery','logger','environment','map','way'],function(Li
             this.listeners.push(new Listener($("#validWay"),"click",function(){
                 var A = $('#ptA').val();
                 var B = $('#ptB').val();
-                console.log("chemin entre " + A + " et " + B);
-        
                 var byWalk = $('#bywalk').is(':checked');
-                var newWay = new Way(A,B);
-                newWay.print(byWalk);
+                if(A !== B){
+                    var newWay = new Way(A,B,byWalk);
+                    Environment.ways.push(newWay);
+                }
             }));
             this.listeners.push(new Listener($("#getMatrix"), "click", Environment.calculMatrix));
-            this.listeners[0].toggle();
-            this.listeners[1].toggle();
-            this.listeners[2].toggle();
+            this.listeners.push(new Listener($("#clearWays"), "click", Environment.clearWays));
+            for(var i = 0;i<UI.listeners.length;i++){
+                UI.listeners[i].toggle();
+            }
         },
         
         loadEmplacement : function(nb) {
@@ -34,7 +35,6 @@ define('ui',['listener','jQuery','logger','environment','map','way'],function(Li
         
        changePoints : function(){
             var $element = $("#list");
-            console.log($element.val());
             UI.loadEmplacement($element.val());
 
             //on adapte le contenu des listes pour tracer le chemin entre deux points
