@@ -1,15 +1,17 @@
-define('environment', ['point','logger'],function(Point,Logger){
+define('environment', ['point', 'logger'], function(Point, Logger) {
     var Environment = {
-        places : [],
-        distanceMatrix : [],
-        ways : [],
-        clearWays : function(){
-          for(var i=0;i<Environment.ways.length;i++){
-              Environment.ways[i].hide();
-          }
+        places: [],
+        distanceMatrix: [],
+        ways: [],
+   
+        clearWays: function() {
+            for (var i = 0; i < Environment.ways.length; i++) {
+                Environment.ways[i].hide();
+            }
         },
-        calculMatrixFly : function(){
-            if(Environment.distanceMatrix.length === 0){
+        
+        calculMatrixFly: function() {
+            if (Environment.distanceMatrix.length === 0) {
                 for (var i = 0; i < 30; i++) {
                     var line = [];
                     var Rayon = 6371000; // METRES
@@ -46,153 +48,166 @@ define('environment', ['point','logger'],function(Point,Logger){
             Environment.printMatrix();
         },
         
-        printMatrix : function() {
+        printMatrix: function() {
             var $zone = $('#matrix');
             $zone.html("");
             var matrix = '<TABLE border=1>';
-            for(var i=0;i<Environment.distanceMatrix.length;i++) {
-                var line = '<TR>'; 
-                for(var j=0;j<Environment.distanceMatrix[i].length;j++){
-                    line += '<TD>' + Math.round(Environment.distanceMatrix[i][j]) +'</TD>';
-                };
+            for (var i = 0; i < Environment.distanceMatrix.length; i++) {
+                var line = '<TR>';
+                for (var j = 0; j < Environment.distanceMatrix[i].length; j++) {
+                    line += '<TD>' + Math.round(Environment.distanceMatrix[i][j]) + '</TD>';
+                }
+                ;
                 line += '</TR>';
-                matrix += line;   
+                matrix += line;
             }
             matrix += '</TABLE>';
             $zone.html(matrix);
         },
-        
-        printMatrixWalk:function(){
+        printMatrixWalk: function() {
             var $zone = $('#matrix');
             $zone.html("");
             var distances = JSON.parse(localStorage.getItem("distanceMatrix"));
             var matrix = '<TABLE border=1>';
-            for(var i=0;i<distances.length;i++) {
-                var line = '<TR>'; 
-                for(var j=0;j<distances[i].length;j++){
-                    line += '<TD>' + distances[i][j] +'</TD>';
-                };
+            for (var i = 0; i < distances.length; i++) {
+                var line = '<TR>';
+                for (var j = 0; j < distances[i].length; j++) {
+                    line += '<TD>' + distances[i][j] + '</TD>';
+                }
+                ;
                 line += '</TR>';
-                matrix += line;   
+                matrix += line;
             }
             matrix += '</TABLE>';
             $zone.html(matrix);
         },
         
-        calculMatrixWalk : function() {
-            if(localStorage.getItem("distanceMatrix") === null){
-                var places = [Environment.places[0].googlePoint,Environment.places[1].googlePoint,Environment.places[2].googlePoint];
+        calculMatrixWalk: function() {
+            if (localStorage.getItem("distanceMatrix") === null) {
+                var places = [Environment.places[0].googlePoint, Environment.places[1].googlePoint, Environment.places[2].googlePoint];
                 var service = new google.maps.DistanceMatrixService();
                 service.getDistanceMatrix(
-                    {
-                        origins: places,
-                        destinations: places,
-                        travelMode: google.maps.TravelMode.WALKING,
-                        unitSystem: google.maps.UnitSystem.METRIC,
-                        durationInTraffic: false,
-                        avoidHighways: false,
-                        avoidTolls: false
-                    }, function(response, status) {
-                            if (status === google.maps.DistanceMatrixStatus.OK) {
-                            var origins = response.originAddresses;
-                            var destinations = response.destinationAddresses;
-                            var matrix = [];
-                            for (var i = 0; i < origins.length; i++) {
-                                var line = [];
-                                var results = response.rows[i].elements;
-                                for (var j = 0; j < results.length; j++) {
-                                    var element = results[j];
-                                    var distance = element.distance.value;
-                                    line.push(distance);
+                        {
+                            origins: places,
+                            destinations: places,
+                            travelMode: google.maps.TravelMode.WALKING,
+                            unitSystem: google.maps.UnitSystem.METRIC,
+                            durationInTraffic: false,
+                            avoidHighways: false,
+                            avoidTolls: false
+                        }, function(response, status) {
+                    if (status === google.maps.DistanceMatrixStatus.OK) {
+                        var origins = response.originAddresses;
+                        var destinations = response.destinationAddresses;
+                        var matrix = [];
+                        for (var i = 0; i < origins.length; i++) {
+                            var line = [];
+                            var results = response.rows[i].elements;
+                            for (var j = 0; j < results.length; j++) {
+                                var element = results[j];
+                                var distance = element.distance.value;
+                                line.push(distance);
 
-                                }
-                                matrix.push(line);
-                                //Environment.distanceMatrixWalk.push(line);
                             }
-                            localStorage.setItem("distanceMatrix",JSON.stringify(matrix));
-                            Environment.printMatrixWalk();
-                            }
-                        });
+                            matrix.push(line);
+                            //Environment.distanceMatrixWalk.push(line);
+                        }
+                        localStorage.setItem("distanceMatrix", JSON.stringify(matrix));
+                        Environment.printMatrixWalk();
+                    }
+                });
             }
-            else{
+            else {
                 Environment.printMatrixWalk();
             }
         },
-        clearCache : function(){
-            if(localStorage.getItem("distanceMatrix") !== null){
+        
+        clearCache: function() {
+            if (localStorage.getItem("distanceMatrix") !== null) {
                 localStorage.removeItem("distanceMatrix");
-                Logger.log(Logger.success,"Cache cleared");
+                Logger.log(Logger.success, "Cache cleared");
             }
-            else{
-                Logger.log(Logger.error,"Cache already empty");
+            else {
+                Logger.log(Logger.error, "Cache already empty");
             }
         },
         
-        fullMatrixWalking : function(){
+        fullMatrixWalking: function() {
             var part1 = [];
             var part2 = [];
             var part3 = [];
-            var i=0;
-            
-            for(i=0;i<10;i++){
+            var i = 0;
+
+            for (i = 0; i < 2; i++) {
                 part1.push(Environment.places[i].googlePoint);
             }
-            
-            for (i = 10; i < 20; i++) {
+
+            for (i = 2; i < 4; i++) {
                 part2.push(Environment.places[i].googlePoint);
             }
-            
-            for (i = 20; i < 30; i++) {
+
+            for (i = 4; i < 6; i++) {
                 part3.push(Environment.places[i].googlePoint);
             }
-            
-            var part = [part1, part2, part3];
-            
-            var matrix = [];
-            
-            for(var j=0;j<3;j++){
-                for(var k=0;k<3;k++){
-                    var service = new google.maps.DistanceMatrixService();
-                    service.getDistanceMatrix(
-                            {
-                                origins: part[j],
-                                destinations: part[k],
-                                travelMode: google.maps.TravelMode.WALKING,
-                                unitSystem: google.maps.UnitSystem.METRIC,
-                                durationInTraffic: false,
-                                avoidHighways: false,
-                                avoidTolls: false
-                            }, function(response, status) {
-                        if (status === google.maps.DistanceMatrixStatus.OK) {
-                            var origins = response.originAddresses;
-                            var destinations = response.destinationAddresses;
-                            for (var m = 0; m < origins.length; m++) {
-                                //var line = [];
-                                var results = response.rows[i].elements;
-                                for (var n = 0; n < results.length; n++) {
-                                    var element = results[j];
-                                    var distance = element.distance.value;
-                                    matrix[m+10*j].push(distance);
 
+            var part = [part1, part2, part3];
+            console.log(part);
+            
+            Environment.matrix = [];
+            for(var c=0;c<6;c++){
+                Environment.matrix[c] = [];
+            }
+            console.log(Environment.matrix);
+
+            for(var row=0;row<3;row++){
+                (function(currentRow) {
+                    for(var column = 0; column<3;column++){
+                        (function(currentColumn) {
+
+                            var service = new google.maps.DistanceMatrixService();
+                            service.getDistanceMatrix(
+                                    {
+                                        origins: part[currentRow],
+                                        destinations: part[currentColumn],
+                                        travelMode: google.maps.TravelMode.WALKING,
+                                        unitSystem: google.maps.UnitSystem.METRIC,
+                                        durationInTraffic: false,
+                                        avoidHighways: false,
+                                        avoidTolls: false
+                                    }, function(response, status) {
+                                if (status === google.maps.DistanceMatrixStatus.OK) {
+                                    var origins = response.originAddresses;
+                                    var destinations = response.destinationAddresses;
+                                    for (var i = 0; i < origins.length; i++) {
+
+                                        var results = response.rows[i].elements;
+                                        for (var j = 0; j < results.length; j++) {
+                                            var element = results[j];
+                                            var distance = element.distance.value;
+                                            Environment.matrix[2*currentRow+i].push(distance);
+
+                                        }
+                                    }
+                                    //localStorage.setItem("distanceMatrix", JSON.stringify(matrix));
+                                    //Environment.printMatrixWalk();
                                 }
-                                //Environment.distanceMatrixWalk.push(line);
-                            }
-                            localStorage.setItem("distanceMatrix", JSON.stringify(matrix));
-                            Environment.printMatrixWalk();
-                        }
-                    });
-                }
+                            });
+                         })(column);
+                    }
+                })(row);
             }
             
+            console.log(Environment.distanceMatrix)
+
         }
     };
-    
+
     $.getJSON('ressources/emplacements.txt', function(data) {
-        for(var i=0;i<data.length;i++){
-            Environment.places.push(new Point(data[i].lat,data[i].lng,data[i].id));
+        for (var i = 0; i < data.length; i++) {
+            Environment.places.push(new Point(data[i].lat, data[i].lng, data[i].id));
         }
     });
-    
+
     return Environment;
 });
 

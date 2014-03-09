@@ -15,7 +15,7 @@ define('ui',['listener','jQuery','logger','environment','map','way'],function(Li
                 }
             }));
             this.listeners.push(new Listener($("#getMatrixFly"), "click", Environment.calculMatrixFly));
-            this.listeners.push(new Listener($("#getMatrixWalk"), "click", Environment.calculMatrixWalk));
+            this.listeners.push(new Listener($("#getMatrixWalk"), "click", Environment.fullMatrixWalking));
             this.listeners.push(new Listener($("#clearWays"), "click", Environment.clearWays));
             this.listeners.push(new Listener($("#clearCache"), "click", Environment.clearCache));
             for(var i = 0;i<UI.listeners.length;i++){
