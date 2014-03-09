@@ -2,8 +2,8 @@
 //Contient les méthodes relatives aux listeners, et a l'interface en général
 define('ui',['listener','jQuery','logger','environment','map','way'],function(Listener,$,Logger,Environment,Map,Way){   
     var UI = {
-        listeners : [],
-        initialize : function(){
+        listeners : [], //Liste des listeners de la page Web
+        initialize : function(){ //Cree tout les listeners de la page
             this.listeners.push(new Listener($("#list"),"change",this.changePoints));
             this.listeners.push(new Listener($("#validWay"),"click",function(){
                 var A = $('#ptA').val();
@@ -24,7 +24,7 @@ define('ui',['listener','jQuery','logger','environment','map','way'],function(Li
             }
         },
         
-        loadEmplacement : function(nb) {
+        loadEmplacement : function(nb) { //Charge le nombre nb d'emplacements sur la carte
             var id=0;
             var Lat=0;
             var Lng=0;
@@ -36,7 +36,7 @@ define('ui',['listener','jQuery','logger','environment','map','way'],function(Li
             } 
         },
         
-       changePoints : function(){
+       changePoints : function(){ //Change les listes déroulantes en fonction du nombre de point affichés
             var $element = $("#list");
             UI.loadEmplacement($element.val());
 
