@@ -55,7 +55,6 @@ template<class T> Matrix<T>::Matrix(int nbRows,int nbColumns,T emptyValue){
     for(int&i:this->data){
         this->data[i] = vector<T*>(nbColumns,NULL);
     }
-    
 };
 
 template<class T> int Matrix<T>::getNbRows(){
@@ -67,7 +66,8 @@ template<class T> int Matrix<T>::getNbColumns(){
 template<class T> T Matrix<T>::getEmptyValue(){
     return this->emptyVal;
 };
-template<class T> int Matrix <T>:: addRow(int rowIndex){
+
+template<class T> void Matrix<T>::addRow(int rowIndex) throw(IndexOutOfBoundsException){
     if (rowIndex<0 ){
         IndexOutOfBoundsException(rowIndex,0,false);
     }
