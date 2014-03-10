@@ -39,6 +39,7 @@
       </toolsSet>
       <compileType>
         <ccTool>
+          <standard>8</standard>
           <commandLine>-std=c++11</commandLine>
         </ccTool>
       </compileType>
