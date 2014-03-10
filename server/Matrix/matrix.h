@@ -75,10 +75,10 @@ template<class T> T Matrix<T>::getEmptyValue() {
 
 template<class T> void Matrix<T>::addRow(int rowIndex) throw (IndexOutOfBoundsException) {
     if (rowIndex < 0) {
-        IndexOutOfBoundsException(rowIndex, 0, false);
+        throw IndexOutOfBoundsException(rowIndex, 0, false);
     }
     if (rowIndex>this->rows) {
-        IndexOutOfBoundsException(rowIndex, this->rows, false);
+        throw IndexOutOfBoundsException(rowIndex, this->rows, false);
     }
     vector<T*> row = vector<T*>(this->cols,NULL);
     typename std::vector<vector<T*> >::iterator it;
@@ -86,7 +86,6 @@ template<class T> void Matrix<T>::addRow(int rowIndex) throw (IndexOutOfBoundsEx
     for(int i = 0;i < rowIndex;i++){
         it++;
     }
-    row.assign(this->cols-1,NULL);
     this->data.insert(it,row);
     this->rows ++ ;
 
