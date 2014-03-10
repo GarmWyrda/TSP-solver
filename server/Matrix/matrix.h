@@ -16,7 +16,7 @@ template<class T> class Matrix{
         int rows;
         int cols;
         int emptyVal;
-        vector<vector<T>*> data;
+        vector<vector<T*> > data;
 
     public :
 
@@ -49,6 +49,18 @@ template<class T> int Matrix <T>:: getNbColumns(){
 template<class T> int Matrix <T>:: getEmptyValue(){
     return this->emptyVal;
 };
+template<class T> int Matrix <T>:: addRow(int rowIndex){
+    if (rowIndex<0 ){
+        IndexOutOfBoundsException(rowIndex,0,false);
+    }
+    if (rowIndex>this->rows) {
+        IndexOutOfBoundsException(rowIndex,this->rows,false);
+    }
+    vector<vector<T*> > row;
+    this->data.insert(rowIndex,row);
+    row.assign(this->cols-1,this->emptyVal);
+    this->rows ++ ;
 
+};
 #endif	/* MATRIX_H */
 
