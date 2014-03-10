@@ -16,7 +16,7 @@ template<class T> class Matrix{
         int rows;
         int cols;
         int emptyVal;
-        vector<vector<T>> data;
+        vector<vector<T>*> data;
 
     public :
 
