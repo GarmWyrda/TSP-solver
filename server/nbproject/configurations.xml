@@ -4,6 +4,8 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>Matrix/IndexOutOfBoundsException.h</itemPath>
+      <itemPath>Matrix/matrix.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -12,6 +14,7 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <itemPath>Matrix/test.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"
@@ -36,6 +39,12 @@
       </toolsSet>
       <compileType>
       </compileType>
+      <item path="Matrix/IndexOutOfBoundsException.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Matrix/matrix.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Matrix/test.cpp" ex="false" tool="1" flavor2="0">
+      </item>
     </conf>
     <conf name="Release" type="1">
       <toolsSet>
@@ -58,6 +67,12 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="Matrix/IndexOutOfBoundsException.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Matrix/matrix.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Matrix/test.cpp" ex="false" tool="1" flavor2="0">
+      </item>
     </conf>
   </confs>
 </configurationDescriptor>
