@@ -23,13 +23,13 @@ template<class T> class Matrix{
     // -------------- interdit de modifier cette partie -------------- //
     Matrix(int nbRows, int nbColumns, T emptyValue);
 
-    T getEmptyValue();
+    T getEmptyValue();//done
 
-    int getNbRows();
+    int getNbRows();// done
     void addRow(int rowIndex) throw(IndexOutOfBoundsException);
     void removeRow(int rowIndex) throw(IndexOutOfBoundsException);
 
-    int getNbColumns();
+    int getNbColumns();// done
     void addColumn(int colIndex) throw(IndexOutOfBoundsException);
     void removeColumn(int colIndex) throw(IndexOutOfBoundsException);
 
@@ -40,7 +40,15 @@ template<class T> class Matrix{
     // --------------------------------------------------------------- //
 
 };
-
+template<class T> int Matrix <T>:: getNbRows(){
+    return this->rows;
+};
+template<class T> int Matrix <T>:: getNbColumns(){
+    return this->cols;
+};
+template<class T> int Matrix <T>:: getEmptyValue(){
+    return this->emptyVal;
+};
 
 #endif	/* MATRIX_H */
 
