@@ -75,7 +75,9 @@ template<class T> int Matrix <T>:: addRow(int rowIndex){
         IndexOutOfBoundsException(rowIndex,this->rows,false);
     }
     vector<vector<T*> > row;
+    
     this->data.insert(rowIndex,row);
+    this->data.insert
     row.assign(this->cols-1,this->emptyVal);
     this->rows ++ ;
 
