@@ -20,7 +20,12 @@ int main(){
         cout<<"getEmptyValue not OK"<<endl;
     }
     testMatrix.addRow(0);
-    testMatrix.addRow(-1);
+    try{
+      testMatrix.addRow(-1);  
+    }
+    catch(IndexOutOfBoundsException ex){
+        cout<<"Exception correctly thrown"<<endl ;
+    }
     testMatrix.addRow(5);
     testMatrix.addRow(1);
      if(testMatrix.getNbRows() == 2) {

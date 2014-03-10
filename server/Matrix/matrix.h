@@ -80,10 +80,14 @@ template<class T> void Matrix<T>::addRow(int rowIndex) throw (IndexOutOfBoundsEx
     if (rowIndex>this->rows) {
         IndexOutOfBoundsException(rowIndex, this->rows, false);
     }
-    vector<T*> row;
-    
-    this->data.insert(rowIndex,row);
+    vector<T*> row = vector<T*>(this->cols,NULL);
+    typename std::vector<vector<T*> >::iterator it;
+    it = this->data.begin();
+    for(int i = 0;i < rowIndex;i++){
+        it++;
+    }
     row.assign(this->cols-1,NULL);
+    this->data.insert(it,row);
     this->rows ++ ;
 
 };
