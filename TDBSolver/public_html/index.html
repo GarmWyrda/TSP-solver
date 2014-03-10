@@ -14,25 +14,64 @@ and open the template in the editor.
     <body>
         <script data-main="js/boot.js" src="lib/require.js"></script>
         <div class="container-fluid">
+            <div class="page-header">
+                <h3>TBP Solver <small>find Rubik's Cube</small></h3>
+              
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <h5>Nb <span class="glyphicon glyphicon-map-marker"></span> <select id="list"></select></h5>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <h5>From <select id="ptA"></select> To <select id="ptB"></select></h5>                                        
+                                    </div>
+                                    <div class="col-md-4">
+                                        <h5><input id="bywalk" type="checkbox" value="true"> By Walk</h5>
+                                    </div>
+                                </div> 
+                            </div>
+                            <div class="col-md-4">
+                                <div class="btn-group">
+                                    <button id="validWay" type="button" class="btn btn-primary">
+                                         <span class="glyphicon glyphicon-pencil"></span> Draw
+                                     </button>
+                                    <button id="clearWays" type="button" class="btn btn-danger">
+                                         <span class="glyphicon glyphicon-floppy-remove"></span> Ways
+                                     </button>
+                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="btn-group">
+                            <button id="getMatrixFly" type="button" class="btn btn-primary">
+                                <span class="glyphicon glyphicon-th"></span> Off Road
+                            </button>
+                            <button id="getMatrixWalk" type="button" class="btn btn-primary">
+                                <span class="glyphicon glyphicon-th"></span> By Walk
+                            </button>
+                            <button id="clearMatrix" type="button" class="btn btn-danger">
+                                <span class="glyphicon glyphicon-trash"></span> Matrix
+                            </button>
+                            <button id="clearCache" type="button" class="btn btn-danger">
+                                <span class="glyphicon glyphicon-floppy-remove"></span> Local Storage
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class ="row">
-                <div id ="map" class="col-md-6">
+                <div class="col-md-6">
+                    <div id='map'>
+                    </div>
                 </div>
-                <div id="input" class ="col-md-3">
-                    Nombre emplacements <select id="list">
-                    </select><br/>
-                    Distances <select id="ptA"> 
-                    </select> vers <select id="ptB">
-                    </select>
-                    <input id="bywalk" type="checkbox" value="true"> Way by walk<br>
-                    <input id="validWay" type="button" value="Ok">
-                    <input id="clearWays" type="button" value="Clear Ways">
-                    <input id="getMatrixFly" type="button" value="Obtenir Matrix Fly">
-                    <input id="getMatrixWalk" type="button" value="Obtenir Matrix Walk">
-                    <input id="clearMatrix" type="button" value="Effacer Matrix">
-                    <input id="clearCache" type="button" value="Vider le cache"><br>
+
+                <div id ="matrix" class="col-md-6">
                 </div>
-                <div id ="matrix" class="col-md-3">
-                </div>
+                
             </div>
             <div class="row">
                 <div id ="logger" class ="">
