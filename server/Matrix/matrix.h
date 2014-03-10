@@ -80,10 +80,10 @@ template<class T> void Matrix<T>::addRow(int rowIndex) throw (IndexOutOfBoundsEx
     if (rowIndex>this->rows) {
         IndexOutOfBoundsException(rowIndex, this->rows, false);
     }
-    vector<vector<T*> > row;
+    vector<T*> row;
     
     this->data.insert(rowIndex,row);
-    row.assign(this->cols-1,this->emptyVal);
+    row.assign(this->cols-1,NULL);
     this->rows ++ ;
 
 };
