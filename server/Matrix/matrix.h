@@ -16,7 +16,7 @@ template<class T> class Matrix{
         int rows;
         int cols;
         int emptyVal;
-        vector<vector<T*> > data;
+        vector< vector<T*> > data;
 
     public :
 
@@ -40,13 +40,31 @@ template<class T> class Matrix{
     // --------------------------------------------------------------- //
 
 };
-template<class T> int Matrix <T>:: getNbRows(){
+
+template<class T> Matrix<T>::Matrix(int nbRows,int nbColumns,T emptyValue){
+    if(nbRows < 0){
+        nbRows = 0;
+    }
+    if(nbColumns){
+        nbColumns = 0;
+    }
+    this->rows = nbRows;
+    this->cols = nbColumns;
+    this->emptyVal = emptyValue;
+    this->data = vector< vector<T*> >(nbRows);
+    for(int&i:this->data){
+        this->data[i] = vector<T*>(nbColumns,NULL);
+    }
+    
+};
+
+template<class T> int Matrix<T>::getNbRows(){
     return this->rows;
 };
-template<class T> int Matrix <T>:: getNbColumns(){
+template<class T> int Matrix<T>::getNbColumns(){
     return this->cols;
 };
-template<class T> int Matrix <T>:: getEmptyValue(){
+template<class T> T Matrix<T>::getEmptyValue(){
     return this->emptyVal;
 };
 template<class T> int Matrix <T>:: addRow(int rowIndex){

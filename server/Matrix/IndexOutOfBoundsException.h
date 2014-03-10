@@ -18,7 +18,7 @@ class IndexOutOfBoundsException{
     bool side; //true for horizontal, false for vertical
     
     public:
-    IndexOutOfBoundsException(int index, int bound, bool side){
+    IndexOutOfBoundsException(int index=0, int bound=0, bool side=true){
         this->index = index;
         this->bound = bound;
         this->side = side;

@@ -38,6 +38,9 @@
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
+        <ccTool>
+          <commandLine>-std=c++11</commandLine>
+        </ccTool>
       </compileType>
       <item path="Matrix/IndexOutOfBoundsException.h" ex="false" tool="3" flavor2="0">
       </item>
