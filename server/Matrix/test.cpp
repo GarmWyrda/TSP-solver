@@ -26,7 +26,12 @@ int main(){
     catch(IndexOutOfBoundsException ex){
         cout<<"Exception correctly thrown"<<endl ;
     }
-    testMatrix.addRow(5);
+    try{
+      testMatrix.addRow(5);  
+    }
+    catch(IndexOutOfBoundsException ex){
+        cout<<"Exception correctly thrown"<<endl ;
+    }
     testMatrix.addRow(1);
      if(testMatrix.getNbRows() == 2) {
         cout<<"addRow OK"<<endl ;
