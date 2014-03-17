@@ -16,7 +16,7 @@ private:
     int rows;
     int cols;
     int emptyVal;
-    vector< vector<T*> > data;
+    vector< vector<T> > data;
 
 public:
 
@@ -51,9 +51,9 @@ template<class T> Matrix<T>::Matrix(int nbRows, int nbColumns, T emptyValue) {
     this->rows = nbRows;
     this->cols = nbColumns;
     this->emptyVal = emptyValue;
-    this->data = vector< vector<T*> >(nbRows);
+    this->data = vector< vector<T> >(nbRows);
     for(int i;i<this->data.size();i++) {
-        this->data[i] = vector<T*>(nbColumns, NULL);
+        this->data[i] = vector<T>(nbColumns, emptyValue);
     }
 };
 
@@ -80,8 +80,8 @@ template<class T> void Matrix<T>::addRow(int rowIndex) throw (IndexOutOfBoundsEx
     if (rowIndex>this->rows) {
         throw IndexOutOfBoundsException(rowIndex, this->rows, false);
     }
-    vector<T*> row = vector<T*>(this->cols,NULL);
-    typename std::vector<vector<T*> >::iterator it;
+    vector<T> row = vector<T>(this->cols,this->emptyVal);
+    typename std::vector<vector<T> >::iterator it;
     it = this->data.begin();
     for(int i = 0;i < rowIndex;i++){
         it++;
@@ -90,5 +90,42 @@ template<class T> void Matrix<T>::addRow(int rowIndex) throw (IndexOutOfBoundsEx
     this->rows ++ ;
 
 };
+
+template<class T> void Matrix<T>::removeRow(int rowIndex) throw (IndexOutOfBoundsException){
+    
+};
+
+template<class T> T Matrix<T>::getValue(int rowIndex, int colIndex) throw (IndexOutOfBoundsException){
+    if(rowIndex < 0){
+        throw IndexOutOfBoundsException(rowIndex,0,true);
+    }
+    if(rowIndex > this->rows){
+        throw IndexOutOfBoundsException(rowIndex,this->rows,true);
+    }
+    if(colIndex < 0){
+        throw IndexOutOfBoundsException(colIndex,0,false);
+    }
+    if(colIndex > this->cols){
+        throw IndexOutOfBoundsException(colIndex,this->cols,false);
+    }
+    return this->data[rowIndex][colIndex];
+};
+    
+template<class T>void Matrix<T>::setValue(int rowIndex, int colIndex, T value) throw (IndexOutOfBoundsException){
+    if(rowIndex < 0){
+        throw IndexOutOfBoundsException(rowIndex,0,true);
+    }
+    if(rowIndex > this->rows){
+        throw IndexOutOfBoundsException(rowIndex,this->rows,true);
+    }
+    if(colIndex < 0){
+        throw IndexOutOfBoundsException(colIndex,0,false);
+    }
+    if(colIndex > this->cols){
+        throw IndexOutOfBoundsException(colIndex,this->cols,false);
+    }
+    this->data[rowIndex][colIndex] = value;
+};
+
 #endif	/* MATRIX_H */
 
