@@ -108,6 +108,12 @@ template<class T> T Matrix<T>::getValue(int rowIndex, int colIndex) throw (Index
     if(colIndex > this->cols){
         throw IndexOutOfBoundsException(colIndex,this->cols,false);
     }
+    if(this->rows == 0){
+        throw IndexOutOfBoundsException(rowIndex,rowIndex,true);
+    }
+    if(this->cols == 0){
+        throw IndexOutOfBoundsException(colIndex,colIndex,false);
+    }
     return this->data[rowIndex][colIndex];
 };
     
@@ -126,25 +132,25 @@ template<class T>void Matrix<T>::setValue(int rowIndex, int colIndex, T value) t
     }
     this->data[rowIndex][colIndex] = value;
 };
+
 template<class T> void Matrix<T>::addColumn(int colIndex) throw (IndexOutOfBoundsException){
-       if (colIndex < 0) {
+    if (colIndex < 0) {
         throw IndexOutOfBoundsException(colIndex, 0, false);
     }
     if (colIndex>this->cols) {
         throw IndexOutOfBoundsException(colIndex, this->rows, false);
     } 
-       
+    typename std::vector<T>::iterator it;
     for(int i = 0;i < this->rows;i++){
         vector<T> row = data[i];
-        typename std::vector<vector<T> >::iterator it;
         it = row.begin();
-        for(int j = 0; j <= colIndex; j++) {
+        for(int j = 0; j < colIndex; j++) {
             it++;
         };
         this->data[i].insert(it,this->emptyVal);
     }
     
-    this->cols ++ ;
+    this->cols++ ;
  };
 template<class T> void Matrix<T>::removeColumn(int colIndex) throw (IndexOutOfBoundsException){
     
