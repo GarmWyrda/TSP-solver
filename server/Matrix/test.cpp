@@ -1,7 +1,18 @@
 #include "matrix.h"
 
+void printTestStatus (bool test){
+    if(test){
+        cout << "PASSED" <<endl;
+    }
+    else{
+        cout << "FAILED" <<endl;
+    }
+}
+
 int main(){
     Matrix<int> testMatrix = Matrix<int>(0,0,0);
+    
+    //Test Getters
     if(testMatrix.getNbRows() == 0) {
         cout<<"getNbRows OK"<<endl ;
     }else {
@@ -38,4 +49,16 @@ int main(){
     }else {
         cout<<"addRow not OK"<<endl;
     }
+    
+    try{
+        testMatrix.getValue(0,0);
+    }
+    catch(IndexOutOfBoundsException ex){
+        printTestStatus(true);
+    }
+    
+    testMatrix.addColumn(0);
+    printTestStatus(testMatrix.getValue(0,0) == 0);
+    testMatrix.setValue(0,0,5);
+    printTestStatus(testMatrix.getValue(0,0) == 5);
 }
