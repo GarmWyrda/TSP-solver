@@ -1,8 +1,8 @@
 /*
  * File:   newtestclass.cpp
- * Author: louis
+ * Author: thibault
  *
- * Created on Mar 17, 2014, 1:52:46 PM
+ * Created on 17 mars 2014, 13:52:44
  */
 
 #include "newtestclass.h"
