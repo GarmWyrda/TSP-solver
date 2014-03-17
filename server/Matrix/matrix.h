@@ -126,9 +126,6 @@ template<class T>void Matrix<T>::setValue(int rowIndex, int colIndex, T value) t
     }
     this->data[rowIndex][colIndex] = value;
 };
-template<class T> void Matrix<T>::removeRow(int rowIndex) throw (IndexOutOfBoundsException){
-    
-};
 template<class T> void Matrix<T>::addColumn(int colIndex) throw (IndexOutOfBoundsException){
        if (colIndex < 0) {
         throw IndexOutOfBoundsException(colIndex, 0, false);
