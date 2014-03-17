@@ -147,9 +147,8 @@ template<class T> void Matrix<T>::addColumn(int colIndex) throw (IndexOutOfBound
         throw IndexOutOfBoundsException(colIndex, this->rows, false);
     } 
     typename std::vector<T>::iterator it;
-    for(int i = 0;i < this->rows;i++){
-        vector<T> row = data[i];
-        it = row.begin();
+    for(int i = 0;i < this->rows;i++){;
+        it = data[i].begin();
         for(int j = 0; j < colIndex; j++) {
             it++;
         };

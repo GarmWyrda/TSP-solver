@@ -64,14 +64,14 @@ int main(){
     catch(IndexOutOfBoundsException ex){
         cout<<"Exception correctly thrown"<<endl ;
     }
+    cout<<testMatrix.getNbColumns();
     testMatrix.addColumn(1);
+    cout<<"berthe"<<endl;
      if(testMatrix.getNbColumns() == 2) {
         cout<<"addColumn OK"<<endl ;
     }else {
         cout<<"addCommn not OK"<<endl;
-    }
-
-    
+    }      
     try{
         testMatrix.getValue(0,0);
     }
