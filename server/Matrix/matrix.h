@@ -30,7 +30,7 @@ public:
     void removeRow(int rowIndex) throw (IndexOutOfBoundsException);
 
     int getNbColumns(); // done
-    void addColumn(int colIndex) throw (IndexOutOfBoundsException);
+    void addColumn(int colIndex) throw (IndexOutOfBoundsException);// done
     void removeColumn(int colIndex) throw (IndexOutOfBoundsException);
 
     T getValue(int rowIndex, int colIndex) throw (IndexOutOfBoundsException);
@@ -126,6 +126,14 @@ template<class T>void Matrix<T>::setValue(int rowIndex, int colIndex, T value) t
     }
     this->data[rowIndex][colIndex] = value;
 };
-
+template<class T> void Matrix<T>::removeRow(int rowIndex) throw (IndexOutOfBoundsException){
+    
+};
+template<class T> void Matrix<T>::addColumn(int colIndex) throw (IndexOutOfBoundsException){
+    
+};
+template<class T> void Matrix<T>::removeColumn(int colIndex) throw (IndexOutOfBoundsException){
+    
+};
 #endif	/* MATRIX_H */
 
