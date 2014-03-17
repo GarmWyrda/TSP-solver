@@ -130,8 +130,25 @@ template<class T> void Matrix<T>::removeRow(int rowIndex) throw (IndexOutOfBound
     
 };
 template<class T> void Matrix<T>::addColumn(int colIndex) throw (IndexOutOfBoundsException){
+       if (colIndex < 0) {
+        throw IndexOutOfBoundsException(colIndex, 0, false);
+    }
+    if (colIndex>this->cols) {
+        throw IndexOutOfBoundsException(colIndex, this->rows, false);
+    } 
+       
+    for(int i = 0;i < this->rows;i++){
+        vector<T> row = data[i];
+        typename std::vector<vector<T> >::iterator it;
+        it = row.begin();
+        for(int j = 0; j <= colIndex; j++) {
+            it++;
+        };
+        this->data[i].insert(it,this->emptyVal);
+    }
     
-};
+    this->cols ++ ;
+ };
 template<class T> void Matrix<T>::removeColumn(int colIndex) throw (IndexOutOfBoundsException){
     
 };
