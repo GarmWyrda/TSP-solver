@@ -92,6 +92,12 @@ template<class T> void Matrix<T>::addRow(int rowIndex) throw (IndexOutOfBoundsEx
 };
 
 template<class T> void Matrix<T>::removeRow(int rowIndex) throw (IndexOutOfBoundsException){
+    if (rowIndex < 0) {
+        throw IndexOutOfBoundsException(rowIndex, 0, false);
+    }
+    if (rowIndex>this->rows -1) {
+        throw IndexOutOfBoundsException(rowIndex, this->rows -1, false);
+    } 
     
 };
 

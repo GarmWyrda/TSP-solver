@@ -49,6 +49,28 @@ int main(){
     }else {
         cout<<"addRow not OK"<<endl;
     }
+    cout<<"toussa"<<endl;
+    testMatrix.addColumn(0);
+    cout<<"pfd "<<endl;
+    try{
+      testMatrix.addColumn(-1);  
+    }
+    catch(IndexOutOfBoundsException ex){
+        cout<<"Exception correctly thrown"<<endl ;
+    }
+    try{
+      testMatrix.addColumn(5);  
+    }
+    catch(IndexOutOfBoundsException ex){
+        cout<<"Exception correctly thrown"<<endl ;
+    }
+    testMatrix.addColumn(1);
+     if(testMatrix.getNbColumns() == 2) {
+        cout<<"addColumn OK"<<endl ;
+    }else {
+        cout<<"addCommn not OK"<<endl;
+    }
+
     
     try{
         testMatrix.getValue(0,0);
