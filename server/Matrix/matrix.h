@@ -26,7 +26,7 @@ public:
     T getEmptyValue(); //done
 
     int getNbRows(); // done
-    void addRow(int rowIndex) throw (IndexOutOfBoundsException);
+    void addRow(int rowIndex) throw (IndexOutOfBoundsException); //done
     void removeRow(int rowIndex) throw (IndexOutOfBoundsException);
 
     int getNbColumns(); // done
