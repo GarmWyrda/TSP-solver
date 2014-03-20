@@ -1,6 +1,7 @@
 #include "matrix.h"
 
 /***Statistiques sur les tests***/
+/*
 struct testStats{
     int passed;
     int failed;
@@ -26,7 +27,6 @@ void printTestStatus (bool test, testStats &stats){
         cout << "FAILED" << endl;
     }
 }
-/***************************************************/
 void coeffTests(Matrix<int>* m,bool callSetValue, int rowMin, int rowMax, int colMin, int colMax, int expectedValue,testStats& stats){
     
 }
@@ -56,22 +56,24 @@ void deleteMatrixTests(Matrix<int>* m, testStats stats){
     bool success;
     
 }
+*/
 
-int main(){
+/*int main2(){
     testStats stats;
     stats.failed = 0;
     stats.passed = 0;
     stats.done = 0;
     stats.planned = 429;
     
-    
-    /*
+
     Matrix<int> testMatrix = Matrix<int>(0,0,0);
     
     //Test Getters
+
     printTestStatus(testMatrix.getNbRows() == 0);
     printTestStatus(testMatrix.getNbColumns() == 0);
     printTestStatus(testMatrix.getEmptyValue() == 0);
+ 
     
     testMatrix.addRow(0);
     try{
@@ -123,5 +125,4 @@ int main(){
     printTestStatus(testMatrix.getValue(0,0) == 0);
     testMatrix.setValue(0,0,5);
     printTestStatus(testMatrix.getValue(0,0) == 5);
-    */
-};
+};*/
