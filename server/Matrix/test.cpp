@@ -1,54 +1,92 @@
 #include "matrix.h"
 
-void printTestStatus (bool test){
+/***Statistiques sur les tests***/
+struct testStats{
+    int passed;
+    int failed;
+    int done;
+    int planned;
+};
+
+void printTestStats (testStats &stats){
+    cout << "Planned : " << stats.planned << endl;
+    cout << "Failed : " << stats.failed << endl;
+    cout << "Passed : " << stats.passed << endl;
+    cout << "Missed : " << stats.planned-stats.done << endl;
+}
+
+void printTestStatus (bool test, testStats &stats){
+    stats.done++;
     if(test){
-        cout << "PASSED" <<endl;
+        stats.passed++;
+        cout << "PASSED" << endl;
     }
     else{
-        cout << "FAILED" <<endl;
+        stats.failed++;
+        cout << "FAILED" << endl;
     }
+}
+/***************************************************/
+void coeffTests(Matrix<int>* m,bool callSetValue, int rowMin, int rowMax, int colMin, int colMax, int expectedValue,testStats& stats){
+    
+}
+
+Matrix<int>* newMatrixTests(int rows, int cols, int defVal, testStats &stats){
+    int coef = -1;
+    Matrix<int>* m = new Matrix<int>(rows,cols,defVal);
+    
+    
+    if(rows >= 0 && cols >=0){
+        printTestStatus(m != NULL,stats);
+        int retrievedRows = m->getNbRows();
+        int retrievedCols = m->getNbColumns();
+        printTestStatus(m->getNbRows() == rows, stats);
+        printTestStatus(m->getNbColumns() == cols, stats);
+        printTestStatus(m->getEmptyValue() == defVal, stats);
+        printTestStatus(m->getEmptyValue() == defVal, stats);
+        coeffTests(m,false,0,rows-1,0,cols-1,defVal,stats);
+    }
+    else{
+        printTestStatus(m == NULL,stats);
+    }
+    return m;
+}
+
+void deleteMatrixTests(Matrix<int>* m, testStats stats){
+    bool success;
+    
 }
 
 int main(){
+    testStats stats;
+    stats.failed = 0;
+    stats.passed = 0;
+    stats.done = 0;
+    stats.planned = 429;
+    
+    
+    /*
     Matrix<int> testMatrix = Matrix<int>(0,0,0);
     
     //Test Getters
-    if(testMatrix.getNbRows() == 0) {
-        cout<<"getNbRows OK"<<endl ;
-    }else {
-        cout<<"getNbRows not OK"<<endl;
-    }
+    printTestStatus(testMatrix.getNbRows() == 0);
+    printTestStatus(testMatrix.getNbColumns() == 0);
+    printTestStatus(testMatrix.getEmptyValue() == 0);
     
-    if(testMatrix.getNbColumns() == 0) {
-        cout<<"getNbColumns OK"<<endl ;
-    }else {
-        cout<<"getNbColumns not OK"<<endl;
-    }
-    
-    if(testMatrix.getEmptyValue() == 0) {
-        cout<<"getEmptyValue OK"<<endl ;
-    }else {
-        cout<<"getEmptyValue not OK"<<endl;
-    }
     testMatrix.addRow(0);
     try{
       testMatrix.addRow(-1);  
     }
     catch(IndexOutOfBoundsException ex){
-        cout<<"Exception correctly thrown"<<endl ;
+        printTestStatus(true) ;
     }
     try{
       testMatrix.addRow(5);  
     }
     catch(IndexOutOfBoundsException ex){
-        cout<<"Exception correctly thrown"<<endl ;
+        printTestStatus(true);
     }
     testMatrix.addRow(1);
-     if(testMatrix.getNbRows() == 2) {
-        cout<<"addRow OK"<<endl ;
-    }else {
-        cout<<"addRow not OK"<<endl;
-    }
     cout<<"toussa"<<endl;
     testMatrix.addColumn(0);
     cout<<"pfd "<<endl;
@@ -72,6 +110,8 @@ int main(){
     }else {
         cout<<"addCommn not OK"<<endl;
     }      
+    printTestStatus(testMatrix.getNbRows() == 2);
+  
     try{
         testMatrix.getValue(0,0);
     }
@@ -83,4 +123,5 @@ int main(){
     printTestStatus(testMatrix.getValue(0,0) == 0);
     testMatrix.setValue(0,0,5);
     printTestStatus(testMatrix.getValue(0,0) == 5);
-}
+    */
+};
