@@ -26,8 +26,7 @@ TestStats::~TestStats() {
 // Tests relatifs au cycle de vue d'une matrice : création, ajout/suppression de lignes/colonnes, modification de coefficients, destruction
 void TestStats::matrixLifeCycleTests(int rows, int cols){
     Matrix<float>* m;
-    m = new Matrix<float>(4,5,0);
-    float defVal;
+    float defVal=0;
     m = this->newMatrixTests(rows, cols, defVal); // Tests relatifs à la création de la matrice
     cout<<*m<<endl;
     defVal = m->getEmptyValue();
