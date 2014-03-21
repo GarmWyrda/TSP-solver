@@ -1,4 +1,5 @@
 #include "matrix.h"
+#include "TestStats.h"
 
 /***Statistiques sur les tests***/
 /*
@@ -10,20 +11,20 @@ struct testStats{
 };
 
 void printTestStats (testStats &stats){
-    cout << "Planned : " << stats.planned << endl;
-    cout << "Failed : " << stats.failed << endl;
-    cout << "Passed : " << stats.passed << endl;
-    cout << "Missed : " << stats.planned-stats.done << endl;
+    cout << "Planned : " << stats->planned << endl;
+    cout << "Failed : " << stats->failed << endl;
+    cout << "Passed : " << stats->passed << endl;
+    cout << "Missed : " << stats->planned-stats->done << endl;
 }
 
 void printTestStatus (bool test, testStats &stats){
-    stats.done++;
+    stats->done++;
     if(test){
-        stats.passed++;
+        stats->passed++;
         cout << "PASSED" << endl;
     }
     else{
-        stats.failed++;
+        stats->failed++;
         cout << "FAILED" << endl;
     }
 }
@@ -60,10 +61,10 @@ void deleteMatrixTests(Matrix<int>* m, testStats stats){
 
 /*int main2(){
     testStats stats;
-    stats.failed = 0;
-    stats.passed = 0;
-    stats.done = 0;
-    stats.planned = 429;
+    stats->failed = 0;
+    stats->passed = 0;
+    stats->done = 0;
+    stats->planned = 429;
     
 
     Matrix<int> testMatrix = Matrix<int>(0,0,0);
@@ -126,3 +127,22 @@ void deleteMatrixTests(Matrix<int>* m, testStats stats){
     testMatrix.setValue(0,0,5);
     printTestStatus(testMatrix.getValue(0,0) == 5);
 };*/
+
+int main(){
+    
+    TestStats* stats = new TestStats(415);
+
+    stats->newMatrixTests(2,-1,0);
+    stats->newMatrixTests(-1,3,0);
+    stats->newMatrixTests(-1,-1,0);
+
+    stats->matrixLifeCycleTests(0,0);
+    stats->matrixLifeCycleTests(2,0);
+    stats->matrixLifeCycleTests(0,3);
+    stats->matrixLifeCycleTests(2,3);
+
+    stats->printTestStats();
+    
+    delete stats;
+
+}

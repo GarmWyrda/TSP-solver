@@ -29,19 +29,19 @@ void TestStats::matrixLifeCycleTests(int rows, int cols){
     m = new Matrix<float>(4,5,0);
     float defVal;
     m = this->newMatrixTests(rows, cols, defVal); // Tests relatifs à la création de la matrice
-    //cout<<*m<<endl;
+    cout<<*m<<endl;
     defVal = m->getEmptyValue();
     this->badAccessTests(m); // Tests relatifs à l'utilisation de {get/set}value avec des indices invalides
     this->setValueTests(m); // Tests relatifs à la modification de tous les coefficients
-    //cout<<*m<<endl;
+    cout<<*m<<endl;
     this->addColumnsTests(m, defVal); // Tests relatifs à l'ajout de colonnes
-    //cout<<*m<<endl;
+    cout<<*m<<endl;
     this->removeColumnsTests(m); // Tests relatifs à la suppression de colonnes
-    //cout<<*m<<endl;
+    cout<<*m<<endl;
     this->addRowsTests(m, defVal); // Tests relatifs à l'ajout de lignes
-    //cout<<*m<<endl;
+    cout<<*m<<endl;
     this->removeRowsTests(m); // Tests relatifs à la suppression de lignes
-    //cout<<*m<<endl;
+    cout<<*m<<endl;
     this->deleteMatrixTests(m); // Tests relatifs à la destruction de la matrice
 }
 
