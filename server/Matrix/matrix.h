@@ -9,6 +9,8 @@
 #define	MATRIX_H
 #include <vector>
 #include "IndexOutOfBoundsException.h" // fichier à créer et chemin à changer selon l'organisation de votre projet
+#include <iostream>
+using std::ostream;
 using std::vector;
 
 template<class T> class Matrix {
@@ -38,27 +40,38 @@ public:
 
     ~Matrix(); //done
     // --------------------------------------------------------------- //
-
+    friend ostream& operator<<( ostream &flux, Matrix<T> const& m ){
+        for(int i = 0;i<m.rows;i++){
+            flux << "[";
+            for(int j = 0;j<m.cols;j++){
+                flux << m.data[i][j] << " ";
+            }
+            flux << "]" << std::endl; 
+        }
+        return flux;
+    }
+    
 };
 
-template<class T> Matrix<T>::Matrix(int nbRows, int nbColumns, T emptyValue) {
-    if (nbRows < 0) {
-        nbRows = 0;
-    }
-    if (nbColumns < 0) {
-        nbColumns = 0;
-    }
+template<class T> Matrix<T>::Matrix(int nbRows, int nbColumns, T emptyValue) { //might throw a std::bad_alloc exception
     this->rows = nbRows;
     this->cols = nbColumns;
     this->emptyVal = emptyValue;
-    this->data = vector< vector<T> >(nbRows);
-    for(int i;i<this->data.size();i++) {
+    this->data = vector<vector<T>>(nbRows);
+    for(int i=0;i<nbRows;i++) {
         this->data[i] = vector<T>(nbColumns, emptyValue);
-    }
+    }   
 };
 
 template<class T> Matrix<T>::~Matrix() {
-
+    /*int columns = this->cols;
+    for(int i = columns-1;i>=0;i--){
+        this->removeColumn(i);
+    }
+    int nbRows = this->rows;
+    for(int i = nbRows-1;i>=0;i--){
+        this->removeRow(i);
+    }*/
 };
 
 template<class T> int Matrix<T>::getNbRows() {
@@ -95,23 +108,29 @@ template<class T> void Matrix<T>::removeRow(int rowIndex) throw (IndexOutOfBound
     if (rowIndex < 0) {
         throw IndexOutOfBoundsException(rowIndex, 0, false);
     }
-    if (rowIndex>this->rows -1) {
+    if (rowIndex>this->rows-1) {
         throw IndexOutOfBoundsException(rowIndex, this->rows -1, false);
-    } 
-    
+    }
+    typename std::vector< vector<T> >::iterator it;
+    it = this->data.begin();
+    for(int i = 0;i<rowIndex;i++){
+        it++;
+    }
+    this->data.erase(it);
+    this->rows--;    
 };
 
 template<class T> T Matrix<T>::getValue(int rowIndex, int colIndex) throw (IndexOutOfBoundsException){
     if(rowIndex < 0){
         throw IndexOutOfBoundsException(rowIndex,0,true);
     }
-    if(rowIndex > this->rows){
+    if(rowIndex > this->rows-1){
         throw IndexOutOfBoundsException(rowIndex,this->rows,true);
     }
     if(colIndex < 0){
         throw IndexOutOfBoundsException(colIndex,0,false);
     }
-    if(colIndex > this->cols){
+    if(colIndex > this->cols-1){
         throw IndexOutOfBoundsException(colIndex,this->cols,false);
     }
     if(this->rows == 0){
@@ -127,14 +146,20 @@ template<class T>void Matrix<T>::setValue(int rowIndex, int colIndex, T value) t
     if(rowIndex < 0){
         throw IndexOutOfBoundsException(rowIndex,0,true);
     }
-    if(rowIndex > this->rows){
+    if(rowIndex > this->rows-1){
         throw IndexOutOfBoundsException(rowIndex,this->rows,true);
     }
     if(colIndex < 0){
         throw IndexOutOfBoundsException(colIndex,0,false);
     }
-    if(colIndex > this->cols){
+    if(colIndex > this->cols-1){
         throw IndexOutOfBoundsException(colIndex,this->cols,false);
+    }
+    if(this->rows == 0){
+        throw IndexOutOfBoundsException(rowIndex,rowIndex,true);
+    }
+    if(this->cols == 0){
+        throw IndexOutOfBoundsException(colIndex,colIndex,false);
     }
     this->data[rowIndex][colIndex] = value;
 };
@@ -157,8 +182,23 @@ template<class T> void Matrix<T>::addColumn(int colIndex) throw (IndexOutOfBound
     
     this->cols++ ;
  };
+ 
 template<class T> void Matrix<T>::removeColumn(int colIndex) throw (IndexOutOfBoundsException){
-    
+    if (colIndex < 0) {
+        throw IndexOutOfBoundsException(colIndex, 0, true);
+    }
+    if (colIndex>this->cols -1) {
+        throw IndexOutOfBoundsException(colIndex, this->cols -1, true);
+    } 
+    for(int i=0;i<this->getNbRows();i++){
+        typename std::vector<T>::iterator it;
+        it = this->data[i].begin();
+        for(int j = 0;j<colIndex;j++){
+            it++;
+        }
+        this->data[i].erase(it);
+    }
+    this->cols--;
 };
 #endif	/* MATRIX_H */
 
