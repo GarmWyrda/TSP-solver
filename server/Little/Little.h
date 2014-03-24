@@ -136,6 +136,17 @@ template<class T> struct Regret getMaxRegret(Matrix<T> &matrix){
     returnValue.value = maxRegret;
     return returnValue;
 }
+
+/*Instead of removing a row and a column with matrix type which is costly we set all the values in the row and 
+ the column to an invalid one, -1 for instance*/
+template<class T> void removeRowAndCol(Matrix<T> matrix,int row,int col){
+    for(int i = 0;i<matrix.getNbColumns();i++){
+        matrix.setValue(row,i,matrix.getEmptyValue());
+    }
+    for(int i = 0;i<matrix.getNbRows();i++){
+        matrix.setValue(i,col,matrix.getEmptyValue());
+    }
+}
 void deleteInvalidWays(){
     
 }
@@ -152,6 +163,7 @@ template<class T> struct Way little(Matrix<T> matrix,ostream &flux,struct Way &c
     deleteInvalidWays();
     //matrix.removeRow(regret.i);
     //matrix.removeColumn(regret.j);
+    removeRowAndCol(matrix,regret.i,regret.j);
     little(matrix,flux);
 }
 
