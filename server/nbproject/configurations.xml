@@ -5,6 +5,7 @@
                    displayName="Header Files"
                    projectFiles="true">
       <itemPath>Matrix/IndexOutOfBoundsException.h</itemPath>
+      <itemPath>Little/Little.h</itemPath>
       <itemPath>Matrix/TestStats.h</itemPath>
       <itemPath>Matrix/matrix.h</itemPath>
     </logicalFolder>
@@ -53,6 +54,8 @@
           <commandLine>-std=c++11</commandLine>
         </ccTool>
       </compileType>
+      <item path="Little/Little.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Matrix/IndexOutOfBoundsException.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Matrix/TestStats.cpp" ex="false" tool="1" flavor2="0">
@@ -105,6 +108,8 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="Little/Little.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Matrix/IndexOutOfBoundsException.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Matrix/TestStats.cpp" ex="false" tool="1" flavor2="0">

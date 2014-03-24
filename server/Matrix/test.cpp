@@ -1,6 +1,6 @@
 #include "matrix.h"
 #include "TestStats.h"
-
+#include "../Little/Little.h"
 /***Statistiques sur les tests***/
 /*
 struct testStats{
