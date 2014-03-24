@@ -9,6 +9,7 @@
 #define	LITTLE_H
 #include "../Matrix/matrix.h"
 #include <iostream>
+#include <string>
 
 /************UTILITY FUNCTIONS******************/
 //Returns the minimum of a row in the matrix given
@@ -106,26 +107,52 @@ template<class T> T getRegret(Matrix<T> &matrix, int row,int col){
     return sum;
 }
 
-template<class T> T getMaxRegret(Matrix<T> &matrix){
+struct Regret{
+    int i;
+    int j;
+    int value;
+};
+
+template<class T> struct Regret getMaxRegret(Matrix<T> &matrix){
     T maxRegret = -1;
     T currentRegret;
+    int row;
+    int col;
     for(int i = 0;i<matrix.getNbRows();i++){
         for(int j = 0;j<matrix.getNbColumns();j++){
             if(matrix.getValue(i,j) == 0){
                 currentRegret = getRegret(matrix,i,j);
                 if(currentRegret > maxRegret){
                     maxRegret = currentRegret;
+                    row = i;
+                    col = j;
                 }
             }
         }
     }
+    struct Regret returnValue;
+    returnValue.i = row;
+    returnValue.j = col;
+    returnValue.value = maxRegret;
+    return returnValue;
+}
+void deleteInvalidWays(){
     
 }
-
 /***********************************************/
+struct Way{
+    int points[][2];
+    int length;
+};
 /*Takes a DistanceMatrix as argument and returns the shortest hamiltonian cycle*/
-template<class T> void little(Matrix<T> matrix,ostream &flux){
+template<class T> struct Way little(Matrix<T> matrix,ostream &flux,struct Way &currentWay){
     T weight = reduceMatrix(matrix);
+    currentWay.length += weight;
+    struct Regret regret = getMaxRegret(matrix);
+    deleteInvalidWays();
+    //matrix.removeRow(regret.i);
+    //matrix.removeColumn(regret.j);
+    little(matrix,flux);
 }
 
 
