@@ -10,15 +10,60 @@
 #include "../Matrix/matrix.h"
 #include <iostream>
 #include <string>
+#include <vector>
+using std::vector;
+
+class Regret{
+private:
+    int i,j;
+    float value;
+public:
+    Regret(int i = 0,int j = 0,float value = 0){this->i = i;this->j = j;this->value = value;};
+    ~Regret(){};
+    
+    float getValue(){return this->value;};
+    float getI(){return this->i;};
+    float getJ(){return this->j;};
+};
+
+class Pair{
+private:
+    int i,j;
+public:
+    Pair(int i=0,int j = 0){this->i = i; this->j=j;};
+    Pair(const Pair &pair){this->i = pair.i; this->j = pair.i;};
+    
+    int getI(){return this->i;};
+    int getJ(){return this->j;};
+    void setI(int i){this->i = i;};
+    void setJ(int j){this->j = j;};
+};
+
+class Way{
+private:
+    vector<Pair> points;
+    float length;
+public:
+    Way(int n=0){this->points = vector<Pair>(n);this->length = 0;};
+    Way(const Way &way){this->points = way.points; this->length = way.length;};
+    ~Way(){};
+    
+    void setLength(float l){this->length = l;};
+    float getLength(){return this->length;};
+    void addPoints(int a, int b,int index){this->points[index].setI(a);this->points[index].setJ(b);}
+    vector<Pair>& getPoints(){return this->points;};
+    Pair operator[](int index){return this->points[index];};
+    
+};
 
 /************UTILITY FUNCTIONS******************/
 //Returns the minimum of a row in the matrix given
-template<class T> T getMinOnRow(Matrix<T> &matrix, int row){
+float getMinOnRow(Matrix<float> &matrix, int row){
     int index = 0;
     while(matrix.getValue(row,index) == matrix.getEmptyValue()){
         index++;
     }
-    T min = matrix.getValue(row,index);
+    float min = matrix.getValue(row,index);
     for(int i=index+1;i<matrix.getNbColumns();i++){
             if(matrix.getValue(row,i)!=matrix.getEmptyValue() && matrix.getValue(row,i)<min){
                 min = matrix.getValue(row,i);
@@ -27,7 +72,7 @@ template<class T> T getMinOnRow(Matrix<T> &matrix, int row){
     return min;
 }
 //Substract value into each cell of the row in matrix
-template<class T> void clearRow(Matrix<T> &matrix, int row, T value){
+void clearRow(Matrix<float> &matrix, int row, float value){
     for(int i=0;i<matrix.getNbColumns();i++){
         if(matrix.getValue(row,i) != matrix.getEmptyValue()){
                 matrix.setValue(row,i,matrix.getValue(row,i)-value);
@@ -36,12 +81,12 @@ template<class T> void clearRow(Matrix<T> &matrix, int row, T value){
 }
 
 //Get the minimum value in the column at index i in matrix
-template<class T> T getMinOnColumn(Matrix<T> &matrix, int column){   
+float getMinOnColumn(Matrix<float> &matrix, int column){   
     int index = 0;
     while(matrix.getValue(index,column) == matrix.getEmptyValue()){
         index++;
     }
-    T min = matrix.getValue(index,column);
+    float min = matrix.getValue(index,column);
     for(int i=index+1;i<matrix.getNbRows();i++){
         if(matrix.getValue(i,column)!= matrix.getEmptyValue() && matrix.getValue(i,column)<min){
             min = matrix.getValue(i,column);
@@ -51,7 +96,7 @@ template<class T> T getMinOnColumn(Matrix<T> &matrix, int column){
 }
 
 //Substract the value in each cell of the column in the matrix
-template<class T> void clearColumn(Matrix<T> &matrix, int column, T value){
+void clearColumn(Matrix<float> &matrix, int column, float value){
     for(int i=0;i<matrix.getNbRows();i++){
         if(matrix.getValue(i,column)!= matrix.getEmptyValue()){
                 matrix.setValue(i,column,matrix.getValue(i,column)-value);
@@ -60,9 +105,9 @@ template<class T> void clearColumn(Matrix<T> &matrix, int column, T value){
 }
 
 //This function reduces the matrix, and returns the value of node weight
-template<class T> T reduceMatrix(Matrix<T> &matrix){
-    T min;
-    T sum=0;
+float reduceMatrix(Matrix<float> &matrix){
+    float min;
+    float sum=0;
     for(int i = 0;i<matrix.getNbRows();i++){
         min = getMinOnRow(matrix,i);
         sum += min;
@@ -77,18 +122,18 @@ template<class T> T reduceMatrix(Matrix<T> &matrix){
 }
 
 //Retourne le regret dans la case (i,j) de matrix
-template<class T> T getRegret(Matrix<T> &matrix, int row,int col){
-    T sum = 0;
+float getRegret(Matrix<float> &matrix, int row,int col){
+    float sum = 0;
     int index1 = 0;
     while(matrix.getValue(row,index1) == matrix.getEmptyValue() || index1 == col){
         index1++;
     }
-    T minRow = matrix.getValue(row,index1);
+    float minRow = matrix.getValue(row,index1);
     int index2 = 0;
     while(matrix.getValue(index2,col) == matrix.getEmptyValue() || index2 == row){
         index2++;
     }
-    T minCol = matrix.getValue(index2,col);
+    float minCol = matrix.getValue(index2,col);
     for(int i=index1+1;i<matrix.getNbColumns();i++){
         if(i!=col){
             if(matrix.getValue(row,i) < minRow){
@@ -107,15 +152,9 @@ template<class T> T getRegret(Matrix<T> &matrix, int row,int col){
     return sum;
 }
 
-struct Regret{
-    int i;
-    int j;
-    int value;
-};
-
-template<class T> struct Regret getMaxRegret(Matrix<T> &matrix){
-    T maxRegret = -1;
-    T currentRegret;
+Regret getMaxRegret(Matrix<float> &matrix){
+    float maxRegret = -1;
+    float currentRegret;
     int row;
     int col;
     for(int i = 0;i<matrix.getNbRows();i++){
@@ -130,16 +169,13 @@ template<class T> struct Regret getMaxRegret(Matrix<T> &matrix){
             }
         }
     }
-    struct Regret returnValue;
-    returnValue.i = row;
-    returnValue.j = col;
-    returnValue.value = maxRegret;
+    Regret returnValue(row,col,maxRegret);
     return returnValue;
 }
 
 /*Instead of removing a row and a column with matrix type which is costly we set all the values in the row and 
  the column to an invalid one, -1 for instance*/
-template<class T> void removeRowAndCol(Matrix<T> &matrix,int row,int col){
+void removeRowAndCol(Matrix<float> &matrix,int row,int col){
     for(int i = 0;i<matrix.getNbColumns();i++){
         matrix.setValue(row,i,matrix.getEmptyValue());
     }
@@ -147,40 +183,59 @@ template<class T> void removeRowAndCol(Matrix<T> &matrix,int row,int col){
         matrix.setValue(i,col,matrix.getEmptyValue());
     }
 }
-void deleteInvalidWays(){
-    
+void deleteInvalidWays(Matrix<float> &matrix, Way &currentWay, int index){
+    if(index != 0){
+        Pair pair = currentWay[index-1];
+        matrix.setValue(pair.getJ(),pair.getI(),matrix.getEmptyValue()); 
+        for(int i = 0;i < index-1;i++){
+        }
+    }
 }
 /***********************************************/
-struct Way{
-    int points[][2];
-    int length = -1;
-};
+
 /*Takes a DistanceMatrix as argument and returns the shortest hamiltonian cycle*/
-template<class T> struct Way little(Matrix<T> matrix,ostream &flux,struct Way &bestWay,struct Way &currentWay, int count=0){
-    deleteInvalidWays();
-    T weight = reduceMatrix(matrix);
-    currentWay.length += weight;
-    if(currentWay.length >= bestWay.length){
-        return currentWay;
+Way little(Matrix<float> matrix,ostream &flux,Way &bestWay,Way currentWay, int count=0){
+    deleteInvalidWays(matrix,currentWay,count);
+    float weight = reduceMatrix(matrix);
+    currentWay.setLength(currentWay.getLength() + weight);
+    if(currentWay.getLength() >= bestWay.getLength() && bestWay.getLength() != -1){
+        return bestWay;
     }
     else{
-        if(count = matrix.getNbRows()-1){
-            if(currentWay.length < bestWay.length){
+        if(count = matrix.getNbRows()-2){
+            if(currentWay.getLength() < bestWay.getLength() || bestWay.getLength() == -1){
+                for(int i = 0; i < matrix.getNbRows();i++){
+                    for(int j = 0; j < matrix.getNbColumns();j++){
+                        if(matrix.getValue(i,j) != matrix.getEmptyValue()){
+                            currentWay.setLength(matrix.getValue(i,j) + currentWay.getLength());
+                            count++;
+                        }
+                    }
+                }
                 bestWay = currentWay;
                 return bestWay;
             }
             else{
-                return currentWay;
+                return bestWay;
             }
         }
         else{
-           struct Regret regret = getMaxRegret(matrix);
-           removeRowAndCol(matrix,regret.i,regret.j);
-           return little(matrix,flux,bestWay);
+           Regret regret = getMaxRegret(matrix);
+           Matrix<float> matrix1 = matrix;
+           removeRowAndCol(matrix,regret.getI(),regret.getJ());
+           currentWay.addPoints(regret.getI(),regret.getJ(),count);
+           little(matrix,flux,bestWay,currentWay,count + 1);
+           if(currentWay.getLength() + regret.getValue() >= bestWay.getLength()){
+               return bestWay;
+           }
+           else{
+               matrix1.setValue(regret.getI(),regret.getJ(),matrix1.getEmptyValue());
+               little(matrix1,flux,bestWay,currentWay,count);
+           }
         }
     }
+    return bestWay;
 }
-
 
 #endif	/* LITTLE_H */
 
