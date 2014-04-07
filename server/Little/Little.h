@@ -139,7 +139,7 @@ template<class T> struct Regret getMaxRegret(Matrix<T> &matrix){
 
 /*Instead of removing a row and a column with matrix type which is costly we set all the values in the row and 
  the column to an invalid one, -1 for instance*/
-template<class T> void removeRowAndCol(Matrix<T> matrix,int row,int col){
+template<class T> void removeRowAndCol(Matrix<T> &matrix,int row,int col){
     for(int i = 0;i<matrix.getNbColumns();i++){
         matrix.setValue(row,i,matrix.getEmptyValue());
     }
@@ -153,18 +153,32 @@ void deleteInvalidWays(){
 /***********************************************/
 struct Way{
     int points[][2];
-    int length;
+    int length = -1;
 };
 /*Takes a DistanceMatrix as argument and returns the shortest hamiltonian cycle*/
-template<class T> struct Way little(Matrix<T> matrix,ostream &flux,struct Way &currentWay){
+template<class T> struct Way little(Matrix<T> matrix,ostream &flux,struct Way &bestWay,struct Way &currentWay, int count=0){
+    deleteInvalidWays();
     T weight = reduceMatrix(matrix);
     currentWay.length += weight;
-    struct Regret regret = getMaxRegret(matrix);
-    deleteInvalidWays();
-    //matrix.removeRow(regret.i);
-    //matrix.removeColumn(regret.j);
-    removeRowAndCol(matrix,regret.i,regret.j);
-    little(matrix,flux);
+    if(currentWay.length >= bestWay.length){
+        return currentWay;
+    }
+    else{
+        if(count = matrix.getNbRows()-1){
+            if(currentWay.length < bestWay.length){
+                bestWay = currentWay;
+                return bestWay;
+            }
+            else{
+                return currentWay;
+            }
+        }
+        else{
+           struct Regret regret = getMaxRegret(matrix);
+           removeRowAndCol(matrix,regret.i,regret.j);
+           return little(matrix,flux,bestWay);
+        }
+    }
 }
 
 
