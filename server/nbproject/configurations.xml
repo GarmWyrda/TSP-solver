@@ -16,6 +16,7 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <itemPath>Little.cpp</itemPath>
       <itemPath>Matrix/TestStats.cpp</itemPath>
       <itemPath>Matrix/test.cpp</itemPath>
     </logicalFolder>
@@ -54,6 +55,8 @@
           <commandLine>-std=c++11</commandLine>
         </ccTool>
       </compileType>
+      <item path="Little.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="Little/Little.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Matrix/IndexOutOfBoundsException.h" ex="false" tool="3" flavor2="0">
@@ -108,6 +111,8 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="Little.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="Little/Little.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Matrix/IndexOutOfBoundsException.h" ex="false" tool="3" flavor2="0">

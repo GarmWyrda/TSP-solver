@@ -35,6 +35,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/Little.o \
 	${OBJECTDIR}/Matrix/TestStats.o \
 	${OBJECTDIR}/Matrix/test.o
 
@@ -69,6 +70,11 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/server: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/server ${OBJECTFILES} ${LDLIBSOPTIONS}
 
+${OBJECTDIR}/Little.o: Little.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -g -std=c++11 -std=c++11 -MMD -MP -MF $@.d -o ${OBJECTDIR}/Little.o Little.cpp
+
 ${OBJECTDIR}/Matrix/TestStats.o: Matrix/TestStats.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Matrix
 	${RM} $@.d
@@ -100,6 +106,19 @@ ${TESTDIR}/tests/newtestrunner.o: tests/newtestrunner.cpp
 	${RM} $@.d
 	$(COMPILE.cc) -g -std=c++11 -std=c++11 `cppunit-config --cflags` -MMD -MP -MF $@.d -o ${TESTDIR}/tests/newtestrunner.o tests/newtestrunner.cpp
 
+
+${OBJECTDIR}/Little_nomain.o: ${OBJECTDIR}/Little.o Little.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/Little.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} $@.d;\
+	    $(COMPILE.cc) -g -std=c++11 -std=c++11 -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/Little_nomain.o Little.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/Little.o ${OBJECTDIR}/Little_nomain.o;\
+	fi
 
 ${OBJECTDIR}/Matrix/TestStats_nomain.o: ${OBJECTDIR}/Matrix/TestStats.o Matrix/TestStats.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Matrix
