@@ -11,7 +11,8 @@ require.config({
         listener: "interface/Listener",
         environment: "model/Environment",
         point : "model/Point",
-        way : "model/Way"
+        way : "model/Way",
+        server_request: "connexion_server/server_request"
     },
     shim: {
         'jQuery': {
