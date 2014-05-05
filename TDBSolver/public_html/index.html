@@ -16,7 +16,48 @@ and open the template in the editor.
         <div class="container-fluid">
             <div class="page-header">
                 <h3>TBP Solver <small>find Rubik's Cube</small></h3>
-              
+                <div class="row" id="subHeader">
+                    <span id="etat">
+                        <span class="error">Web Socket closed</span>
+                    </span>
+                    <span id="pseudoForm">
+                            <input type="text" pattern="\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}" id="ip" value="127.0.0.1" placeholder="IP de l'hôte" required />
+                            <input type="number" min="1" max="65535" step="1" id="port" value="9002" placeholder="Port de connexion" required />
+                            <input type="button" id="connection" value="Se connecter" />
+                    <span>
+                </div>
+                <div class="row" id="toolbar">
+                    <div class="btn-group col-md-3">
+                        <button id="play" class="btn btn-primary" type="button">
+                            <span class="glyphicon glyphicon-play"></span>
+                             Play
+                        </button>
+                        <button id="pause" class="btn btn-primary" type="button">
+                            <span class="glyphicon glyphicon-pause"></span>
+                             Pause
+                        </button>
+                        <button id="stop" class="btn btn-primary" type="button">
+                             <span class="glyphicon glyphicon-stop"></span>
+                             Stop
+                        </button>
+                    </div>
+                    <div id="TSP_state" class="col-md-9">
+                        <div class="col-md-2">
+                            <p>
+                                Temps de calcul: <p id="time"></p>
+                            </p>
+                        </div>
+                        <div class="col-md-2">
+                            <p>
+                                Coût : <p id='coast'></p>
+                            </p>
+                        </div>
+                        <div class="col-md-2">
+                            <p>
+                                Type : <p id="type"></p>
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="row">
