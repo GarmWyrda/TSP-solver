@@ -1,7 +1,10 @@
 define('way', ['jQuery','GoogleMaps','logger','environment','map'],function($, gmaps, Logger,Environment,Map){
    var Way = function(A,B,byWalk){ //Constructeur d'un chemin entre A et B, a pied ou non (byWalk)
+       
        this.start = Environment.places[A - 1]; 
+       
        this.stop = Environment.places[B - 1];
+       
        this.createPolyline = function(){ //permet de cree la representation graphique du chemin
            if(byWalk === false){
                 var extremites = [this.start.googlePoint,this.stop.googlePoint];
@@ -13,6 +16,7 @@ define('way', ['jQuery','GoogleMaps','logger','environment','map'],function($, g
                     strokeWeight: 2,
                     map: Map
                 });
+                        
                 return polyline;
             }
             else {
@@ -36,12 +40,15 @@ define('way', ['jQuery','GoogleMaps','logger','environment','map'],function($, g
                             strokeWeight: 2,
                             map: Map
                         });
+                        
                         return polyline;
                     }
                 });
           }
        };
+       
        this.polyline = this.createPolyline();
+       
        this.print = function(){ //Affiche la polyline(comportement par défaut)
            this.polyline.setVisible(true);
        };
