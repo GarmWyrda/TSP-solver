@@ -29,11 +29,18 @@ define('way', ['jQuery','GoogleMaps','logger','environment','map'],function($, g
                 };
                 directionsService.route(request, function(response, status) {
                     if (status === google.maps.DirectionsStatus.OK) {
-                        //directionsDisplay.setDirections(response);
-                        //console.log(response.routes[0]); 
+                        
+                        var data = response.routes[0].legs[0].steps;
+                        var waypoints = [];
+                        
+                        for (var i=0; i<data.length; i++){
+                            for (var j=0;j<data[i].path.length;j++) {
+                                waypoints.push(data[i].path[j]);
+                            }
+                        }
                         
                         var polyline = new google.maps.Polyline({
-                            path: response.routes[0].overview_path,
+                            path: waypoints,
                             geodesic: true,
                             strokeColor: '#0000FF',
                             strokeOpacity: 1.0,
