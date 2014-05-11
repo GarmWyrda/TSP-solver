@@ -1,17 +1,20 @@
 define('environment', ['jQuery', 'point', 'distanceMatrix', 'logger'], function($, Point, Logger) {
     var Environment = {
         zoneMatrix: $('#matrix'),
-        nb:5,
+        nb:0,
         places: [], //Emplacements
         ways: [], //Chemin tracés sur la carte
 
         matrixOffRoad: new Matrix("offRoad"),
         matrixByWalk: new Matrix("byWalk"),
+        
         clearWays: function() { //Efface les chemins tracés sur la carte
+            console.log(Environment.ways);
             for (var i = 0; i < Environment.ways.length; i++) {
                 Environment.ways[i].hide();
             }
         },
+                
         clearCache: function() { //Efface le localStorage
             if (localStorage.getItem("offRoad") !== null) {
                 localStorage.removeItem("offRoad");
@@ -25,6 +28,7 @@ define('environment', ['jQuery', 'point', 'distanceMatrix', 'logger'], function(
                 Logger.log(Logger.error, "Cache already empty");
             }
         },
+                
         clearMatrix: function() { //Efface la matrice de la page
             $('#matrix').html('');
         }
@@ -128,7 +132,6 @@ define('environment', ['jQuery', 'point', 'distanceMatrix', 'logger'], function(
 
                                         }
                                     }
-                                    console.log(Environment.matrixByWalk);
                                     localStorage.setItem(Environment.matrixByWalk.nameInStorage, JSON.stringify(data));
                                     Environment.matrixByWalk.print(Environment.zoneMatrix, Environment.nb);
                                 }

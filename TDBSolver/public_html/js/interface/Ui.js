@@ -11,7 +11,6 @@ define('ui', ['listener', 'jQuery', 'logger', 'environment', 'map', 'way', 'dist
                 var byWalk = $('#bywalk').is(':checked');
                 if (A !== B) {
                     var newWay = new Way(A, B, byWalk);
-                    newWay.createPolyline(A, B, byWalk);
                     Environment.ways.push(newWay);
                 }
             }));
