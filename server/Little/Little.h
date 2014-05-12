@@ -11,7 +11,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-using std::vector;
+using std::string;
 
 class Regret{
 private:
@@ -31,7 +31,7 @@ private:
     int i,j;
 public:
     Pair(int i=0,int j = 0){this->i = i; this->j=j;};
-    Pair(const Pair &pair){this->i = pair.i; this->j = pair.i;};
+    Pair(const Pair &pair){this->i = pair.i; this->j = pair.j;};
     
     int getI(){return this->i;};
     int getJ(){return this->j;};
@@ -52,9 +52,17 @@ public:
     float getLength(){return this->length;};
     void addPoints(int a, int b,int index);
     vector<Pair>& getPoints(){return this->points;};
-    Pair operator[](int index){return this->points[index];};
+    friend ostream& operator<<( ostream &flux, Way &way ){
+        for(int i = 0;i<way.points.size();i++){
+            flux << "(" << way.points[i].getI() << "," << way.points[i].getJ() << ") - ";
+        }
+        flux << way.length;
+        return flux;
+    }
     
 };
 
+Way little(Matrix<int> matrix,Way &bestWay,Way &currentWay, int count, string &flux);
+Way little(Matrix<int> matrix,Way &bestWay,Way &currentWay, int count=0);
 #endif
 

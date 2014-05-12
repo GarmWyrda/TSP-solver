@@ -37,7 +37,8 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/Little.o \
 	${OBJECTDIR}/Matrix/TestStats.o \
-	${OBJECTDIR}/Matrix/test.o
+	${OBJECTDIR}/Matrix/test.o \
+	${OBJECTDIR}/tspParse.o
 
 # Test Directory
 TESTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tests
@@ -84,6 +85,11 @@ ${OBJECTDIR}/Matrix/test.o: Matrix/test.cpp
 	${MKDIR} -p ${OBJECTDIR}/Matrix
 	${RM} $@.d
 	$(COMPILE.cc) -g -std=c++11 -std=c++11 -MMD -MP -MF $@.d -o ${OBJECTDIR}/Matrix/test.o Matrix/test.cpp
+
+${OBJECTDIR}/tspParse.o: tspParse.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -g -std=c++11 -std=c++11 -MMD -MP -MF $@.d -o ${OBJECTDIR}/tspParse.o tspParse.cpp
 
 # Subprojects
 .build-subprojects:
@@ -144,6 +150,19 @@ ${OBJECTDIR}/Matrix/test_nomain.o: ${OBJECTDIR}/Matrix/test.o Matrix/test.cpp
 	    $(COMPILE.cc) -g -std=c++11 -std=c++11 -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/Matrix/test_nomain.o Matrix/test.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/Matrix/test.o ${OBJECTDIR}/Matrix/test_nomain.o;\
+	fi
+
+${OBJECTDIR}/tspParse_nomain.o: ${OBJECTDIR}/tspParse.o tspParse.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/tspParse.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} $@.d;\
+	    $(COMPILE.cc) -g -std=c++11 -std=c++11 -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/tspParse_nomain.o tspParse.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/tspParse.o ${OBJECTDIR}/tspParse_nomain.o;\
 	fi
 
 # Run Test Targets
