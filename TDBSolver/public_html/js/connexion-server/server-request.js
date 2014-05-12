@@ -1,4 +1,4 @@
-define('server_request',['jQuery','logger'],function($){
+define('server-request',['jQuery','logger'],function($){
         // Objet connexion avec le serveur
         var serverConnection = { socket: undefined, isConnected: false, ip: "", port: -1, pseudo: "" };
   
@@ -60,10 +60,11 @@ define('server_request',['jQuery','logger'],function($){
                             } else {
                                     // Si tout s'est bien passé, on peut se connecter
                                     connectWebSocket(ip, port, pseudo);
-                                    Logger.log(Logger.success,"Connexion effectuée au serveur")
+                                    Logger.log(Logger.success,"Connexion effectuée au serveur");
                                     console.log("ba alors");
                             }
                     };
                     $('#connection').click(checkConnectionForm);
+                    $('#connection').click(console.log("bouton fonctionnel"));
  
 });
