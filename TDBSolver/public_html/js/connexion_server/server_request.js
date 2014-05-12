@@ -52,12 +52,15 @@ define('server_request',['jQuery','logger'],function($){
                             if(!(port > 0 && port < 65536)) {
                                     error.params.msg = "Port invalide";
                                     parseMessage(error);
+                                    console.log("pfd");
                             } else if(!/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/.test(ip)) {
                                     error.params.msg = "IP invalide";
                                     parseMessage(error);
+                                    console.log("pfd toussa");
                             } else {
                                     // Si tout s'est bien passé, on peut se connecter
                                     connectWebSocket(ip, port, pseudo);
+                                    console.log("ba alors");
                             }
                     };
                     $('#connection').click(checkConnectionForm);
