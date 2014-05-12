@@ -1,6 +1,6 @@
-define('server_request',['jQuery','logger'],function($){
+define('server_request',['jQuery','logger'],function($,Logger){
         // Objet connexion avec le serveur
-        var serverConnection = { socket: undefined, isConnected: false, ip: "", port: -1, pseudo: "" };
+        var serverConnection = { socket: undefined, isConnected: false, ip: "", port: -1 };
   
                     // Permet de se connecter ou de changer son pseudo
                     var connectWebSocket = function(ip, port) {
@@ -59,7 +59,7 @@ define('server_request',['jQuery','logger'],function($){
                                     console.log("pfd toussa");
                             } else {
                                     // Si tout s'est bien passé, on peut se connecter
-                                    connectWebSocket(ip, port, pseudo);
+                                    connectWebSocket(ip, port);
                                     Logger.log(Logger.success,"Connexion effectuée au serveur");
                                     console.log("ba alors");
                             }
