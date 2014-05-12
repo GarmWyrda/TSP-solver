@@ -1,4 +1,4 @@
-define('server_request',['jQuery','logger'],function($,Logger){
+define('server_request',['jQuery','logger','listener'],function($,Logger){
         // Objet connexion avec le serveur
         var serverConnection = { socket: undefined, isConnected: false, ip: "", port: -1 };
   
@@ -65,5 +65,6 @@ define('server_request',['jQuery','logger'],function($,Logger){
                             }
                     };
                     $('#connection').click(checkConnectionForm);
+                   // Listener('#connection','click',checkConnectionForm);
  
 });

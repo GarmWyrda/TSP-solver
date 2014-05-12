@@ -12,7 +12,8 @@ require.config({
         environment: "model/Environment",
         point : "model/Point",
         way : "model/Way",
-        server_request: "connexion-server/server-request"
+        server_request: "connexion-server/server-request",
+        server_interaction:"connexion-server/server-interaction"
     },
     shim: {
         'jQuery': {
@@ -21,7 +22,7 @@ require.config({
     }
 });
 
-require(["logger","environment","distanceMatrix", "ui","server_request"], init);
+require(["logger","environment","distanceMatrix", "ui","server_request","serveur_interaction"], init);
 
 
 function init(Logger) {
