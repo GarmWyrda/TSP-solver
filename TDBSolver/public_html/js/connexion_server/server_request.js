@@ -37,8 +37,8 @@ define('server_request',['jQuery','logger'],function($){
                                     // Handler déclanché lorsqu'une erreur
                                     serverConnection.socket.onerror = function(event) {
                                             serverConnection.isConnected = false;
-                                            var error = { type:"error", params:{ msg:"Impossible de se connecter au serveur ["+event.target.url+"]" } };
-                                            parseMessage(error);
+                                            var error = "Impossible de se connecter au serveur ["+event.target.url+"]";
+                                            Logger.log(Logger.error,error);
                                     };
                             }
                     };
@@ -47,19 +47,20 @@ define('server_request',['jQuery','logger'],function($){
                     var checkConnectionForm = function() {
                             var ip = $("#ip").val();
                             var port = $("#port").val();
-                            var error = { type:"error", params:{ msg:"" } };
+                            var error = "";
 
                             if(!(port > 0 && port < 65536)) {
-                                    error.params.msg = "Port invalide";
-                                    parseMessage(error);
+                                    error = "Port invalide";
+                                    Logger.log(Logger.error,error);
                                     console.log("pfd");
                             } else if(!/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/.test(ip)) {
-                                    error.params.msg = "IP invalide";
-                                    parseMessage(error);
+                                    error = "IP invalide";
+                                    Logger.log(Logger.error,error);
                                     console.log("pfd toussa");
                             } else {
                                     // Si tout s'est bien passé, on peut se connecter
                                     connectWebSocket(ip, port, pseudo);
+                                    Logger.log(Logger.success,"Connexion effectuée au serveur")
                                     console.log("ba alors");
                             }
                     };
