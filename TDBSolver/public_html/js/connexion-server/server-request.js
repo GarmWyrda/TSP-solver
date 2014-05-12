@@ -60,11 +60,10 @@ define('server_request',['jQuery','logger'],function($,Logger){
                             } else {
                                     // Si tout s'est bien passé, on peut se connecter
                                     connectWebSocket(ip, port);
-                                    Logger.log(Logger.success,"Connexion effectuée au serveur");
+                                    Logger.log(Logger.success,"IP et Port valides");
                                     console.log("ba alors");
                             }
                     };
                     $('#connection').click(checkConnectionForm);
-                    $('#connection').click(console.log("bouton fonctionnel"));
  
 });
