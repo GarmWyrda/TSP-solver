@@ -1,4 +1,4 @@
-define('server-request',['jQuery','logger'],function($){
+define('server_request',['jQuery','logger'],function($){
         // Objet connexion avec le serveur
         var serverConnection = { socket: undefined, isConnected: false, ip: "", port: -1, pseudo: "" };
   
