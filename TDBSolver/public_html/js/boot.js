@@ -12,7 +12,7 @@ require.config({
         environment: "model/Environment",
         point : "model/Point",
         way : "model/Way",
-        server_request: "connexion_server/server_request"
+        server-request: "connexion-server/server-request"
     },
     shim: {
         'jQuery': {
