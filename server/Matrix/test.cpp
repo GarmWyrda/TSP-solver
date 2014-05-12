@@ -1,148 +1,105 @@
 #include "matrix.h"
 #include "TestStats.h"
 #include "../Little/Little.h"
-/***Statistiques sur les tests***/
-/*
-struct testStats{
-    int passed;
-    int failed;
-    int done;
-    int planned;
-};
+#include <iostream>
+#include <cstring>
+#include <fstream>
+#include "../tspParse.h"
+#include <sstream>
+#include <string>
+using namespace std;
 
-void printTestStats (testStats &stats){
-    cout << "Planned : " << stats->planned << endl;
-    cout << "Failed : " << stats->failed << endl;
-    cout << "Passed : " << stats->passed << endl;
-    cout << "Missed : " << stats->planned-stats->done << endl;
-}
-
-void printTestStatus (bool test, testStats &stats){
-    stats->done++;
-    if(test){
-        stats->passed++;
-        cout << "PASSED" << endl;
-    }
-    else{
-        stats->failed++;
-        cout << "FAILED" << endl;
-    }
-}
-void coeffTests(Matrix<int>* m,bool callSetValue, int rowMin, int rowMax, int colMin, int colMax, int expectedValue,testStats& stats){
+int main(int argc,char** argv){
+    /*
+    Matrix<int> m(6,6,-1);
     
-}
-
-Matrix<int>* newMatrixTests(int rows, int cols, int defVal, testStats &stats){
-    int coef = -1;
-    Matrix<int>* m = new Matrix<int>(rows,cols,defVal);
+    m.setValue(0,0,-1);
+    m.setValue(1,1,-1);
+    m.setValue(2,2,-1);
+    m.setValue(3,3,-1);
+    m.setValue(4,4,-1);
+    m.setValue(5,5,-1);
+    
+    m.setValue(0,1,780);
+    m.setValue(0,2,320);
+    m.setValue(0,3,580);
+    m.setValue(0,4,480);
+    m.setValue(0,5,660);
+    
+    m.setValue(1,0,780);
+    m.setValue(1,2,700);
+    m.setValue(1,3,460);
+    m.setValue(1,4,300);
+    m.setValue(1,5,200);
+    
+    m.setValue(2,0,320);
+    m.setValue(2,1,700);
+    m.setValue(2,3,380);
+    m.setValue(2,4,820);
+    m.setValue(2,5,630);
+    
+    m.setValue(3,0,580);
+    m.setValue(3,1,460);
+    m.setValue(3,2,380);
+    m.setValue(3,4,750);
+    m.setValue(3,5,310);
+    
+    m.setValue(4,0,480);
+    m.setValue(4,1,300);
+    m.setValue(4,2,820);
+    m.setValue(4,3,750);
+    m.setValue(4,5,500);
+    
+    m.setValue(5,0,660);
+    m.setValue(5,1,200);
+    m.setValue(5,2,630);
+    m.setValue(5,3,310);
+    m.setValue(5,4,500);
+    */
     
     
-    if(rows >= 0 && cols >=0){
-        printTestStatus(m != NULL,stats);
-        int retrievedRows = m->getNbRows();
-        int retrievedCols = m->getNbColumns();
-        printTestStatus(m->getNbRows() == rows, stats);
-        printTestStatus(m->getNbColumns() == cols, stats);
-        printTestStatus(m->getEmptyValue() == defVal, stats);
-        printTestStatus(m->getEmptyValue() == defVal, stats);
-        coeffTests(m,false,0,rows-1,0,cols-1,defVal,stats);
-    }
-    else{
-        printTestStatus(m == NULL,stats);
-    }
-    return m;
-}
-
-void deleteMatrixTests(Matrix<int>* m, testStats stats){
-    bool success;
+    TsplibFile fileInput;
+    char fileMode[] = "-o";
+    char inputFile[] = "-i";
+    Matrix<int> distMatrix(0,0,-1);
+    string name;
+    stringstream outPut;
+            
     
-}
-*/
-
-/*int main2(){
-    testStats stats;
-    stats->failed = 0;
-    stats->passed = 0;
-    stats->done = 0;
-    stats->planned = 429;
-    
-
-    Matrix<int> testMatrix = Matrix<int>(0,0,0);
-    
-    //Test Getters
-
-    printTestStatus(testMatrix.getNbRows() == 0);
-    printTestStatus(testMatrix.getNbColumns() == 0);
-    printTestStatus(testMatrix.getEmptyValue() == 0);
- 
-    
-    testMatrix.addRow(0);
-    try{
-      testMatrix.addRow(-1);  
+    //flux = std::cout
+    for(int i=1;i<argc;i++){
+        if(strcmp(argv[i],inputFile) == 0){
+            TsplibFile fileInput = LoaderFile::load(argv[i+1]);
+            distMatrix = fileInput.getMatrix();
+            name = fileInput.GetName();
+            outPut << "COMMENT : Optimal solution for " 
+            << fileInput.GetName() 
+            << endl
+            << "TYPE : TOUR"
+            << endl
+            << "DIMENSION : "
+            << fileInput.GetDimension()
+            << endl
+            << "TOUR_SECTION"
+            << endl;
+        }
     }
-    catch(IndexOutOfBoundsException ex){
-        printTestStatus(true) ;
+    string Ostring = outPut.str();
+    bool mode = false;
+    for(int i=1;i<argc;i++){
+        if(strcmp(argv[i],fileMode) == 0){
+                ofstream fichier(name, ios::out | ios::app);
+                int size = distMatrix.getNbRows();
+                Way bestWay(size),currentWay(size);
+                little(distMatrix,bestWay,currentWay,0,Ostring);
+                mode = true;
+                fichier << Ostring;
+        }
     }
-    try{
-      testMatrix.addRow(5);  
+    if(!mode){
+        int size = distMatrix.getNbRows();
+        Way bestWay(size),currentWay(size);
+        little(distMatrix,bestWay,currentWay,0,Ostring);
+        cout << Ostring;
     }
-    catch(IndexOutOfBoundsException ex){
-        printTestStatus(true);
-    }
-    testMatrix.addRow(1);
-    cout<<"toussa"<<endl;
-    testMatrix.addColumn(0);
-    cout<<"pfd "<<endl;
-    try{
-      testMatrix.addColumn(-1);  
-    }
-    catch(IndexOutOfBoundsException ex){
-        cout<<"Exception correctly thrown"<<endl ;
-    }
-    try{
-      testMatrix.addColumn(5);  
-    }
-    catch(IndexOutOfBoundsException ex){
-        cout<<"Exception correctly thrown"<<endl ;
-    }
-    cout<<testMatrix.getNbColumns();
-    testMatrix.addColumn(1);
-    cout<<"berthe"<<endl;
-     if(testMatrix.getNbColumns() == 2) {
-        cout<<"addColumn OK"<<endl ;
-    }else {
-        cout<<"addCommn not OK"<<endl;
-    }      
-    printTestStatus(testMatrix.getNbRows() == 2);
-  
-    try{
-        testMatrix.getValue(0,0);
-    }
-    catch(IndexOutOfBoundsException ex){
-        printTestStatus(true);
-    }
-    
-    testMatrix.addColumn(0);
-    printTestStatus(testMatrix.getValue(0,0) == 0);
-    testMatrix.setValue(0,0,5);
-    printTestStatus(testMatrix.getValue(0,0) == 5);
-};*/
-
-int main(){
-    
-    TestStats* stats = new TestStats(415);
-
-    stats->newMatrixTests(2,-1,0);
-    stats->newMatrixTests(-1,3,0);
-    stats->newMatrixTests(-1,-1,0);
-
-    stats->matrixLifeCycleTests(0,0);
-    stats->matrixLifeCycleTests(2,0);
-    stats->matrixLifeCycleTests(0,3);
-    stats->matrixLifeCycleTests(2,3);
-
-    stats->printTestStats();
-    
-    delete stats;
-
 }

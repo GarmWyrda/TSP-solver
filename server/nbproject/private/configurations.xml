@@ -25,8 +25,16 @@
       <runprofile version="9">
         <runcommandpicklist>
           <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
+          <runcommandpicklistitem> -i </runcommandpicklistitem>
+          <runcommandpicklistitem>-i /home/louis/</runcommandpicklistitem>
+          <runcommandpicklistitem>-i /home/louis/gr24.tsp</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" -i "/home/louis/gr24.tsp"</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" -i /home/louisgr24.tsp</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" -i /home/louis/24.tsp</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" -i /home/louis/br17.atsp</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" -i /home/louis/gr24.tsp</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}"</runcommand>
+        <runcommand>"${OUTPUT_PATH}" -i /home/louis/gr24.tsp</runcommand>
         <rundir></rundir>
         <buildfirst>true</buildfirst>
         <terminal-type>0</terminal-type>
