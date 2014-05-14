@@ -6,15 +6,12 @@
 #include "tspParse.h"
 #include <sstream>
 #include <string>
-
+using namespace std;
 // STL containers
 #include <map>
 #include <set>
 
-
 // websocket++
-#include <websocketpp/config/asio_no_tls.hpp>
-#include <websocketpp/server.hpp>
 
 // JSON parser
 #include <boost/property_tree/ptree.hpp>
@@ -23,7 +20,7 @@
 // boost threads
 #include <boost/thread.hpp>
 
-
+/*
 typedef websocketpp::server<websocketpp::config::asio> server;
 
 using websocketpp::connection_hdl;
@@ -33,7 +30,7 @@ using websocketpp::lib::bind;
 using websocketpp::lib::function;
 
 using namespace boost::property_tree;
-using namespace std;
+
 
 
 class Clock
@@ -601,12 +598,12 @@ class ChatServer {
 
 
 };
+*/
 
 
 
-
-
-int main(int argc, char** argv) {
+/*
+int main1(int argc, char** argv) {
 
     int port = 0;
     
@@ -622,9 +619,9 @@ int main(int argc, char** argv) {
 	
     ChatServer server;
     server.run(port);
-}
+}*/
 
-int main1(int argc,char** argv){
+int main(int argc,char** argv){
     /*
     Matrix<int> m(6,6,-1);
     
