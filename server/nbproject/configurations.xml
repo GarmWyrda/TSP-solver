@@ -56,7 +56,7 @@
           <incDir>
             <pElem>websocketpp</pElem>
           </incDir>
-          <commandLine>-D_WEBSOCKETPP_CPP11_STL_ -I websocket/ -lboost_system -lboost_thread -lpthread</commandLine>
+          <commandLine>-D_WEBSOCKETPP_CPP11_STL_ -I websocketpp/ -lboost_system -lboost_thread -lpthread</commandLine>
         </ccTool>
       </compileType>
       <item path="Little.cpp" ex="false" tool="1" flavor2="0">
