@@ -37,7 +37,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/Little.o \
 	${OBJECTDIR}/Matrix/TestStats.o \
-	${OBJECTDIR}/Matrix/test.o \
+	${OBJECTDIR}/test.o \
 	${OBJECTDIR}/tspParse.o
 
 # Test Directory
@@ -51,8 +51,8 @@ TESTFILES= \
 CFLAGS=
 
 # CC Compiler Flags
-CCFLAGS=-std=c++11
-CXXFLAGS=-std=c++11
+CCFLAGS=-lboost_system -lboost_thread -lpthread
+CXXFLAGS=-lboost_system -lboost_thread -lpthread
 
 # Fortran Compiler Flags
 FFLAGS=
@@ -74,22 +74,22 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/server: ${OBJECTFILES}
 ${OBJECTDIR}/Little.o: Little.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.cc) -g -std=c++11 -std=c++11 -MMD -MP -MF $@.d -o ${OBJECTDIR}/Little.o Little.cpp
+	$(COMPILE.cc) -g -Iwebsocketpp -std=c++11 -lboost_system -lboost_thread -lpthread -MMD -MP -MF $@.d -o ${OBJECTDIR}/Little.o Little.cpp
 
 ${OBJECTDIR}/Matrix/TestStats.o: Matrix/TestStats.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Matrix
 	${RM} $@.d
-	$(COMPILE.cc) -g -std=c++11 -std=c++11 -MMD -MP -MF $@.d -o ${OBJECTDIR}/Matrix/TestStats.o Matrix/TestStats.cpp
+	$(COMPILE.cc) -g -Iwebsocketpp -std=c++11 -lboost_system -lboost_thread -lpthread -MMD -MP -MF $@.d -o ${OBJECTDIR}/Matrix/TestStats.o Matrix/TestStats.cpp
 
-${OBJECTDIR}/Matrix/test.o: Matrix/test.cpp 
-	${MKDIR} -p ${OBJECTDIR}/Matrix
+${OBJECTDIR}/test.o: test.cpp 
+	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.cc) -g -std=c++11 -std=c++11 -MMD -MP -MF $@.d -o ${OBJECTDIR}/Matrix/test.o Matrix/test.cpp
+	$(COMPILE.cc) -g -Iwebsocketpp -std=c++11 -lboost_system -lboost_thread -lpthread -MMD -MP -MF $@.d -o ${OBJECTDIR}/test.o test.cpp
 
 ${OBJECTDIR}/tspParse.o: tspParse.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.cc) -g -std=c++11 -std=c++11 -MMD -MP -MF $@.d -o ${OBJECTDIR}/tspParse.o tspParse.cpp
+	$(COMPILE.cc) -g -Iwebsocketpp -std=c++11 -lboost_system -lboost_thread -lpthread -MMD -MP -MF $@.d -o ${OBJECTDIR}/tspParse.o tspParse.cpp
 
 # Subprojects
 .build-subprojects:
@@ -104,13 +104,13 @@ ${TESTDIR}/TestFiles/f1: ${TESTDIR}/tests/newtestclass.o ${TESTDIR}/tests/newtes
 ${TESTDIR}/tests/newtestclass.o: tests/newtestclass.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} $@.d
-	$(COMPILE.cc) -g -std=c++11 -std=c++11 `cppunit-config --cflags` -MMD -MP -MF $@.d -o ${TESTDIR}/tests/newtestclass.o tests/newtestclass.cpp
+	$(COMPILE.cc) -g -Iwebsocketpp -std=c++11 -lboost_system -lboost_thread -lpthread `cppunit-config --cflags` -MMD -MP -MF $@.d -o ${TESTDIR}/tests/newtestclass.o tests/newtestclass.cpp
 
 
 ${TESTDIR}/tests/newtestrunner.o: tests/newtestrunner.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} $@.d
-	$(COMPILE.cc) -g -std=c++11 -std=c++11 `cppunit-config --cflags` -MMD -MP -MF $@.d -o ${TESTDIR}/tests/newtestrunner.o tests/newtestrunner.cpp
+	$(COMPILE.cc) -g -Iwebsocketpp -std=c++11 -lboost_system -lboost_thread -lpthread `cppunit-config --cflags` -MMD -MP -MF $@.d -o ${TESTDIR}/tests/newtestrunner.o tests/newtestrunner.cpp
 
 
 ${OBJECTDIR}/Little_nomain.o: ${OBJECTDIR}/Little.o Little.cpp 
@@ -121,7 +121,7 @@ ${OBJECTDIR}/Little_nomain.o: ${OBJECTDIR}/Little.o Little.cpp
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} $@.d;\
-	    $(COMPILE.cc) -g -std=c++11 -std=c++11 -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/Little_nomain.o Little.cpp;\
+	    $(COMPILE.cc) -g -Iwebsocketpp -std=c++11 -lboost_system -lboost_thread -lpthread -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/Little_nomain.o Little.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/Little.o ${OBJECTDIR}/Little_nomain.o;\
 	fi
@@ -134,22 +134,22 @@ ${OBJECTDIR}/Matrix/TestStats_nomain.o: ${OBJECTDIR}/Matrix/TestStats.o Matrix/T
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} $@.d;\
-	    $(COMPILE.cc) -g -std=c++11 -std=c++11 -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/Matrix/TestStats_nomain.o Matrix/TestStats.cpp;\
+	    $(COMPILE.cc) -g -Iwebsocketpp -std=c++11 -lboost_system -lboost_thread -lpthread -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/Matrix/TestStats_nomain.o Matrix/TestStats.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/Matrix/TestStats.o ${OBJECTDIR}/Matrix/TestStats_nomain.o;\
 	fi
 
-${OBJECTDIR}/Matrix/test_nomain.o: ${OBJECTDIR}/Matrix/test.o Matrix/test.cpp 
-	${MKDIR} -p ${OBJECTDIR}/Matrix
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/Matrix/test.o`; \
+${OBJECTDIR}/test_nomain.o: ${OBJECTDIR}/test.o test.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/test.o`; \
 	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
 	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} $@.d;\
-	    $(COMPILE.cc) -g -std=c++11 -std=c++11 -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/Matrix/test_nomain.o Matrix/test.cpp;\
+	    $(COMPILE.cc) -g -Iwebsocketpp -std=c++11 -lboost_system -lboost_thread -lpthread -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/test_nomain.o test.cpp;\
 	else  \
-	    ${CP} ${OBJECTDIR}/Matrix/test.o ${OBJECTDIR}/Matrix/test_nomain.o;\
+	    ${CP} ${OBJECTDIR}/test.o ${OBJECTDIR}/test_nomain.o;\
 	fi
 
 ${OBJECTDIR}/tspParse_nomain.o: ${OBJECTDIR}/tspParse.o tspParse.cpp 
@@ -160,7 +160,7 @@ ${OBJECTDIR}/tspParse_nomain.o: ${OBJECTDIR}/tspParse.o tspParse.cpp
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} $@.d;\
-	    $(COMPILE.cc) -g -std=c++11 -std=c++11 -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/tspParse_nomain.o tspParse.cpp;\
+	    $(COMPILE.cc) -g -Iwebsocketpp -std=c++11 -lboost_system -lboost_thread -lpthread -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/tspParse_nomain.o tspParse.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/tspParse.o ${OBJECTDIR}/tspParse_nomain.o;\
 	fi

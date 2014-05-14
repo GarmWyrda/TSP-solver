@@ -37,7 +37,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/Little.o \
 	${OBJECTDIR}/Matrix/TestStats.o \
-	${OBJECTDIR}/Matrix/test.o \
+	${OBJECTDIR}/test.o \
 	${OBJECTDIR}/tspParse.o
 
 # Test Directory
@@ -81,10 +81,10 @@ ${OBJECTDIR}/Matrix/TestStats.o: Matrix/TestStats.cpp
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/Matrix/TestStats.o Matrix/TestStats.cpp
 
-${OBJECTDIR}/Matrix/test.o: Matrix/test.cpp 
-	${MKDIR} -p ${OBJECTDIR}/Matrix
+${OBJECTDIR}/test.o: test.cpp 
+	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/Matrix/test.o Matrix/test.cpp
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/test.o test.cpp
 
 ${OBJECTDIR}/tspParse.o: tspParse.cpp 
 	${MKDIR} -p ${OBJECTDIR}
@@ -139,17 +139,17 @@ ${OBJECTDIR}/Matrix/TestStats_nomain.o: ${OBJECTDIR}/Matrix/TestStats.o Matrix/T
 	    ${CP} ${OBJECTDIR}/Matrix/TestStats.o ${OBJECTDIR}/Matrix/TestStats_nomain.o;\
 	fi
 
-${OBJECTDIR}/Matrix/test_nomain.o: ${OBJECTDIR}/Matrix/test.o Matrix/test.cpp 
-	${MKDIR} -p ${OBJECTDIR}/Matrix
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/Matrix/test.o`; \
+${OBJECTDIR}/test_nomain.o: ${OBJECTDIR}/test.o test.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/test.o`; \
 	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
 	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} $@.d;\
-	    $(COMPILE.cc) -O2 -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/Matrix/test_nomain.o Matrix/test.cpp;\
+	    $(COMPILE.cc) -O2 -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/test_nomain.o test.cpp;\
 	else  \
-	    ${CP} ${OBJECTDIR}/Matrix/test.o ${OBJECTDIR}/Matrix/test_nomain.o;\
+	    ${CP} ${OBJECTDIR}/test.o ${OBJECTDIR}/test_nomain.o;\
 	fi
 
 ${OBJECTDIR}/tspParse_nomain.o: ${OBJECTDIR}/tspParse.o tspParse.cpp 

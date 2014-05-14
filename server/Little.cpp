@@ -228,29 +228,25 @@ void deleteInvalidWays(Matrix<int> &matrix, Way &currentWay, int index){
                 headFoundIndex = i;
             }
         }
-        
-        Pair nextPair;
+        int i;
         if(headFound && !tailFound){
-            currentPair = currentWay.getPoints()[headFoundIndex];
-            nextPair = currentWay.getPoints()[headFoundIndex-1];
-            int i = headFoundIndex-1;
-            while (i>=0 && currentPair.getI() == nextPair.getJ()){
-                currentPair = nextPair;
-                nextPair = currentWay.getPoints()[i];
-                i--;
-            }
-            matrix.setValue(addedPair.getJ(),currentPair.getI(),matrix.getEmptyValue());
-        }
-        if(tailFound && !headFound){
-            currentPair = currentWay.getPoints()[tailFoundIndex];
-            nextPair = currentWay.getPoints()[tailFoundIndex+1];
-            int i = tailFoundIndex+1;
-            while (currentPair.getJ() == nextPair.getI() && (currentPair.getI() != 0 || currentPair.getJ() != 0)){
-                currentPair = nextPair;
-                nextPair = currentWay.getPoints()[i];
+            i = index;
+            while(currentWay.getPoints()[i].getJ() != addedPair.getI()){
                 i++;
             }
-            matrix.setValue(addedPair.getJ(),currentPair.getI(),matrix.getEmptyValue());
+            i--;
+            matrix.setValue(i,addedPair.getI(),matrix.getEmptyValue());
+        }
+        if(!headFound && tailFound){
+            i = index-2;
+            while(currentWay.getPoints()[i].getI() != addedPair.getJ()){
+                i--;
+            }
+            i++;
+            matrix.setValue(addedPair.getJ(),i,matrix.getEmptyValue());
+        }
+        if(headFound && tailFound){
+            
         }
     }
 }
