@@ -6,8 +6,8 @@ define('server_interaction',['jQuery','logger','server_request'],function($,Logg
         if (window.WebSocket && (serverConnection.isConnected === true) ){
             
             console.log($('#bywalk').val());
-            if(($('#bywalk').val())==="true"){
-                 way = 'distanceMatrix';
+            if($('#checkBox').attr('checked') === true){
+                 way = 'byWalk';
                  byWalk = true;
                  console.log('à pied');
             }else{
@@ -61,7 +61,6 @@ define('server_interaction',['jQuery','logger','server_request'],function($,Logg
 
         getGoodMatrix = function(name) {
             if (localStorage.getItem(name) === null) {
-              console.log(this);
               Logger.log(Logger.error,"matrice non présente dans le local storage");
               var matrix = null;
             }
@@ -74,7 +73,6 @@ define('server_interaction',['jQuery','logger','server_request'],function($,Logg
                 for (var i = 0; i < [$nbElement.val()]; i++) {
                     matrix[i] = new Array();
                     for (var j = 0; j < [$nbElement.val()]; j++) {
-                        console.log(i);
                         matrix[i][j] = parseInt(data[i][j]);
                     }
                 }
