@@ -37,7 +37,8 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/Little.o \
 	${OBJECTDIR}/Matrix/TestStats.o \
-	${OBJECTDIR}/test.o \
+	${OBJECTDIR}/Obspattern.o \
+	${OBJECTDIR}/server.o \
 	${OBJECTDIR}/tspParse.o
 
 # Test Directory
@@ -81,10 +82,15 @@ ${OBJECTDIR}/Matrix/TestStats.o: Matrix/TestStats.cpp
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/Matrix/TestStats.o Matrix/TestStats.cpp
 
-${OBJECTDIR}/test.o: test.cpp 
+${OBJECTDIR}/Obspattern.o: Obspattern.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/test.o test.cpp
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/Obspattern.o Obspattern.cpp
+
+${OBJECTDIR}/server.o: server.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/server.o server.cpp
 
 ${OBJECTDIR}/tspParse.o: tspParse.cpp 
 	${MKDIR} -p ${OBJECTDIR}
@@ -139,17 +145,30 @@ ${OBJECTDIR}/Matrix/TestStats_nomain.o: ${OBJECTDIR}/Matrix/TestStats.o Matrix/T
 	    ${CP} ${OBJECTDIR}/Matrix/TestStats.o ${OBJECTDIR}/Matrix/TestStats_nomain.o;\
 	fi
 
-${OBJECTDIR}/test_nomain.o: ${OBJECTDIR}/test.o test.cpp 
+${OBJECTDIR}/Obspattern_nomain.o: ${OBJECTDIR}/Obspattern.o Obspattern.cpp 
 	${MKDIR} -p ${OBJECTDIR}
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/test.o`; \
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/Obspattern.o`; \
 	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
 	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} $@.d;\
-	    $(COMPILE.cc) -O2 -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/test_nomain.o test.cpp;\
+	    $(COMPILE.cc) -O2 -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/Obspattern_nomain.o Obspattern.cpp;\
 	else  \
-	    ${CP} ${OBJECTDIR}/test.o ${OBJECTDIR}/test_nomain.o;\
+	    ${CP} ${OBJECTDIR}/Obspattern.o ${OBJECTDIR}/Obspattern_nomain.o;\
+	fi
+
+${OBJECTDIR}/server_nomain.o: ${OBJECTDIR}/server.o server.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/server.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} $@.d;\
+	    $(COMPILE.cc) -O2 -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/server_nomain.o server.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/server.o ${OBJECTDIR}/server_nomain.o;\
 	fi
 
 ${OBJECTDIR}/tspParse_nomain.o: ${OBJECTDIR}/tspParse.o tspParse.cpp 
