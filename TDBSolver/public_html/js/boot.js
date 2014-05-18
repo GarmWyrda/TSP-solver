@@ -22,7 +22,7 @@ require.config({
     }
 });
 
-require(["logger","environment","distanceMatrix", "ui","server_request","serveur_interaction"], init);
+require(["logger","environment","distanceMatrix", "ui","server_request","server_interaction"], init);
 
 
 function init(Logger) {
