@@ -1,4 +1,4 @@
-define('server_request',['jQuery','logger','listener'],function($,Logger){
+define('server_request',['jQuery','logger','listener','way'],function($,Logger){
         // Objet connexion avec le serveur
         var serverConnection = { socket: undefined, isConnected: false, ip: "", port: -1 };
   
@@ -55,8 +55,8 @@ define('server_request',['jQuery','logger','listener'],function($,Logger){
                                                     $('#cost').innerHTML(inMessage.cost);
                                                     $('#time').innerHTML(inMessage.time);
                                                     $('#type').innerHTML(inMessage.sol);
-                                                    localStorage.setItem("points",inMessage.way);
-                                                    for (var i = 0; i <way.length;i++){
+                                                   // localStorage.setItem("points",inMessage.way);
+                                                    for (var i = 0; i <inMessage.way.length;i++){
                                                         var newWay = new Way(inMessage.way[i][0],inMessage.way[i][1], inMessage.byWalk);
                                                     }
                                                 case 'error':
