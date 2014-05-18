@@ -55,7 +55,7 @@ define('server_request',['jQuery','logger','listener'],function($,Logger){
                                                     $('#cost').innerHTML(inMessage.cost);
                                                     $('#time').innerHTML(inMessage.time);
                                                     $('#type').innerHTML(inMessage.sol);
-                                                    localStorage.setItem("points",inMessage.matrix);
+                                                    localStorage.setItem("points",inMessage.way);
                                                 case 'error':
                                                     Logger.log(Logger.error,inMessage.msg);    
                                                     break;
