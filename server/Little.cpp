@@ -192,10 +192,7 @@ void Little::deleteInvalidWays(Matrix<int> &matrix, Way &currentWay, int index){
 
 Way Little::solve(Matrix<int> matrix,Way &bestWay,Way &currentWay,int count){
     deleteInvalidWays(matrix,currentWay,count);
-    cout << currentWay << endl;
-    cout << matrix<< endl;
     int weight = reduceMatrix(matrix);
-    cout << matrix<< endl;
     currentWay.setLength(currentWay.getLength() + weight);
     if(currentWay.getLength() >= bestWay.getLength() && bestWay.getLength() != 0){
         cout << bestWay <<endl;
@@ -214,11 +211,9 @@ Way Little::solve(Matrix<int> matrix,Way &bestWay,Way &currentWay,int count){
                     }
                 }
                 setBestWay(currentWay);
-                cout << bestWay <<endl;
                 return bestWay;
             }
             else{
-                cout << bestWay <<endl;
                 return bestWay;
             }
         }
@@ -226,12 +221,10 @@ Way Little::solve(Matrix<int> matrix,Way &bestWay,Way &currentWay,int count){
            Regret regret = getMaxRegret(matrix);
            Matrix<int> matrix1 = matrix;
            removeRowAndCol(matrix,regret.getI(),regret.getJ());
-           cout << matrix<< endl;
            Way currentWay2 = currentWay;
            currentWay.addPoints(regret.getI(),regret.getJ(),count);
            solve(matrix,bestWay,currentWay,count + 1);
            if(currentWay.getLength() + regret.getValue() >= bestWay.getLength()){
-               cout << bestWay <<endl;
                return bestWay;
            }
            else{
@@ -240,18 +233,22 @@ Way Little::solve(Matrix<int> matrix,Way &bestWay,Way &currentWay,int count){
            }
         }
     }
-    cout << bestWay <<endl;
     return bestWay;
 }
 
-Way Little::call(Matrix<int> &matrix){
+Way Little::call(Matrix<int> &matrix, LittleObs* obs){
     if(Little::isRunning){
         throw AlreadyRunningEx();
     }
     Way bestWay(matrix.getNbRows());
     Little newLittle(matrix,bestWay);
     Way currentWay(matrix.getNbRows());
-    return newLittle.solve(newLittle.distMatrix,bestWay,currentWay,0);
+    if(obs != NULL){
+        obs->AddObs(&newLittle);
+        newLittle.AddObs(obs);
+    }
+    newLittle.solve(newLittle.distMatrix,bestWay,currentWay,0);
+    return newLittle.bestWay;
 }
 
 Little::Little(Matrix<int> distMatrix, Way bestWay): distMatrix(distMatrix){
@@ -267,13 +264,14 @@ void Little::setBestWay(Way &way){
     Notify();
 }
 
-Way Little::Statut(){
+Way Little::Statut(void){
     return this->bestWay;
 }
 
 void LittleObs::Update(Observable* observable){
-    string output;
-    output += observable->Statut().toString();
-    output += ", \"state\" : \"ongoing\" ";
-    
+    stringstream output;
+    Way way = observable->Statut();
+    output << way;
+    output << ", \"state\" : \"ongoing\" , \"type\" : \"little\" }";
+    this->conn->send(output.str());
 }
