@@ -13,116 +13,133 @@ and open the template in the editor.
     </head>
     <body>
         <script data-main="js/boot.js" src="lib/require.js"></script>
-        <div class="container-fluid">
-            <div class="page-header">
-                <h3>TBP Solver <small>find Rubik's Cube</small></h3>
-                
-                <div class="row" id="Socket">
-                    <span id="etat">
-                        <span class="error">Web Socket closed</span>
-                    </span>
-                    <span id="connexion_form">
-                            <input type="text" pattern="\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}" id="ip" value="127.0.0.1" placeholder="IP de l'hôte" required />
-                            <input type="number" min="1" max="65535" step="1" id="port" value="9002"/>
-                            <button id="connection" class="btn btn-primary" type="button">
-                            <span class="glyphicon glyphicon-user"></span>
-                             Connection
-                        </button>
-                    <span>
-                </div>
-                <div class="row" id="toolbar">
-                    <div class="btn-group col-md-3">
-                        <button id="play" class="btn btn-primary" type="button">
-                            <span class="glyphicon glyphicon-play"></span>
-                             Play
-                        </button>
-                        <button id="pause" class="btn btn-primary" type="button">
-                            <span class="glyphicon glyphicon-pause"></span>
-                             Pause
-                        </button>
-                        <button id="stop" class="btn btn-primary" type="button">
-                             <span class="glyphicon glyphicon-stop"></span>
-                             Stop
-                        </button>
-                    </div>
-                    <div id="TSP_state" class="col-md-9">
-                        <div class="col-md-2">
-                            <p>
-                                Temps de calcul: <p id="time"></p>
-                            </p>
-                        </div>
-                        <div class="col-md-2">
-                            <p>
-                                Coût : <p id='coast'></p>
-                            </p>
-                        </div>
-                        <div class="col-md-2">
-                            <p>
-                                Type : <p id="type"></p>
-                        </div>
-                    </div>
-                </div>
+        <nav class="navbar navbar-inverse" role="navigation">
+            <div class="col-md-4">
+                <a class="navbar-brand">TPB Solver</a>
+                <p class="navbar-text">find Rubik's Cube</p>
+            </div>
+            <div class="col-md-3">
+
+            </div>
+            <div class="col-md-5">
                 <div class="row">
-                    <div class="col-md-6">
+                    <span id="etat">
+                        <span class="btn-danger">Web Socket closed</span>
+                    </span>
+
+                    <span id="connexion_form">
+                        <input type="text" pattern="\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}" id="ip" value="127.0.0.1" placeholder="IP de l'hôte" required />
+                        <input type="number" min="1" max="65535" step="1" id="port" value="9002"/>
+                        <button id="connection" class="btn btn-primary" type="button">
+                            <span class="glyphicon glyphicon-user"></span>
+                            Connection
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </nav>
+        
+        <div class="row">
+
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-7">
                         <div class="row">
-                            <div class="col-md-8">
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <h5>Nb <span class="glyphicon glyphicon-map-marker"></span> <select id="list"></select></h5>
-                                    </div>
-                                    <div class="col-md-5">
-                                        <h5>From <select id="ptA"></select> To <select id="ptB"></select></h5>                                        
-                                    </div>
-                                    <div class="col-md-4">
-                                        <h5><input id="bywalk" type="checkbox" value="true"> By Walk</h5>
-                                    </div>
-                                </div> 
+                            <div class="col-md-4">
+                                <h5>Nb <span class="glyphicon glyphicon-map-marker"></span> <select id="list"></select></h5>
                             </div>
                             <div class="col-md-4">
-                                <div class="btn-group">
-                                    <button id="validWay" type="button" class="btn btn-primary">
-                                         <span class="glyphicon glyphicon-pencil"></span> Draw
-                                     </button>
-                                    <button id="clearWays" type="button" class="btn btn-danger">
-                                         <span class="glyphicon glyphicon-floppy-remove"></span> Ways
-                                     </button>
-                                 </div>
+                                <h5><select id="ptA"></select> <span class="glyphicon glyphicon-play"></span> <select id="ptB"></select></h5>                                        
                             </div>
-                        </div>
+                            <div class="col-md-4">
+                                <h5><input id="bywalk" type="checkbox" value="true"> By Walk</h5>
+                            </div>
+                        </div> 
                     </div>
-                    <div class="col-md-6">
+                    
+                    <div class="col-md-4">
                         <div class="btn-group">
-                            <button id="getMatrixFly" type="button" class="btn btn-primary">
-                                <span class="glyphicon glyphicon-th"></span> Off Road
+                            <button id="validWay" type="button" class="btn btn-primary">
+                                <span class="glyphicon glyphicon-pencil"></span> Draw
                             </button>
-                            <button id="getMatrixWalk" type="button" class="btn btn-primary">
-                                <span class="glyphicon glyphicon-th"></span> By Walk
-                            </button>
-                            <button id="clearMatrix" type="button" class="btn btn-danger">
-                                <span class="glyphicon glyphicon-trash"></span> Matrix
-                            </button>
-                            <button id="clearCache" type="button" class="btn btn-danger">
-                                <span class="glyphicon glyphicon-floppy-remove"></span> Local Storage
+                            <button id="clearWays" type="button" class="btn btn-danger">
+                                <span class="glyphicon glyphicon-floppy-remove"></span> Ways
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class ="row">
-                <div class="col-md-6">
-                    <div id='map'>
-                    </div>
-                </div>
-
-                <div id ="matrix" class="col-md-6">
-                </div>
-                
-            </div>
-            <div class="row">
-                <div id ="logger" class ="">
+            
+            <div class="col-md-6">
+                <div class="btn-group">
+                    <button id="getMatrixFly" type="button" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-th"></span> Off Road
+                    </button>
+                    <button id="getMatrixWalk" type="button" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-th"></span> By Walk
+                    </button>
+                    <button id="clearMatrix" type="button" class="btn btn-danger">
+                        <span class="glyphicon glyphicon-trash"></span> Matrix
+                    </button>
+                    <button id="clearCache" type="button" class="btn btn-danger">
+                        <span class="glyphicon glyphicon-floppy-remove"></span> Local Storage
+                    </button>
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div id="TSP_state" class="col-md-12">
+                    <div class="col-md-4">
+                        <p>
+                            Temps de calcul: <p id="time"></p>
+                        </p>
+                    </div>
+                    <div class="col-md-4">
+                        <p>
+                            Coût : <p id='coast'></p>
+                        </p>
+                    </div>
+                    <div class="col-md-4">
+                        <p>
+                            Type : <p id="type"></p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="btn-group col-md-6">
+                    <button id="play" class="btn btn-primary" type="button">
+                        <span class="glyphicon glyphicon-play"></span>
+                        Play
+                    </button>
+                    <button id="pause" class="btn btn-primary" type="button">
+                        <span class="glyphicon glyphicon-pause"></span>
+                        Pause
+                    </button>
+                    <button id="stop" class="btn btn-primary" type="button">
+                        <span class="glyphicon glyphicon-stop"></span>
+                        Stop
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="row"><hr></div>
 
-    </body>
+        <div class ="row">
+            <div class="col-md-6">
+                <div id='map'>
+                </div>
+            </div>
+            <div id ="matrix" class="col-md-6">
+            </div>
+        </div>
+        
+        <div class="row">
+            <div id ="logger" class ="col-md-12">
+            </div>
+        </div>
+
+</body>
 </html>

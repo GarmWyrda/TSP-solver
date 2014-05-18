@@ -18,14 +18,14 @@ define('server_request',['jQuery','logger','listener'],function($,Logger){
                                     serverConnection.ip = ip;
                                     serverConnection.port = port;
 
-                                    for(var i=0; i< 1; i++){
-                                            serverConnection.socket = new WebSocket(host);
-                                    }
+                                
+                                    serverConnection.socket = new WebSocket(host);
+                                    
                                     // Handler déclanché lors de l'ouverture de la websocket
                                     serverConnection.socket.onopen = function(event) {
                                             serverConnection.isConnected = true;
                                             $('#etat').html('<span class="info">Web Socket opened</span>');
-                                            serverConnection.socket.send($.toJSON(request));
+                                            //serverConnection.socket.send($.toJSON(request));
                                     };
 
                                     // Handler déclanché lors de la fermeture de la websocket
@@ -39,9 +39,32 @@ define('server_request',['jQuery','logger','listener'],function($,Logger){
                                             serverConnection.isConnected = false;
                                             var error = "Impossible de se connecter au serveur ["+event.target.url+"]";
                                             Logger.log(Logger.error,error);
-                                    };
-                            }
-                    };
+                                    };       
+                                            // Handler déclanché dès qu'un nouveau message est envoyé au client
+                                    serverConnection.socket.onmessage = function(event) {
+                                        var msg = $.parseJSON(event.data);
+                                        parseMessage(msg);
+                                    };        
+                                    function parseMessage(inMessage) {
+
+                                            switch(inMessage.type) {
+                                                case 'success':
+                                                    Logger.log(Logger.success,inMessage.msg);
+                                                     break;
+                                                case 'little':
+                                                    $('#coast').innerHTML(inMessage.coast);
+                                                    $('#time').innerHTML(inMessage.time);
+                                                    $('#type').innerHTML(inMessage.sol);
+                                                    localStorage.setItem("points",inMessage.matrix);
+                                                case 'error':
+                                                    Logger.log(Logger.error,inMessage.msg);    
+                                                    break;
+                                                default:
+                                                    return;
+                                            }
+                                        };
+                                    }
+                            };
 
                     // Vérifie que le formulaire de connexion est valide
                     var checkConnectionForm = function() {
@@ -51,20 +74,16 @@ define('server_request',['jQuery','logger','listener'],function($,Logger){
 
                             if(!(port > 0 && port < 65536)) {
                                     error = "Port invalide";
-                                    Logger.log(Logger.error,error);
-                                    console.log("pfd");
+                                    Logger.log(Logger.error,error);                                   
                             } else if(!/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/.test(ip)) {
                                     error = "IP invalide";
                                     Logger.log(Logger.error,error);
-                                    console.log("pfd toussa");
                             } else {
                                     // Si tout s'est bien passé, on peut se connecter
                                     connectWebSocket(ip, port);
                                     Logger.log(Logger.success,"IP et Port valides");
-                                    console.log("ba alors");
                             }
                     };
                     $('#connection').click(checkConnectionForm);
-                   // Listener('#connection','click',checkConnectionForm);
- 
+        return serverConnection;
 });
