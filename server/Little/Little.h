@@ -24,6 +24,15 @@ using websocketpp::connection_hdl;
 using std::stringstream;
 using std::string;
 
+class LittleObs : public Observateur{
+private:
+    server::connection_ptr conn;
+public:
+    LittleObs(server::connection_ptr conn){this->conn = conn;};
+    ~LittleObs(){};
+    void Update(Observable* observable);
+};
+
 class Regret{
 private:
     int i,j;
@@ -60,19 +69,13 @@ private:
     void setBestWay(Way &way);
     
 public:
-    Way Statut();
-    static Way call(Matrix<int>& distMatrix);
+    Way Statut(void);
+    static Way call(Matrix<int>& distMatrix, LittleObs* obs=NULL);
 };
 
 class AlreadyRunningEx{
 };
 
-class LittleObs : Observateur{
-private:
-    server::connection_ptr conn;
-public:
-    LittleObs(server::connection_ptr conn){this->conn = conn;};
-    void Update(Observable* observable);
-};
+
 #endif
 

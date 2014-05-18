@@ -13,8 +13,9 @@
 #include <iterator>
 #include <algorithm>
 #include "Way.h"
-
-
+#include <iostream>
+#include <sstream>
+using std::stringstream;
 typedef int Info;
 
 class Observable;
@@ -22,10 +23,10 @@ class Observable;
 class Observateur
 {
  protected:
-    std::list<Observable*> m_list;
+   std::list<Observable*> m_list;
    typedef std::list<Observable*>::iterator iterator; 
    typedef std::list<Observable*>::const_iterator const_iterator;
-   virtual ~Observateur() = 0;
+   virtual ~Observateur()=0;
  public:
     virtual void Update(Observable* observable);
 
@@ -43,7 +44,7 @@ class Observable
  public:
     void AddObs( Observateur* obs);
     void DelObs(Observateur* obs);
-        virtual Way Statut(void)=0;
+        virtual Way Statut()=0;
     virtual ~Observable();
  protected:
     void Notify(void);

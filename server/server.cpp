@@ -76,20 +76,30 @@ void Request::handle(){
     Way result;
     if(type == "play"){
         if(matrix != NULL && matrix->getNbRows() >= 0){
-            try{
                 std::cout << "Calling Little algorithm for client : " << conn->get_remote_endpoint() << std::endl;
                 std::cout << *matrix << std::endl;
-                result = Little::call(*matrix);
+                LittleObs* obs;
+                obs = new LittleObs(this->conn);
+                result = Little::call(*matrix,obs);
                 msg << result;
-            }
-            catch(AlreadyRunningEx ex){
-            msg << "{\"type\":\"error\" , \"msg\":\"alreadyRunning\"}";           
-            this->conn->send(msg.str());
-            }
-        }else{
-            msg << "{\"type\":\"error\" , \"msg\":\"invalidMatrix\"}";           
+                msg << ", \"state\" : \"finished\" , \"type\" : \"little\"}";
+                cout << msg.str() << endl;
+                this->conn->send(msg.str());
+        }
+        else{
+            msg << "{\"type\":\"error\" , \"msg\":\"invalidMatrix\"}";
             this->conn->send(msg.str());
         }
+    }
+    else if(type == "pause"){
+        stringstream msg;
+        msg << "{\"type\":\"success\" , \"msg\":\"Pausing calculation\"}";
+        this->conn->send(msg.str());
+    }
+    else if(type == "stop"){
+        stringstream msg;
+        msg << "{\"type\":\"success\" , \"msg\":\"Stopping calculation\"}";
+        this->conn->send(msg.str());
     }
 }
 
@@ -118,7 +128,7 @@ public:
     }
     void onClose(connection_hdl hdl) {
         server::connection_ptr conn = this->ws_server.get_con_from_hdl(hdl);
-        cout << "Client disconnec : " << conn->get_remote_endpoint() << endl;
+        cout << "Client disconnected : " << conn->get_remote_endpoint() << endl;
     }
 
     void onMessage(connection_hdl hdl, server::message_ptr msg) {
@@ -168,8 +178,9 @@ public:
                 req = new Request(type,conn,&matrix);
             }
             else if(type == "pause"){
-                std::cout << "Pausing computation" << std::endl; 
+                std::cout << "Pausing computation" << std::endl;
                 req = new Request(type,conn);
+                
             }
             else if(type == "stop"){
                 std::cout << "Stoping computation" << std::endl;

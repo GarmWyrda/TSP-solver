@@ -8,7 +8,12 @@
 #ifndef WAY_H
 #define	WAY_H
 #include <string>
+#include <sstream>
+#include <vector>
+#include <iostream>
+using namespace std;
 using std::string;
+using std::vector;
 class Pair{
 private:
     int i,j;
@@ -35,39 +40,16 @@ public:
     float getLength(){return this->length;};
     void addPoints(int a, int b,int index);
     vector<Pair>& getPoints(){return this->points;};
-    string toString(){
-        string flux;
-        flux += "{";
-        flux += "\"cost\" : \"";
-        flux += this->length;
-        flux += "\"";
-        flux += " , ";
-        flux += "\"way\" : \"[";
-        int i;
-        for(i = 0;i<this->points.size()-1;i++){
-            flux += "[";
-            flux += this->points[i].getI();
-            flux += ",";
-            flux += this->points[i].getJ();
-            flux += "],";
-        }
-        flux += "[";
-        flux += this->points[i].getI();
-        flux += ",";
-        flux += this->points[i].getJ();
-        flux +="]]";
-        return flux;
-    }
+
     friend ostream& operator<<( ostream &flux, Way &way ){
-        flux << "{";
-        flux << "\"cost\" : \""<< way.length << "\"";
-        flux << " , ";
-        flux << "\"way\" : \"[";
+        flux << "{\"cost\":\"" << way.length << "\"";
+        flux << ",";
+        flux << "\"way\":[";
         int i;
         for(i = 0;i<way.points.size()-1;i++){
-            flux << "[" << way.points[i].getI() << "," << way.points[i].getJ() << "],";
+            flux << "[" << way.points[i].getI()+1 << "," << way.points[i].getJ()+1 << "],";
         }
-        flux << "[" << way.points[i].getI() << "," << way.points[i].getJ() << "]]";
+        flux << "[" << way.points[i].getI()+1 << "," << way.points[i].getJ()+1 << "]]";
         return flux;
     }
     
