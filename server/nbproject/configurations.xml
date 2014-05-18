@@ -6,8 +6,11 @@
                    projectFiles="true">
       <itemPath>Matrix/IndexOutOfBoundsException.h</itemPath>
       <itemPath>Little/Little.h</itemPath>
+      <itemPath>Obspattern.h</itemPath>
       <itemPath>Matrix/TestStats.h</itemPath>
+      <itemPath>Way.h</itemPath>
       <itemPath>Matrix/matrix.h</itemPath>
+      <itemPath>tspParse.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -17,9 +20,10 @@
                    displayName="Source Files"
                    projectFiles="true">
       <itemPath>Little.cpp</itemPath>
+      <itemPath>Obspattern.cpp</itemPath>
       <itemPath>Matrix/TestStats.cpp</itemPath>
+      <itemPath>server.cpp</itemPath>
       <itemPath>tspParse.cpp</itemPath>
-      <itemPath>tspParse.h</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"
@@ -54,10 +58,13 @@
         <ccTool>
           <standard>8</standard>
           <incDir>
-            <pElem>websocketpp</pElem>
+            <pElem>.</pElem>
           </incDir>
-          <commandLine>-D_WEBSOCKETPP_CPP11_STL_ -I websocketpp/ -lboost_system -lboost_thread -lpthread</commandLine>
+          <commandLine>-std=c++11</commandLine>
         </ccTool>
+        <linkerTool>
+          <commandLine>-lboost_system -lpthread</commandLine>
+        </linkerTool>
       </compileType>
       <item path="Little.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -70,6 +77,12 @@
       <item path="Matrix/TestStats.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Matrix/matrix.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Obspattern.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Obspattern.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Way.h" ex="false" tool="3" flavor2="0">
       </item>
       <folder path="TestFiles/f1">
         <cTool>
@@ -85,7 +98,7 @@
           </linkerLibItems>
         </linkerTool>
       </folder>
-      <item path="test.cpp" ex="false" tool="1" flavor2="0">
+      <item path="server.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="tests/newtestclass.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -131,6 +144,12 @@
       </item>
       <item path="Matrix/matrix.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Obspattern.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Obspattern.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Way.h" ex="false" tool="3" flavor2="0">
+      </item>
       <folder path="TestFiles/f1">
         <cTool>
           <commandLine>`cppunit-config --cflags`</commandLine>
@@ -145,7 +164,7 @@
           </linkerLibItems>
         </linkerTool>
       </folder>
-      <item path="test.cpp" ex="false" tool="1" flavor2="0">
+      <item path="server.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="tests/newtestclass.cpp" ex="false" tool="1" flavor2="0">
       </item>

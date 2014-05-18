@@ -11,6 +11,17 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <sstream>
+#include "../Obspattern.h"
+// boost threads
+#include <boost/thread.hpp>
+#include "../Way.h"
+#define _WEBSOCKETPP_CPP11_STL_
+#include <websocketpp/config/asio_no_tls.hpp>
+#include <websocketpp/server.hpp>
+typedef websocketpp::server<websocketpp::config::asio> server;
+using websocketpp::connection_hdl;
+using std::stringstream;
 using std::string;
 
 class Regret{
@@ -26,43 +37,42 @@ public:
     float getJ(){return this->j;};
 };
 
-class Pair{
+
+class Little : public Observable{
 private:
-    int i,j;
-public:
-    Pair(int i=0,int j = 0){this->i = i; this->j=j;};
-    Pair(const Pair &pair){this->i = pair.i; this->j = pair.j;};
+    Matrix<int> distMatrix;
+    Way bestWay;
+    boost::thread* pThread; // The thread runs this object
+    static bool isRunning;
     
-    int getI(){return this->i;};
-    int getJ(){return this->j;};
-    void setI(int i){this->i = i;};
-    void setJ(int j){this->j = j;};
+    Little(Matrix<int> distMatrix, Way bestWay);
+    ~Little(){Little::isRunning = false;};
+    Way solve(Matrix<int> matrix,Way &bestWay,Way &currentWay, int count);
+    void deleteInvalidWays(Matrix<int> &matrix, Way &currentWay, int index);
+    void removeRowAndCol(Matrix<int> &matrix,int row,int col);
+    Regret getMaxRegret(Matrix<int> &matrix);
+    int getRegret(Matrix<int> &matrix, int row,int col);
+    int reduceMatrix(Matrix<int> &matrix);
+    void clearColumn(Matrix<int> &matrix, int column, float value);
+    float getMinOnColumn(Matrix<int> &matrix, int column);
+    void clearRow(Matrix<int> &matrix, int row, float value);
+    float getMinOnRow(Matrix<int> &matrix, int row);
+    void setBestWay(Way &way);
+    
+public:
+    Way Statut();
+    static Way call(Matrix<int>& distMatrix);
 };
 
-class Way{
-private:
-    vector<Pair> points;
-    float length;
-public:
-    Way(int n=0){this->points = vector<Pair>(n);this->length = 0;};
-    Way(const Way &way){this->points = way.points; this->length = way.length;};
-    ~Way(){};
-    
-    void setLength(float l){this->length = l;};
-    float getLength(){return this->length;};
-    void addPoints(int a, int b,int index);
-    vector<Pair>& getPoints(){return this->points;};
-    friend ostream& operator<<( ostream &flux, Way &way ){
-        for(int i = 0;i<way.points.size();i++){
-            flux << "(" << way.points[i].getI() << "," << way.points[i].getJ() << ") - ";
-        }
-        flux << way.length;
-        return flux;
-    }
-    
+class AlreadyRunningEx{
 };
 
-Way little(Matrix<int> matrix,Way &bestWay,Way &currentWay, int count, string &flux);
-Way little(Matrix<int> matrix,Way &bestWay,Way &currentWay, int count=0);
+class LittleObs : Observateur{
+private:
+    server::connection_ptr conn;
+public:
+    LittleObs(server::connection_ptr conn){this->conn = conn;};
+    void Update(Observable* observable);
+};
 #endif
 

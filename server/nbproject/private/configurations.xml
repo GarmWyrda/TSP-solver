@@ -33,8 +33,9 @@
           <runcommandpicklistitem>"${OUTPUT_PATH}" -i /home/louis/24.tsp</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -i /home/louis/br17.atsp</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -i /home/louis/gr24.tsp</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" 9002</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}" -i /home/louis/gr24.tsp</runcommand>
+        <runcommand>"${OUTPUT_PATH}" 9002</runcommand>
         <rundir></rundir>
         <buildfirst>true</buildfirst>
         <terminal-type>0</terminal-type>

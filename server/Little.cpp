@@ -8,73 +8,20 @@
 #include <cstdlib>
 #include "Little/Little.h"
 #include <iostream>
+#include <string>
+using std::string;
 using std::cout;
 /*
  * 
  */
 void Way::addPoints(int a, int b,int index){
-    /*
-    int sortedCursor,j;
     this->points[index].setI(a);
     this->points[index].setJ(b);
-    Pair currentPair,lastSortedPair; 
-    this->lastAdded.setI(a);
-    this->lastAdded.setJ(b); 
-    cout << a << " " << b;
-    for(sortedCursor = 1;sortedCursor < index;sortedCursor++){
-        lastSortedPair = this->points[sortedCursor];
-        for(j = sortedCursor;j <= index;j++){
-            currentPair = this->points[j];
-            if(lastSortedPair.getJ() == currentPair.getI()){
-                Pair tmp;
-                tmp = this->points[sortedCursor+1];
-                this->points[sortedCursor+1] = currentPair;
-                this->points[j] = tmp;
-            }
-        }
-    }
-    for(sortedCursor = 1;sortedCursor < index;sortedCursor++){
-        lastSortedPair = this->points[sortedCursor];
-        for(j = sortedCursor;j <= index;j++){
-            currentPair = this->points[j];
-            if(lastSortedPair.getI() == currentPair.getJ()){
-                Pair tmp;
-                tmp = this->points[sortedCursor-1];
-                this->points[sortedCursor-1] = currentPair;
-                this->points[j] = tmp;
-            }
-        }
-    }
-}*/
-    int i = 0;
-    bool found = false;
-    
-    while(!found && i < index){
-        if(this->points[i].getJ() == a ){
-            found = true;
-        }
-        else if(this->points[i].getI() == b){
-            found = true;
-            i--;
-        }
-        i++;
-    }
-    Pair tmp1;
-    Pair tmp2;
-    tmp1 = this->points[i];
-    int j;
-    for(j=i+1;j<this->points.size();j++){
-        tmp2 = this->points[j];
-        this->points[j] = tmp1;
-        tmp1 = tmp2;
-    }
-    this->points[i].setI(a);
-    this->points[i].setJ(b);
 }
 
 /************UTILITY FUNCTIONS******************/
 //Returns the minimum of a row in the matrix given
-float getMinOnRow(Matrix<int> &matrix, int row){
+float Little::getMinOnRow(Matrix<int> &matrix, int row){
     int index = 0;
     while(index < matrix.getNbRows() && matrix.getValue(row,index) == matrix.getEmptyValue()){
         index++;
@@ -91,7 +38,7 @@ float getMinOnRow(Matrix<int> &matrix, int row){
     return min;
 }
 //Substract value into each cell of the row in matrix
-void clearRow(Matrix<int> &matrix, int row, float value){
+void Little::clearRow(Matrix<int> &matrix, int row, float value){
     for(int i=0;i<matrix.getNbColumns();i++){
         if(matrix.getValue(row,i) != matrix.getEmptyValue()){
                 matrix.setValue(row,i,matrix.getValue(row,i)-value);
@@ -100,7 +47,7 @@ void clearRow(Matrix<int> &matrix, int row, float value){
 }
 
 //Get the minimum value in the column at index i in matrix
-float getMinOnColumn(Matrix<int> &matrix, int column){   
+float Little::getMinOnColumn(Matrix<int> &matrix, int column){   
     int index = 0;
     while(index < matrix.getNbColumns() && matrix.getValue(index,column) == matrix.getEmptyValue()){
         index++;
@@ -118,7 +65,7 @@ float getMinOnColumn(Matrix<int> &matrix, int column){
 }
 
 //Substract the value in each cell of the column in the matrix
-void clearColumn(Matrix<int> &matrix, int column, float value){
+void Little::clearColumn(Matrix<int> &matrix, int column, float value){
     for(int i=0;i<matrix.getNbRows();i++){
         if(matrix.getValue(i,column)!= matrix.getEmptyValue()){
                 matrix.setValue(i,column,matrix.getValue(i,column)-value);
@@ -127,7 +74,7 @@ void clearColumn(Matrix<int> &matrix, int column, float value){
 }
 
 //This function reduces the matrix, and returns the value of node weight
-int reduceMatrix(Matrix<int> &matrix){
+int Little::reduceMatrix(Matrix<int> &matrix){
     int min;
     int sum=0;
     for(int i = 0;i<matrix.getNbRows();i++){
@@ -144,7 +91,7 @@ int reduceMatrix(Matrix<int> &matrix){
 }
 
 //Retourne le regret dans la case (i,j) de matrix
-int getRegret(Matrix<int> &matrix, int row,int col){
+int Little::getRegret(Matrix<int> &matrix, int row,int col){
     int sum = 0;
     int index1 = 0;
     while(matrix.getValue(row,index1) == matrix.getEmptyValue() || index1 == col){
@@ -174,7 +121,7 @@ int getRegret(Matrix<int> &matrix, int row,int col){
     return sum;
 }
 
-Regret getMaxRegret(Matrix<int> &matrix){
+Regret Little::getMaxRegret(Matrix<int> &matrix){
     int maxRegret = -1;
     int currentRegret;
     int row;
@@ -197,118 +144,61 @@ Regret getMaxRegret(Matrix<int> &matrix){
 
 /*Instead of removing a row and a column with matrix type which is costly we set all the values in the row and 
  the column to an invalid one, -1 for instance*/
-void removeRowAndCol(Matrix<int> &matrix,int row,int col){
+void Little::removeRowAndCol(Matrix<int> &matrix,int row,int col){
     for(int i = 0;i<matrix.getNbColumns();i++){
         matrix.setValue(row,i,matrix.getEmptyValue());
     }
     for(int i = 0;i<matrix.getNbRows();i++){
         matrix.setValue(i,col,matrix.getEmptyValue());
     }
+}     //penser à Chasles? penser permutation, cycle, "borne" des cycles = ce qu'il faut supprimer...    
+
+void Little::deleteInvalidWays(Matrix<int> &matrix, Way &currentWay, int index){
+    int i, val; 
+    if(index == 0){ return; }
+    int tmpDepart, tmpArrival; 
+    tmpDepart = currentWay.getPoints()[index-1].getI(); 
+    tmpArrival = currentWay.getPoints()[index-1].getJ();
+    vector<int> list; 
+    list = vector<int> (0, 0); 
+    list.insert(list.begin(), tmpDepart); 
+    list.push_back(tmpArrival);
+    for(i=0; i<index; i++){ 
+        val = currentWay.getPoints()[i].getJ(); 
+        if(val == tmpDepart){
+            tmpDepart = currentWay.getPoints()[i].getI(); 
+            list.insert(list.begin(), tmpDepart);
+            i = -1; 
+        } 
+        if(list.size() > matrix.getNbColumns())
+        {
+            return; 
+        } 
+    } 
+    for(i=0; i<index; i++){
+        val = currentWay.getPoints()[i].getI(); 
+        if(val == tmpArrival){
+            tmpArrival = currentWay.getPoints()[i].getJ(); 
+            list.push_back(tmpArrival);
+            i = -1;
+        }
+        if(list.size() > matrix.getNbColumns()){ return; } 
+    } 
+    tmpDepart = list[list.size() - 1]; 
+    tmpArrival = list[0];
+    matrix.setValue(tmpDepart, tmpArrival, -1);
 }
 
-void deleteInvalidWays(Matrix<int> &matrix, Way &currentWay, int index){
-    if(index != 0){
-        Pair addedPair;
-        addedPair = currentWay.getPoints()[index-1];
-        matrix.setValue(addedPair.getJ(),addedPair.getI(),matrix.getEmptyValue());
-        bool headFound = false;
-        int headFoundIndex;
-        bool tailFound = false;
-        int tailFoundIndex;
-        Pair currentPair;
-        
-        for(int i = 0;i < index-1;i++){
-            currentPair = currentWay.getPoints()[i];
-            if(currentPair.getI() == addedPair.getJ()){
-                tailFound = true;
-                tailFoundIndex = i;
-            }
-            if(currentPair.getJ() == addedPair.getI()){
-                headFound = true;
-                headFoundIndex = i;
-            }
-        }
-        int i;
-        if(headFound && !tailFound){
-            i = index;
-            while(currentWay.getPoints()[i].getJ() != addedPair.getI()){
-                i++;
-            }
-            i--;
-            matrix.setValue(i,addedPair.getI(),matrix.getEmptyValue());
-        }
-        if(!headFound && tailFound){
-            i = index-2;
-            while(currentWay.getPoints()[i].getI() != addedPair.getJ()){
-                i--;
-            }
-            i++;
-            matrix.setValue(addedPair.getJ(),i,matrix.getEmptyValue());
-        }
-        if(headFound && tailFound){
-            
-        }
-    }
-}
-/***********************************************/
 
-/*Takes a DistanceMatrix as argument and returns the shortest hamiltonian cycle*/
-Way little(Matrix<int> matrix,Way &bestWay,Way &currentWay, int count){
+Way Little::solve(Matrix<int> matrix,Way &bestWay,Way &currentWay,int count){
     deleteInvalidWays(matrix,currentWay,count);
-    int weight = reduceMatrix(matrix);
-    currentWay.setLength(currentWay.getLength() + weight);
-    cout << matrix;
-    if(currentWay.getLength() >= bestWay.getLength() && bestWay.getLength() != 0){
-        return bestWay;
-    }
-    else{
-        if(count == matrix.getNbRows()-2){
-            if(currentWay.getLength() < bestWay.getLength() || bestWay.getLength() == 0){
-                for(int i = 0; i < matrix.getNbRows();i++){
-                    for(int j = 0; j < matrix.getNbColumns();j++){
-                        if(matrix.getValue(i,j) != matrix.getEmptyValue()){
-                            currentWay.addPoints(i,j,count+1);
-                            currentWay.setLength(matrix.getValue(i,j) + currentWay.getLength());
-                            count++;
-                        }
-                    }
-                }
-                bestWay = currentWay;
-                return bestWay;
-            }
-            else{
-                return bestWay;
-            }
-        }
-        else{
-           Regret regret = getMaxRegret(matrix);
-           Matrix<int> matrix1 = matrix;
-           removeRowAndCol(matrix,regret.getI(),regret.getJ());
-           Way currentWay2 = currentWay;
-           currentWay.addPoints(regret.getI(),regret.getJ(),count);
-           cout << currentWay << endl;
-           cout << matrix;
-           little(matrix,bestWay,currentWay,count + 1);
-           if(currentWay.getLength() + regret.getValue() >= bestWay.getLength()){
-               return bestWay;
-           }
-           else{
-               matrix1.setValue(regret.getI(),regret.getJ(),matrix1.getEmptyValue());
-               little(matrix1,bestWay,currentWay2,count);
-           }
-        }
-    }
-   
-    return bestWay;
-}
-
-Way little(Matrix<int> matrix,Way &bestWay,Way &currentWay,int count, string &flux){
     cout << currentWay << endl;
-    deleteInvalidWays(matrix,currentWay,count);
+    cout << matrix<< endl;
     int weight = reduceMatrix(matrix);
+    cout << matrix<< endl;
     currentWay.setLength(currentWay.getLength() + weight);
-    cout << matrix;
     if(currentWay.getLength() >= bestWay.getLength() && bestWay.getLength() != 0){
+        cout << bestWay <<endl;
         return bestWay;
     }
     else{
@@ -317,17 +207,18 @@ Way little(Matrix<int> matrix,Way &bestWay,Way &currentWay,int count, string &fl
                 for(int i = 0; i < matrix.getNbRows();i++){
                     for(int j = 0; j < matrix.getNbColumns();j++){
                         if(matrix.getValue(i,j) != matrix.getEmptyValue()){
-                            currentWay.addPoints(i,j,count+1);
+                            currentWay.addPoints(i,j,count);
                             currentWay.setLength(matrix.getValue(i,j) + currentWay.getLength());
-                            cout << currentWay << endl;
                             count++;
                         }
                     }
                 }
-                bestWay = currentWay;
+                setBestWay(currentWay);
+                cout << bestWay <<endl;
                 return bestWay;
             }
             else{
+                cout << bestWay <<endl;
                 return bestWay;
             }
         }
@@ -335,24 +226,54 @@ Way little(Matrix<int> matrix,Way &bestWay,Way &currentWay,int count, string &fl
            Regret regret = getMaxRegret(matrix);
            Matrix<int> matrix1 = matrix;
            removeRowAndCol(matrix,regret.getI(),regret.getJ());
-           cout << matrix;
+           cout << matrix<< endl;
            Way currentWay2 = currentWay;
            currentWay.addPoints(regret.getI(),regret.getJ(),count);
-           cout << currentWay << endl;
-           little(matrix,bestWay,currentWay,count + 1,flux);
+           solve(matrix,bestWay,currentWay,count + 1);
            if(currentWay.getLength() + regret.getValue() >= bestWay.getLength()){
+               cout << bestWay <<endl;
                return bestWay;
            }
            else{
                matrix1.setValue(regret.getI(),regret.getJ(),matrix1.getEmptyValue());
-               little(matrix1,bestWay,currentWay2,count,flux);
+               solve(matrix1,bestWay,currentWay2,count);
            }
         }
     }
-    for(int i = 0;i<bestWay.getLength();i++){
-        flux += bestWay.getPoints()[i].getI();
-        flux += " ";
-    }
-    flux += "\n-1\nEOF";
+    cout << bestWay <<endl;
     return bestWay;
+}
+
+Way Little::call(Matrix<int> &matrix){
+    if(Little::isRunning){
+        throw AlreadyRunningEx();
+    }
+    Way bestWay(matrix.getNbRows());
+    Little newLittle(matrix,bestWay);
+    Way currentWay(matrix.getNbRows());
+    return newLittle.solve(newLittle.distMatrix,bestWay,currentWay,0);
+}
+
+Little::Little(Matrix<int> distMatrix, Way bestWay): distMatrix(distMatrix){
+    this->bestWay = bestWay;
+    this->pThread = NULL;
+    Little::isRunning = true;
+}
+
+bool Little::isRunning = false;
+
+void Little::setBestWay(Way &way){
+    this->bestWay = way;
+    Notify();
+}
+
+Way Little::Statut(){
+    return this->bestWay;
+}
+
+void LittleObs::Update(Observable* observable){
+    string output;
+    output += observable->Statut().toString();
+    output += ", \"state\" : \"ongoing\" ";
+    
 }

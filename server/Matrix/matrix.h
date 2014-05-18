@@ -21,7 +21,6 @@ private:
     vector< vector<T> > data;
 
 public:
-
     // -------------- interdit de modifier cette partie -------------- //
     Matrix(int nbRows, int nbColumns, T emptyValue); //done
 
@@ -38,7 +37,7 @@ public:
     T getValue(int rowIndex, int colIndex) throw (IndexOutOfBoundsException);
     void setValue(int rowIndex, int colIndex, T value) throw (IndexOutOfBoundsException);
 
-    ~Matrix(); //done
+    ~Matrix(); //donethis->type=type;this->matrix=matrix;this->conn=conn;
     // --------------------------------------------------------------- //
     friend ostream& operator<<( ostream &flux, Matrix<T> const& m ){
         for(int i = 0;i<m.rows;i++){

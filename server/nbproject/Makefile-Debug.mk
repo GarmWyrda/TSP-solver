@@ -37,7 +37,8 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/Little.o \
 	${OBJECTDIR}/Matrix/TestStats.o \
-	${OBJECTDIR}/test.o \
+	${OBJECTDIR}/Obspattern.o \
+	${OBJECTDIR}/server.o \
 	${OBJECTDIR}/tspParse.o
 
 # Test Directory
@@ -51,8 +52,8 @@ TESTFILES= \
 CFLAGS=
 
 # CC Compiler Flags
-CCFLAGS=-D_WEBSOCKETPP_CPP11_STL_ -I websocketpp/ -lboost_system -lboost_thread -lpthread
-CXXFLAGS=-D_WEBSOCKETPP_CPP11_STL_ -I websocketpp/ -lboost_system -lboost_thread -lpthread
+CCFLAGS=-std=c++11
+CXXFLAGS=-std=c++11
 
 # Fortran Compiler Flags
 FFLAGS=
@@ -69,27 +70,32 @@ LDLIBSOPTIONS=
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/server: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/server ${OBJECTFILES} ${LDLIBSOPTIONS}
+	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/server ${OBJECTFILES} ${LDLIBSOPTIONS} -lboost_system -lpthread
 
 ${OBJECTDIR}/Little.o: Little.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.cc) -g -Iwebsocketpp -std=c++11 -D_WEBSOCKETPP_CPP11_STL_ -I websocketpp/ -lboost_system -lboost_thread -lpthread -MMD -MP -MF $@.d -o ${OBJECTDIR}/Little.o Little.cpp
+	$(COMPILE.cc) -g -I. -std=c++11 -std=c++11 -MMD -MP -MF $@.d -o ${OBJECTDIR}/Little.o Little.cpp
 
 ${OBJECTDIR}/Matrix/TestStats.o: Matrix/TestStats.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Matrix
 	${RM} $@.d
-	$(COMPILE.cc) -g -Iwebsocketpp -std=c++11 -D_WEBSOCKETPP_CPP11_STL_ -I websocketpp/ -lboost_system -lboost_thread -lpthread -MMD -MP -MF $@.d -o ${OBJECTDIR}/Matrix/TestStats.o Matrix/TestStats.cpp
+	$(COMPILE.cc) -g -I. -std=c++11 -std=c++11 -MMD -MP -MF $@.d -o ${OBJECTDIR}/Matrix/TestStats.o Matrix/TestStats.cpp
 
-${OBJECTDIR}/test.o: test.cpp 
+${OBJECTDIR}/Obspattern.o: Obspattern.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.cc) -g -Iwebsocketpp -std=c++11 -D_WEBSOCKETPP_CPP11_STL_ -I websocketpp/ -lboost_system -lboost_thread -lpthread -MMD -MP -MF $@.d -o ${OBJECTDIR}/test.o test.cpp
+	$(COMPILE.cc) -g -I. -std=c++11 -std=c++11 -MMD -MP -MF $@.d -o ${OBJECTDIR}/Obspattern.o Obspattern.cpp
+
+${OBJECTDIR}/server.o: server.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -g -I. -std=c++11 -std=c++11 -MMD -MP -MF $@.d -o ${OBJECTDIR}/server.o server.cpp
 
 ${OBJECTDIR}/tspParse.o: tspParse.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.cc) -g -Iwebsocketpp -std=c++11 -D_WEBSOCKETPP_CPP11_STL_ -I websocketpp/ -lboost_system -lboost_thread -lpthread -MMD -MP -MF $@.d -o ${OBJECTDIR}/tspParse.o tspParse.cpp
+	$(COMPILE.cc) -g -I. -std=c++11 -std=c++11 -MMD -MP -MF $@.d -o ${OBJECTDIR}/tspParse.o tspParse.cpp
 
 # Subprojects
 .build-subprojects:
@@ -104,13 +110,13 @@ ${TESTDIR}/TestFiles/f1: ${TESTDIR}/tests/newtestclass.o ${TESTDIR}/tests/newtes
 ${TESTDIR}/tests/newtestclass.o: tests/newtestclass.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} $@.d
-	$(COMPILE.cc) -g -Iwebsocketpp -std=c++11 -D_WEBSOCKETPP_CPP11_STL_ -I websocketpp/ -lboost_system -lboost_thread -lpthread `cppunit-config --cflags` -MMD -MP -MF $@.d -o ${TESTDIR}/tests/newtestclass.o tests/newtestclass.cpp
+	$(COMPILE.cc) -g -I. -std=c++11 -std=c++11 `cppunit-config --cflags` -MMD -MP -MF $@.d -o ${TESTDIR}/tests/newtestclass.o tests/newtestclass.cpp
 
 
 ${TESTDIR}/tests/newtestrunner.o: tests/newtestrunner.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} $@.d
-	$(COMPILE.cc) -g -Iwebsocketpp -std=c++11 -D_WEBSOCKETPP_CPP11_STL_ -I websocketpp/ -lboost_system -lboost_thread -lpthread `cppunit-config --cflags` -MMD -MP -MF $@.d -o ${TESTDIR}/tests/newtestrunner.o tests/newtestrunner.cpp
+	$(COMPILE.cc) -g -I. -std=c++11 -std=c++11 `cppunit-config --cflags` -MMD -MP -MF $@.d -o ${TESTDIR}/tests/newtestrunner.o tests/newtestrunner.cpp
 
 
 ${OBJECTDIR}/Little_nomain.o: ${OBJECTDIR}/Little.o Little.cpp 
@@ -121,7 +127,7 @@ ${OBJECTDIR}/Little_nomain.o: ${OBJECTDIR}/Little.o Little.cpp
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} $@.d;\
-	    $(COMPILE.cc) -g -Iwebsocketpp -std=c++11 -D_WEBSOCKETPP_CPP11_STL_ -I websocketpp/ -lboost_system -lboost_thread -lpthread -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/Little_nomain.o Little.cpp;\
+	    $(COMPILE.cc) -g -I. -std=c++11 -std=c++11 -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/Little_nomain.o Little.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/Little.o ${OBJECTDIR}/Little_nomain.o;\
 	fi
@@ -134,22 +140,35 @@ ${OBJECTDIR}/Matrix/TestStats_nomain.o: ${OBJECTDIR}/Matrix/TestStats.o Matrix/T
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} $@.d;\
-	    $(COMPILE.cc) -g -Iwebsocketpp -std=c++11 -D_WEBSOCKETPP_CPP11_STL_ -I websocketpp/ -lboost_system -lboost_thread -lpthread -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/Matrix/TestStats_nomain.o Matrix/TestStats.cpp;\
+	    $(COMPILE.cc) -g -I. -std=c++11 -std=c++11 -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/Matrix/TestStats_nomain.o Matrix/TestStats.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/Matrix/TestStats.o ${OBJECTDIR}/Matrix/TestStats_nomain.o;\
 	fi
 
-${OBJECTDIR}/test_nomain.o: ${OBJECTDIR}/test.o test.cpp 
+${OBJECTDIR}/Obspattern_nomain.o: ${OBJECTDIR}/Obspattern.o Obspattern.cpp 
 	${MKDIR} -p ${OBJECTDIR}
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/test.o`; \
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/Obspattern.o`; \
 	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
 	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} $@.d;\
-	    $(COMPILE.cc) -g -Iwebsocketpp -std=c++11 -D_WEBSOCKETPP_CPP11_STL_ -I websocketpp/ -lboost_system -lboost_thread -lpthread -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/test_nomain.o test.cpp;\
+	    $(COMPILE.cc) -g -I. -std=c++11 -std=c++11 -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/Obspattern_nomain.o Obspattern.cpp;\
 	else  \
-	    ${CP} ${OBJECTDIR}/test.o ${OBJECTDIR}/test_nomain.o;\
+	    ${CP} ${OBJECTDIR}/Obspattern.o ${OBJECTDIR}/Obspattern_nomain.o;\
+	fi
+
+${OBJECTDIR}/server_nomain.o: ${OBJECTDIR}/server.o server.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/server.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} $@.d;\
+	    $(COMPILE.cc) -g -I. -std=c++11 -std=c++11 -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/server_nomain.o server.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/server.o ${OBJECTDIR}/server_nomain.o;\
 	fi
 
 ${OBJECTDIR}/tspParse_nomain.o: ${OBJECTDIR}/tspParse.o tspParse.cpp 
@@ -160,7 +179,7 @@ ${OBJECTDIR}/tspParse_nomain.o: ${OBJECTDIR}/tspParse.o tspParse.cpp
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} $@.d;\
-	    $(COMPILE.cc) -g -Iwebsocketpp -std=c++11 -D_WEBSOCKETPP_CPP11_STL_ -I websocketpp/ -lboost_system -lboost_thread -lpthread -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/tspParse_nomain.o tspParse.cpp;\
+	    $(COMPILE.cc) -g -I. -std=c++11 -std=c++11 -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/tspParse_nomain.o tspParse.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/tspParse.o ${OBJECTDIR}/tspParse_nomain.o;\
 	fi
