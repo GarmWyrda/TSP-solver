@@ -52,7 +52,7 @@ define('server_request',['jQuery','logger','listener'],function($,Logger){
                                                     Logger.log(Logger.success,inMessage.msg);
                                                      break;
                                                 case 'little':
-                                                    $('#coast').innerHTML(inMessage.coast);
+                                                    $('#cost').innerHTML(inMessage.cost);
                                                     $('#time').innerHTML(inMessage.time);
                                                     $('#type').innerHTML(inMessage.sol);
                                                     localStorage.setItem("points",inMessage.matrix);
