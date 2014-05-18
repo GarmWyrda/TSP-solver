@@ -4,10 +4,13 @@ define('server_interaction',['jQuery','logger','server_request'],function($,Logg
     var playTSP = function(){
         if (window.WebSocket && (serverConnection.isConnected === true) ){
             //interaction avec le serveur
-            if($('bywalk') === true){
+            console.log($('#bywalk').val());
+            if(($('#bywalk').val())==="true"){
                  way = 'distanceMatrix';
+                 console.log('à pied');
             }else{
                  way = 'offRoad';
+                 console.log('oiseaux');
             }
         var request = {type : "play",matrix:getGoodMatrix(way),size:$("#list").val()};
         serverConnection.socket.send(JSON.stringify(request));
