@@ -1,18 +1,21 @@
 define('server_interaction',['jQuery','logger','server_request'],function($,Logger,serverConnection){
     var etat = '';
     var way;
+    var byWalk;
     var playTSP = function(){
         if (window.WebSocket && (serverConnection.isConnected === true) ){
             //interaction avec le serveur
             console.log($('#bywalk').val());
             if(($('#bywalk').val())==="true"){
                  way = 'distanceMatrix';
+                 byWalk = true;
                  console.log('à pied');
             }else{
                  way = 'offRoad';
-                 console.log('oiseaux');
+                 byWalk = false;
+                console.log('oiseaux');
             }
-        var request = {type : "play",matrix:getGoodMatrix(way),size:$("#list").val()};
+        var request = {type : "play",matrix:getGoodMatrix(way),size:$("#list").val(),byWalk:byWalk};
         serverConnection.socket.send(JSON.stringify(request));
             etat ='play';
             Logger.log(Logger.success,"play lancé");

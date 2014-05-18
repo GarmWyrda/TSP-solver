@@ -56,6 +56,9 @@ define('server_request',['jQuery','logger','listener'],function($,Logger){
                                                     $('#time').innerHTML(inMessage.time);
                                                     $('#type').innerHTML(inMessage.sol);
                                                     localStorage.setItem("points",inMessage.way);
+                                                    for (var i = 0; i <way.length;i++){
+                                                        var newWay = new Way(inMessage.way[i][0],inMessage.way[i][1], inMessage.byWalk);
+                                                    }
                                                 case 'error':
                                                     Logger.log(Logger.error,inMessage.msg);    
                                                     break;
