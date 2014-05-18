@@ -4,7 +4,7 @@ define('server_interaction',['jQuery','logger','server_request'],function($,Logg
     var byWalk;
     var playTSP = function(){
         if (window.WebSocket && (serverConnection.isConnected === true) ){
-            //interaction avec le serveur
+            
             console.log($('#bywalk').val());
             if(($('#bywalk').val())==="true"){
                  way = 'distanceMatrix';
@@ -15,7 +15,12 @@ define('server_interaction',['jQuery','logger','server_request'],function($,Logg
                  byWalk = false;
                 console.log('oiseaux');
             }
-        var request = {type : "play",matrix:getGoodMatrix(way),size:$("#list").val(),byWalk:byWalk};
+        if(getGoodMatrix(way) === null ){
+            return ;
+        }else{
+            var matrix = getGoodMatrix(way);
+        }
+        var request = {type : "play",matrix:matrix,size:$("#list").val(),byWalk:byWalk};
         serverConnection.socket.send(JSON.stringify(request));
             etat ='play';
             Logger.log(Logger.success,"play lancé");
@@ -55,14 +60,14 @@ define('server_interaction',['jQuery','logger','server_request'],function($,Logg
 
 
         getGoodMatrix = function(name) {
-        this.nameInStorage = name;
-            if (localStorage.getItem(this.nameInStorage) === null) {
+            if (localStorage.getItem(name) === null) {
               console.log(this);
               Logger.log(Logger.error,"matrice non présente dans le local storage");
+              var matrix = null;
             }
 
             else {
-                data = JSON.parse(localStorage.getItem(this.nameInStorage));
+                data = JSON.parse(localStorage.getItem(name));
 
                 var $nbElement = $("#list");
                 var matrix = new Array();
